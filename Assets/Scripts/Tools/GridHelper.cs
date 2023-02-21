@@ -6,6 +6,8 @@ namespace Editor
 { 
     public class GridHelper : MonoBehaviour
     {
+        //Size of cell
+        [SerializeField] private int _width, _depth;
         [SerializeField] private float _size = 1f;
         public float Size { get { return _size; } }
 
@@ -31,7 +33,7 @@ namespace Editor
                 for (float z = 0; z < 40; z+=_size)
                 {
                     var point = GetNearestPointOnGrid(new Vector3(x, 0f, z));
-                    Gizmos.DrawSphere(point, 0.15f);
+                    Gizmos.DrawSphere(point, 0.1f);
                 }
             }
         }
