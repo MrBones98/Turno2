@@ -10,7 +10,11 @@ namespace Editor
         [SerializeField] private int _width, _depth;
         [SerializeField] private float _size = 1f;
         public float Size { get { return _size; } }
-
+        /// <summary>
+        /// Returns the equivalent position on the created grid
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public Vector3 GetNearestPointOnGrid(Vector3 position)
         {
             position -= transform.position;
