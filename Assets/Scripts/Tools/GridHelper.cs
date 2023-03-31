@@ -32,9 +32,9 @@ namespace Editor
         {
             Color color = Color.cyan;
             Gizmos.color = Color.cyan;
-            for (float x = 0; x <40 ; x+=_size)
+            for (float x = 0; x <_width ; x+=_size)
             {
-                for (float z = 0; z < 40; z+=_size)
+                for (float z = 0; z < _depth; z+=_size)
                 {
                     var point = GetNearestPointOnGrid(new Vector3(x, 0f, z));
                     Gizmos.DrawSphere(point, 0.1f);

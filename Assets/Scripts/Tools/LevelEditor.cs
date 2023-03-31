@@ -4,40 +4,81 @@ using UnityEngine;
 
 namespace Editor
 { 
+    public enum TileType
+    {
+        Platform,
+        Button,
+        Wall,
+        SpawnTile
+    }
     public class LevelEditor : MonoBehaviour
     {
         [SerializeField] private GridHelper _grid;
         [SerializeField] private Camera _camera;
         [SerializeField] private GameObject _levelContainer;
-        [SerializeField] private GameObject _tilePrefab;
+        [SerializeField] private GameObject[] _tilePrefab;
 
-        [SerializeField] private List<Vector3> _tilePositions = new List<Vector3>();
-        [SerializeField] private List<GameObject> _tiles = new List<GameObject>();
+
+        private int _tileIndex = 0;
+        private int _tileCountDebug;
+        private bool _startTest = false;
         
+        public static LevelEditor Instance;
+        public static List<Vector3> _tilePositions = new();
+        public static List<GameObject> _tiles = new();
+
+        public delegate void StartTest();
+        public static event StartTest startTest;
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+
+        }
         private void Update()
         {
             //yes soon input system
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+            //if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+            if (_startTest == false)
             {
-                RaycastHit hitInfo;
-                Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-                
-                if(Physics.Raycast(ray, out hitInfo))
-                {   
-                    PlaceTile(CheckCoordinates(hitInfo.point));
-                }
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                RaycastHit hitInfo;
-                Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out hitInfo))
+                if (Input.GetMouseButtonDown(0))
                 {
-                    RemoveTileAt(CheckCoordinates(hitInfo.point));
+                    RaycastHit hitInfo;
+                    Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+                
+                    if(Physics.Raycast(ray, out hitInfo))
+                    {   
+                        PlaceTile(CheckCoordinates(hitInfo.point));
+                    }
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    RaycastHit hitInfo;
+                    Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+                    if (Physics.Raycast(ray, out hitInfo))
+                    {
+                        RemoveTileAt(CheckCoordinates(hitInfo.point));
+                    }
                 }
             }
+            else
+            {
+                //startTest
+                //Need to subscribe from spawntile and perhaps more?
+            }
+
+
             //??no input detected cool diassapear text, ui, whatever for better look with easing
+            //_tileCountDebug= _tilePositions.Count;
+            //if(_tilepositions)
         }
         /// <summary>
         /// Returns the pointer's position with rounded coordinates
@@ -64,15 +105,17 @@ namespace Editor
            
             Vector3 finalPosition = _grid.GetNearestPointOnGrid(closestPoint);
 
-            GameObject tile = Instantiate(_tilePrefab, finalPosition, Quaternion.identity);
+            GameObject tile = Instantiate(_tilePrefab[_tileIndex], finalPosition, Quaternion.identity);
             tile.transform.SetParent(_levelContainer.transform);
 
             tile.name = $"X: {finalPosition.x} | Z: {finalPosition.z}";
 
             _tilePositions.Add(finalPosition);
+            _tiles.Add(tile);
             
         }
-        private void RemoveTileAt(Vector3 tilePosition)
+        //Make public? Send Event? Ask Pete
+        public void RemoveTileAt(Vector3 tilePosition)
         {
             if (!_tilePositions.Contains(tilePosition))
             {
@@ -81,10 +124,26 @@ namespace Editor
             }
             else
             {
-                //_tilePositions.Remove(tilePosition);
-                //Destroy.
-                print("I should sleep, deleting tiles will be implemented tomorrow jajajaa");
+                int index = _tilePositions.IndexOf(tilePosition);
+                _tilePositions.Remove(tilePosition);
+                Destroy(_tiles[index].gameObject);
+                _tiles.RemoveAt(index);
+                
+                
             }
+        }
+        /// <summary>
+        /// Passes index to select tileType
+        /// </summary>
+        /// <param name="id"></param>
+        public void SwitchPrefab(int index)
+        {
+            //Have to change to enum
+            _tileIndex = index;
+        }
+        public void ChangeEditingState()
+        {
+            _startTest = !_startTest;
         }
     }
 }
