@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,14 +19,24 @@ namespace Editor
         [SerializeField] private GameObject _levelContainer;
         [SerializeField] private GameObject[] _tilePrefab;
 
+        [SerializeField]
+        [OnInspectorGUI("UpdatePrefabList")]
+        private List<SaveLevelPrefab> _prefabList = new();
+
+        [SerializeField]
+        [Required]
+        [OnValueChanged("LoadLevel")]
+        private Level _currentLevel;
 
         private int _tileIndex = 0;
-        private int _tileCountDebug;
         private bool _startTest = false;
-        
+        private List<GameObject> _runtimeTileObjects = new();
+
+
         public static LevelEditor Instance;
-        public static List<Vector3> _tilePositions = new();
-        public static List<GameObject> _tiles = new();
+        public static List<Vector3> RuntimeTilePositions = new();
+
+        public static List<Tile> TilesToSave = new();
 
         public delegate void StartTest();
         public static event StartTest startTest;
@@ -40,6 +51,70 @@ namespace Editor
             {
                 Instance = this;
             }
+
+        }
+        [ButtonGroup("LevelButtons")]
+        public void SaveLevel()
+        {
+            if(_currentLevel == null)
+            {
+                Debug.LogError("No Level Object");
+            }
+            
+            _currentLevel.ClearTileObjectList();
+            //So we actually add on click for the Data needed to save (different than
+            //current transforms)
+            Tile[] tiles = FindObjectsOfType<Tile>();
+            foreach (var tile in tiles)
+            {
+                _currentLevel.AddTileObjectType(tile);
+            }
+
+            UnityEditor.EditorUtility.SetDirty(_currentLevel);
+
+        }
+        [ButtonGroup("LevelButtons")]
+        public void LoadCurrentLevel()
+        {
+            if(_currentLevel == null)
+            {
+                Debug.LogError("No Level Object");
+                return;
+            }
+            ClearLevel();
+
+            foreach (TileObject tileObject in _currentLevel.tileObjects)
+            {
+                GameObject prefab = null;
+
+                foreach (SaveLevelPrefab levelPrefab in _prefabList)
+                {
+                    if (tileObject.Type == levelPrefab.Type)
+                    {
+                        prefab = levelPrefab.Prefab;
+                        break;
+                    }
+                }
+
+                if (prefab == null)
+                {
+                    Debug.LogError("Couldn't find prefab of type: " + tileObject.Type.ToString());
+                    continue;
+                }
+
+                GameObject newTileInstance = Instantiate(prefab);
+
+                newTileInstance.transform.position = new Vector3(tileObject.position[0], tileObject.position[1], tileObject.position[2]);
+            }
+        }
+        public void LoadLevel(Level levelToLoad)
+        {
+            this._currentLevel = levelToLoad;
+            LoadCurrentLevel();
+        }
+        [ButtonGroup("LevelButtons")]
+        public void ClearLevel()
+        {
 
         }
         private void Update()
@@ -97,7 +172,7 @@ namespace Editor
         {
             print($"This is where you clicked{closestPoint}");
             
-            if (_tilePositions.Contains(closestPoint))
+            if (RuntimeTilePositions.Contains(closestPoint))
             {
                 Debug.LogWarning($"A tile is already at X:{(int)closestPoint.x} | Z:{(int)closestPoint.z}");
                 return;
@@ -110,24 +185,28 @@ namespace Editor
 
             tile.name = $"X: {finalPosition.x} | Z: {finalPosition.z}";
 
-            _tilePositions.Add(finalPosition);
-            _tiles.Add(tile);
+            RuntimeTilePositions.Add(finalPosition);
+            _runtimeTileObjects.Add(tile);
             
         }
-        //Make public? Send Event? Ask Pete
+        //TODO CHECK RUNTIME TILES, WHETHER OR NOT THEY ARE LOADED AND IF NOT, POPULATE LIST WITH CACHED LEVEL TILE GAME OBJECTS POSITIONS
         public void RemoveTileAt(Vector3 tilePosition)
         {
-            if (!_tilePositions.Contains(tilePosition))
+            if (!RuntimeTilePositions.Contains(tilePosition))
             {
+                if(RuntimeTilePositions.Count== 0)
+                {
+                    Debug.Log("Is the Tile not here? or are you not updating the RuntimeTiles from Saved Level");
+                }
                 Debug.LogWarning($"No tile  at X:{(int)tilePosition.x} | Z:{(int)tilePosition.z}");
                 return;
             }
             else
             {
-                int index = _tilePositions.IndexOf(tilePosition);
-                _tilePositions.Remove(tilePosition);
-                Destroy(_tiles[index].gameObject);
-                _tiles.RemoveAt(index);
+                int index = RuntimeTilePositions.IndexOf(tilePosition);
+                RuntimeTilePositions.Remove(tilePosition);
+                Destroy(_runtimeTileObjects[index].gameObject);
+                _runtimeTileObjects.RemoveAt(index);
                 
                 
             }

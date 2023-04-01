@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridDraw : MonoBehaviour
 {
     [SerializeField] private int _minX, _minY, _maxX, _maxY;
+    [SerializeField] private Vector3 offset = new Vector3(0.5f, 0, 0.5f);
 
     private void OnDrawGizmos()
     {
@@ -19,7 +20,7 @@ public class GridDraw : MonoBehaviour
             pos1.x = i;
             pos1.z = _maxY;
 
-            Gizmos.DrawLine(pos0,pos1);
+            Gizmos.DrawLine(pos0+offset,pos1 + offset);
 
         }
 
@@ -29,7 +30,7 @@ public class GridDraw : MonoBehaviour
             pos0.z = i;
             pos1.x = _maxX;
             pos1.z = i;
-            Gizmos.DrawLine(pos0, pos1);
+            Gizmos.DrawLine(pos0 + offset, pos1 + offset);
                 
         }
     }
