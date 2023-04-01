@@ -2474,7 +2474,7 @@ MonoBehaviour:
   _camera: {fileID: 963194227}
   _levelContainer: {fileID: 490318298}
   _tilePrefab:
-  - {fileID: 1077272012063938345, guid: 3b49aac626a01524d822bc04a9eec8e5, type: 3}
+  - {fileID: 57383642975557578, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
   - {fileID: 4326172704242918630, guid: 3fc046e404185f145b7a7483eb7c04db, type: 3}
   - {fileID: 283226035125672115, guid: 81908dfc3a2a7df498f03e4bc5f54789, type: 3}
   - {fileID: 2933719968902673501, guid: e764fc844ab802c4292724fe3babcee2, type: 3}
@@ -2487,7 +2487,8 @@ MonoBehaviour:
     Prefab: {fileID: 2933719968902673501, guid: e764fc844ab802c4292724fe3babcee2, type: 3}
   - Type: 2
     Prefab: {fileID: 283226035125672115, guid: 81908dfc3a2a7df498f03e4bc5f54789, type: 3}
-  _currentLevel: {fileID: 11400000, guid: d49fcc10d1d357e4c8d2b3004d9e2987, type: 2}
+  _currentLevel: {fileID: 0}
+  RuntimeTilePositions: []
 --- !u!1 &1318045380
 GameObject:
   m_ObjectHideFlags: 0

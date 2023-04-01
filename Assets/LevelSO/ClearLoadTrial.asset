@@ -10,136 +10,86 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f664c7288f34bf84dbef09a4c4a5f6b6, type: 3}
-  m_Name: Smile
+  m_Name: ClearLoadTrial
   m_EditorClassIdentifier: 
   tileObjects:
+  - Type: 1
+    position:
+    - 5
+    - 0
+    - 6
+  - Type: 1
+    position:
+    - 4
+    - 0
+    - 6
+  - Type: 1
+    position:
+    - 3
+    - 0
+    - 5
+  - Type: 1
+    position:
+    - 3
+    - 0
+    - 4
   - Type: 0
     position:
     - 6
     - 0
-    - 1
-  - Type: 0
-    position:
-    - 7
-    - 0
-    - 1
-  - Type: 0
-    position:
-    - 5
-    - 0
-    - 1
-  - Type: 0
-    position:
     - 4
-    - 0
-    - 1
-  - Type: 0
-    position:
-    - 3
-    - 0
-    - 1
-  - Type: 0
-    position:
-    - 3
-    - 0
-    - 2
-  - Type: 0
-    position:
-    - 3
-    - 0
-    - 4
-  - Type: 0
-    position:
-    - 3
-    - 0
-    - 5
-  - Type: 0
-    position:
-    - 4
-    - 0
-    - 5
   - Type: 0
     position:
     - 6
     - 0
     - 5
-  - Type: 0
-    position:
-    - 7
-    - 0
-    - 5
-  - Type: 0
-    position:
-    - 7
-    - 0
-    - 4
-  - Type: 0
-    position:
-    - 7
-    - 0
-    - 2
-  - Type: 0
-    position:
-    - 5
-    - 0
-    - 3
-  - Type: 2
-    position:
-    - 5
-    - 0
-    - 2
-  - Type: 2
-    position:
-    - 5
-    - 0
-    - 1
-  - Type: 2
-    position:
-    - 5
-    - 0
-    - 4
-  - Type: 2
-    position:
-    - 5
-    - 0
-    - 5
-  - Type: 0
-    position:
-    - 3
-    - 0
-    - 3
-  - Type: 0
-    position:
-    - 7
-    - 0
-    - 3
-  - Type: 0
-    position:
-    - 4
-    - 0
-    - 3
-  - Type: 0
+  - Type: 3
     position:
     - 6
     - 0
     - 3
   - Type: 3
     position:
-    - 6
+    - 5
     - 0
-    - 2
+    - 3
   - Type: 3
+    position:
+    - 5
+    - 0
+    - 4
+  - Type: 0
+    position:
+    - 4
+    - 0
+    - 4
+  - Type: 0
+    position:
+    - 4
+    - 0
+    - 3
+  - Type: 0
+    position:
+    - 3
+    - 0
+    - 3
+  - Type: 0
+    position:
+    - 5
+    - 0
+    - 5
+  - Type: 0
+    position:
+    - 4
+    - 0
+    - 5
+  - Type: 0
     position:
     - 4
     - 0
     - 2
-  - Type: 3
+  - Type: 0
     position:
-    - 4
+    - 5
     - 0
-    - 4
-  - Type: 3
-    position:
-    - 6
-    - 0
-    - 4
+    - 2

@@ -34,7 +34,7 @@ namespace Editor
 
 
         public static LevelEditor Instance;
-        public static List<Vector3> RuntimeTilePositions = new();
+        public List<Vector3> RuntimeTilePositions = new();
 
         public static List<Tile> TilesToSave = new();
 
@@ -51,6 +51,7 @@ namespace Editor
             {
                 Instance = this;
             }
+            Debug.LogWarning("Assign and remove Level SO manually");
 
         }
         [ButtonGroup("LevelButtons")]
@@ -82,6 +83,7 @@ namespace Editor
                 return;
             }
             ClearLevel();
+            ReassignRuntimeTileValues();
 
             foreach (TileObject tileObject in _currentLevel.tileObjects)
             {
@@ -102,11 +104,26 @@ namespace Editor
                     continue;
                 }
 
-                GameObject newTileInstance = Instantiate(prefab);
+                GameObject newTileInstance = Instantiate(prefab,_levelContainer.transform);
+                newTileInstance.name = $"X: {newTileInstance.transform.position.x} | Z: {newTileInstance.transform.position.z}";
 
+                //_runtimeTileObjects.Add(newTileInstance);
+                //RuntimeTilePositions.Add(newTileInstance.transform.position);
                 newTileInstance.transform.position = new Vector3(tileObject.position[0], tileObject.position[1], tileObject.position[2]);
             }
+            foreach(Transform child in _levelContainer.transform)
+            {
+                _runtimeTileObjects.Add(child.gameObject);
+                RuntimeTilePositions.Add(child.position);
+            }
         }
+
+        private void ReassignRuntimeTileValues()
+        {
+            _runtimeTileObjects.Clear();
+            RuntimeTilePositions.Clear();           
+        }
+
         public void LoadLevel(Level levelToLoad)
         {
             this._currentLevel = levelToLoad;
@@ -115,7 +132,20 @@ namespace Editor
         [ButtonGroup("LevelButtons")]
         public void ClearLevel()
         {
-
+            Tile[] tileObjects = FindObjectsOfType<Tile>();
+            foreach (Tile tileObject in tileObjects)
+            {
+                if (tileObject == null)
+                {
+                    continue;
+                }
+                if (Application.isEditor)
+                {
+                    _runtimeTileObjects.Remove(tileObject.gameObject);
+                    RuntimeTilePositions.Remove(tileObject.gameObject.transform.position);
+                }
+                Destroy(tileObject.gameObject);
+            }
         }
         private void Update()
         {
