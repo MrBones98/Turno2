@@ -54,6 +54,7 @@ namespace Editor
             Debug.LogWarning("Assign and remove Level SO manually");
 
         }
+        [DisableInEditorMode]
         [ButtonGroup("LevelButtons")]
         public void SaveLevel()
         {
@@ -74,10 +75,11 @@ namespace Editor
             UnityEditor.EditorUtility.SetDirty(_currentLevel);
 
         }
+        [DisableInEditorMode]
         [ButtonGroup("LevelButtons")]
         public void LoadCurrentLevel()
         {
-            if(_currentLevel == null)
+            if(_currentLevel == null || !Application.isEditor)
             {
                 Debug.LogError("No Level Object");
                 return;
@@ -107,14 +109,46 @@ namespace Editor
                 GameObject newTileInstance = Instantiate(prefab,_levelContainer.transform);
                 newTileInstance.name = $"X: {newTileInstance.transform.position.x} | Z: {newTileInstance.transform.position.z}";
 
-                //_runtimeTileObjects.Add(newTileInstance);
-                //RuntimeTilePositions.Add(newTileInstance.transform.position);
+
                 newTileInstance.transform.position = new Vector3(tileObject.position[0], tileObject.position[1], tileObject.position[2]);
             }
             foreach(Transform child in _levelContainer.transform)
             {
                 _runtimeTileObjects.Add(child.gameObject);
                 RuntimeTilePositions.Add(child.position);
+            }
+        }
+        public void LoadLevel(Level levelToLoad)
+        {
+            if (Application.isPlaying)
+            {
+                this._currentLevel = levelToLoad;
+                LoadCurrentLevel();
+            }
+        }
+        [DisableInEditorMode]
+        [ButtonGroup("LevelButtons")]
+        public void ClearLevel()
+        {
+            if (Application.isPlaying)
+            {
+                Tile[] tileObjects = FindObjectsOfType<Tile>();
+                foreach (Tile tileObject in tileObjects)
+                {
+                    if (tileObject == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        _runtimeTileObjects.Remove(tileObject.gameObject);
+                        RuntimeTilePositions.Remove(tileObject.gameObject.transform.position);
+                    
+                        Destroy(tileObject.gameObject);
+                    }
+                    
+                }
+
             }
         }
 
@@ -124,29 +158,6 @@ namespace Editor
             RuntimeTilePositions.Clear();           
         }
 
-        public void LoadLevel(Level levelToLoad)
-        {
-            this._currentLevel = levelToLoad;
-            LoadCurrentLevel();
-        }
-        [ButtonGroup("LevelButtons")]
-        public void ClearLevel()
-        {
-            Tile[] tileObjects = FindObjectsOfType<Tile>();
-            foreach (Tile tileObject in tileObjects)
-            {
-                if (tileObject == null)
-                {
-                    continue;
-                }
-                if (Application.isEditor)
-                {
-                    _runtimeTileObjects.Remove(tileObject.gameObject);
-                    RuntimeTilePositions.Remove(tileObject.gameObject.transform.position);
-                }
-                Destroy(tileObject.gameObject);
-            }
-        }
         private void Update()
         {
             //yes soon input system
@@ -182,8 +193,6 @@ namespace Editor
 
 
             //??no input detected cool diassapear text, ui, whatever for better look with easing
-            //_tileCountDebug= _tilePositions.Count;
-            //if(_tilepositions)
         }
         /// <summary>
         /// Returns the pointer's position with rounded coordinates
