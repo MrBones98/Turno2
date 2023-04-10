@@ -6,6 +6,8 @@ using UnityEngine;
 public class Level : ScriptableObject
 {
    [SerializeField] public List<TileObject> tileObjects;
+    [SerializeField] public string Name;
+   [SerializeField] public int MoveOne, MoveTwo, MoveThree, MoveFour;
 
     public void ClearTileObjectList()
     {
