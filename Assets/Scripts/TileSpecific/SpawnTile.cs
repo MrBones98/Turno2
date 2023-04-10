@@ -5,14 +5,21 @@ using UnityEngine;
 
 public class SpawnTile : Tile
 {
-    private void Awake()
-    {
+    [SerializeField] private GameObject _bot;
+    [SerializeField] private float _offset;
 
+    private void OnEnable()
+    {
+        GameManager.onGameStarted += SpawnBot;   
+    }
+    private void SpawnBot()
+    {
+        //Instantiate(_bot, transform.position + new Vector3(transform.position.x, transform.position.y + _offset, transform.position.z), Quaternion.identity);
+        Instantiate(_bot,this.transform.position + new Vector3(0, _offset, 0),Quaternion.identity);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        GameManager.onGameStarted -= SpawnBot;
     }
 }

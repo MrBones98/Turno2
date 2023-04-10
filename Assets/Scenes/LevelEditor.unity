@@ -2475,32 +2475,20 @@ MonoBehaviour:
   _levelContainer: {fileID: 490318298}
   _tilePrefab:
   - {fileID: 57383642975557578, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
-  - {fileID: 4326172704242918630, guid: 3fc046e404185f145b7a7483eb7c04db, type: 3}
-  - {fileID: 283226035125672115, guid: 81908dfc3a2a7df498f03e4bc5f54789, type: 3}
+  - {fileID: 1724653398659216163, guid: 4bd51c7dd8a07468c9b64449dd6940db, type: 3}
+  - {fileID: 7122627758479895085, guid: fe00d1a57f1774413a3a40cdd4e127f9, type: 3}
   - {fileID: 2933719968902673501, guid: e764fc844ab802c4292724fe3babcee2, type: 3}
   _prefabList:
   - Type: 0
     Prefab: {fileID: 57383642975557578, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
   - Type: 1
-    Prefab: {fileID: 4326172704242918630, guid: 3fc046e404185f145b7a7483eb7c04db, type: 3}
+    Prefab: {fileID: 1724653398659216163, guid: 4bd51c7dd8a07468c9b64449dd6940db, type: 3}
   - Type: 3
     Prefab: {fileID: 2933719968902673501, guid: e764fc844ab802c4292724fe3babcee2, type: 3}
   - Type: 2
-    Prefab: {fileID: 283226035125672115, guid: 81908dfc3a2a7df498f03e4bc5f54789, type: 3}
-  _currentLevel: {fileID: 11400000, guid: 564a4edba27ef16449b8971288c32a7f, type: 2}
-  RuntimeTilePositions:
-  - {x: 3, y: 0, z: 1}
-  - {x: 3, y: 0, z: 7}
-  - {x: 5, y: 0, z: 7}
-  - {x: 7, y: 0, z: 7}
-  - {x: 7, y: 0, z: 1}
-  - {x: 5, y: 0, z: 1}
-  - {x: 7, y: 0, z: 5}
-  - {x: 3, y: 0, z: 5}
-  - {x: 5, y: 0, z: 5}
-  - {x: 7, y: 0, z: 3}
-  - {x: 5, y: 0, z: 3}
-  - {x: 3, y: 0, z: 3}
+    Prefab: {fileID: 7122627758479895085, guid: fe00d1a57f1774413a3a40cdd4e127f9, type: 3}
+  _currentLevel: {fileID: 0}
+  RuntimeTilePositions: []
 --- !u!1 &1318045380
 GameObject:
   m_ObjectHideFlags: 0

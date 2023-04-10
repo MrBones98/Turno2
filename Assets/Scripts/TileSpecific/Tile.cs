@@ -11,6 +11,7 @@ public class Tile : MonoBehaviour
     private void Awake()
     {
         //SaveSystem.tiles.Add(this);
+
         LevelEditor.TilesToSave.Add(this);
     }
 }

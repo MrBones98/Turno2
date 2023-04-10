@@ -111,3 +111,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  _bot: {fileID: 4543900161054584840, guid: 5a90907f872644428aba3b335277087b, type: 3}
+  _offset: 0
