@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
+    private int _stepCount;
+
     private Vector3 _lookDirection;
     private Transform _parentTransform = null;
     private bool _isActive = true;
     private Rigidbody _rigidBody;
+    
     private void OnEnable()
     {
         WinTile.onButtonPressed += SwitchState;
@@ -25,8 +28,9 @@ public class Bot : MonoBehaviour
         }
         if (_isActive)
         {
+            Vector3 correctedDirection = direction * _stepCount;
             _lookDirection = (_parentTransform.position +direction )- _parentTransform.position;
-            _parentTransform.position += direction;
+            _parentTransform.position += correctedDirection;
             //_rigidBody.MovePosition(_parentTransform.position+direction);
             _parentTransform.rotation = Quaternion.LookRotation(_lookDirection);
         }
@@ -39,6 +43,10 @@ public class Bot : MonoBehaviour
     public void SwitchState()
     {
         _isActive = !_isActive;
+    }
+    public void SetDistance(int distance)
+    {
+        _stepCount = distance;
     }
     private void OnDisable()
     {

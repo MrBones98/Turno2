@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;
 
-    [OnValueChanged("AssignPlayer")]
+    //[OnValueChanged("AssignPlayer")]
     private GameObject _bot;
 
 
@@ -96,12 +96,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void AssignPlayer()
+    public void AssignPlayer(GameObject selectedBot)
     {
-        if (_bot == null)
-        {
-            Debug.LogWarning("Object Player not found, cache it from event");
-        }
+        _bot = selectedBot;
     }
     private void OnDisable()
     {

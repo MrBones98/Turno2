@@ -26,7 +26,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
-        print("dragging");
+        //print("dragging");
         transform.position = eventData.position;
         RaycastHit hitInfo;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -35,6 +35,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if (hitInfo.collider.GetComponent<Bot>())
             {
                 _bot= hitInfo.collider.gameObject;
+                _bot.GetComponent<Bot>().SetDistance(_moveCount);
+                GameManager.Instance.AssignPlayer(_bot);
 
             }
             else
@@ -50,7 +52,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.SetParent(_originalHandParent);
         if (_bot != null)
         {
-            _bot.GetComponent<Bot>().Move(Vector3.forward);
+            Destroy(gameObject);
+            //_bot.GetComponent<Bot>().Move(Vector3.forward);
         }
     }
 }
