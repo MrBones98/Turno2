@@ -193,8 +193,8 @@ MonoBehaviour:
     - 6
     - 0
     - 3
-  Name: 
-  MoveOne: 0
-  MoveTwo: 0
-  MoveThree: 0
-  MoveFour: 0
+  Name: DebugMovementLevel
+  MoveOne: 2
+  MoveTwo: 1
+  MoveThree: 3
+  MoveFour: 4
