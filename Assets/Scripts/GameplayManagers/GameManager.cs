@@ -1,25 +1,78 @@
 using Sirenix.OdinInspector;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
     public static List<GameObject> TileGameObjects = new();
+
+    [SerializeField] private GameObject _winScreen;
+    [SerializeField] private GameObject _gameplayUI;
 
     [OnValueChanged("AssignPlayer")]
     private GameObject _bot;
+
+
+    //public WinTile WinTile;
+
+    //ON THE LEVEL SO ADD COUNT OF BUTTONS FOR WINNING FOR DIFFERENT NEEED AMOUNTS
 
     public delegate void OnGameStart();
     public static event OnGameStart onGameStarted;
     private void OnEnable()
     {
         ScriptableObjectLoader.onLevelLoaded += LoadLevel;
+        WinTile.onButtonPressed += FinishLevel;
     }
-    public void GiveChosenBotDirection(Vector3 direction)
+
+    private void FinishLevel()
     {
-        _bot.GetComponent<Bot>().Move(direction);
+        _winScreen.SetActive(true);
+        _gameplayUI.SetActive(false);
+    }
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else 
+        { 
+            Destroy(this.gameObject);
+        }
+    }
+    public void GiveChosenBotDirection(int direction)
+    {
+        Vector3 moveVector; //perhaps pass it to bot
+        
+        //0 right
+        //1 down
+        //2 left
+        //3 up
+
+        if(direction == 0)
+        {
+            moveVector = Vector3.right;
+        }
+        else if(direction == 1)
+        {
+            moveVector = -Vector3.forward;
+        }
+        else if(direction == 2)
+        {
+            moveVector = -Vector3.right;
+        }
+        else if (direction == 3)
+        {
+            moveVector = Vector3.forward;
+        }
+        else
+        {
+            return;
+        }
+        _bot.GetComponent<Bot>().Move(moveVector);
     }
     void Update()
     {
@@ -52,6 +105,7 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         ScriptableObjectLoader.onLevelLoaded -= LoadLevel;
+        WinTile.onButtonPressed -= FinishLevel;
     }
 
     private void LoadLevel()

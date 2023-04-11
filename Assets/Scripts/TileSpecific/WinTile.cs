@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class WinTile : Tile
 {
+    [SerializeField] private Collider _buttonCollider;
+
+    public delegate void OnButtonPressed();
+    public static event OnButtonPressed onButtonPressed;
     private void Awake()
     {
-
-        
+      //GameManager.Instance.WinTile = this;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        onButtonPressed();
+        print("Wiiiiiiiiiiiiiii");
     }
 }

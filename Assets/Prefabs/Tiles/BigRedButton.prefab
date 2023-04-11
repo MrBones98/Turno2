@@ -109,6 +109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigRedButton
       objectReference: {fileID: 0}
+    - target: {fileID: 57383642975557578, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 828678489602887024, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -157,7 +161,8 @@ PrefabInstance:
       propertyPath: type
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2002732318121686552, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
 --- !u!1 &1724653398659216163 stripped
 GameObject:
@@ -177,6 +182,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.95, y: 0.271411, z: 0.95}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7144860992555514257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724653398659216163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a031ceaebb5e4db44a681eb034156eea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  _buttonCollider: {fileID: 1044734508612276673}
+--- !u!54 &2827702616201920453
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724653398659216163}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &2064024721714899353 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 828678489602887024, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
