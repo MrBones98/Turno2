@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static List<GameObject> TileGameObjects = new();
+    public static List<GameObject> Cards = new();
 
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;

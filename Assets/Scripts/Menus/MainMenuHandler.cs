@@ -6,6 +6,6 @@ public class MainMenuHandler : MonoBehaviour
 {
     public void StartGame()
     {
-    print("Start Game Button Pressed");
+        print("Start Game Button Pressed");
     }
 }

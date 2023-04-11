@@ -33,8 +33,7 @@ public class Bot : MonoBehaviour
         //TODO
         //today switch to rigidbody
         //falling off of platforms
-        //Quit and Reset
-        
+        //Quit and Reset   
     }
 
     public void SwitchState()

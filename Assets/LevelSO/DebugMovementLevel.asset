@@ -196,5 +196,5 @@ MonoBehaviour:
   Name: DebugMovementLevel
   MoveOne: 2
   MoveTwo: 1
-  MoveThree: 3
-  MoveFour: 4
+  MoveThree: 2
+  MoveFour: 2
