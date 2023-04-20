@@ -10,7 +10,9 @@ namespace Editor
         Platform,
         Button,
         Wall,
-        SpawnTile
+        SpawnTile,
+        Switch,
+        Gate
     }
     public class LevelEditor : MonoBehaviour
     {
@@ -228,7 +230,7 @@ namespace Editor
             _runtimeTileObjects.Add(tile);
             
         }
-        //TODO CHECK RUNTIME TILES, WHETHER OR NOT THEY ARE LOADED AND IF NOT, POPULATE LIST WITH CACHED LEVEL TILE GAME OBJECTS POSITIONS
+        
         public void RemoveTileAt(Vector3 tilePosition)
         {
             if (!RuntimeTilePositions.Contains(tilePosition))

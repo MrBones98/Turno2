@@ -360,13 +360,28 @@ PrefabInstance:
       propertyPath: _lightColor.a
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2002732318121686552, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
 --- !u!1 &8115424234123960394 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 57383642975557578, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
   m_PrefabInstance: {fileID: 8094122233560561536}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3749662098556550284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115424234123960394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a7ad356f24a9e47a0545eea4db243b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  _isLatchSwitch: 0
 --- !u!114 &7817159050787784673
 MonoBehaviour:
   m_ObjectHideFlags: 0

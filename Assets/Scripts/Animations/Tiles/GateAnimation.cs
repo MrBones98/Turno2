@@ -29,11 +29,11 @@ public class GateAnimation : MonoBehaviour
         _gMW.color = GateColor;
 
         // cache closed gate positions
-        _gateClosedPos_C = _gateCentre.position; 
-        _gateClosedPos_N = _gateN.position; 
-        _gateClosedPos_S = _gateS.position; 
-        _gateClosedPos_E = _gateE.position; 
-        _gateClosedPos_W = _gateW.position; 
+        _gateClosedPos_C = _gateCentre.transform.position; 
+        _gateClosedPos_N = _gateN.transform.position; 
+        _gateClosedPos_S = _gateS.transform.position; 
+        _gateClosedPos_E = _gateE.transform.position; 
+        _gateClosedPos_W = _gateW.transform.position; 
 
         //OpenGate();
     }

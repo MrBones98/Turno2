@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
-    private int _stepCount;
+    [SerializeField] private GameObject _parentGameObject;
+    [SerializeField] [Range(0.5f, 2f)] private float _botStepDelay;
 
+    private int _stepCount;
     private Vector3 _lookDirection;
-    private Transform _parentTransform = null;
     private bool _isActive = true;
     private Rigidbody _rigidBody;
     
@@ -18,21 +19,54 @@ public class Bot : MonoBehaviour
     }
     private void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody>();
+        _rigidBody = GetComponent<Rigidbody>(); 
+        //_parentTransform = transform.GetComponentInParent<Transform>(); //change to gameobject
     }
     public void Move(Vector3 direction)
     {
-        if(_parentTransform == null)
+        if(_parentGameObject != null)
         {
-            _parentTransform = transform.GetComponentInParent<Transform>();
+            
+            print(_parentGameObject.gameObject.name);
         }
+
         if (_isActive)
         {
-            Vector3 correctedDirection = direction * _stepCount;
-            _lookDirection = (_parentTransform.position +direction )- _parentTransform.position;
-            _parentTransform.position += correctedDirection;
-            //_rigidBody.MovePosition(_parentTransform.position+direction);
-            _parentTransform.rotation = Quaternion.LookRotation(_lookDirection);
+            Vector3 correctedDirection = direction.normalized;
+            _lookDirection = (_parentGameObject.transform.position +direction )- _parentGameObject.transform.position;
+            _parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
+            for (int i = 0; i < _stepCount; i++)
+            {
+                RaycastHit hit;
+                WallTile wallTile;
+
+                if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out hit, 1))
+                {
+                    if (hit.transform.GetComponent<WallTile>())
+                    {
+                        wallTile = hit.transform.GetComponent<WallTile>();
+
+                    }
+                    else
+                    {
+                        wallTile = null;
+                    }
+                    //_rigidBody.MovePosition(_parentTransform.position+direction);
+                }
+                else
+                {
+                    wallTile = null;
+                }
+                if (wallTile != null)
+                {
+                    print("no movement, wall in front");
+                }
+                else
+                {
+                    StartCoroutine(StepDelay(_botStepDelay));
+                    _parentGameObject.transform.position += correctedDirection;
+                }
+            }
         }
         //TODO
         //today switch to rigidbody
@@ -53,4 +87,9 @@ public class Bot : MonoBehaviour
         WinTile.onButtonPressed += SwitchState;
 
     }
+    private IEnumerator StepDelay(float botStepDelay)
+    {
+        yield return new WaitForSeconds(botStepDelay);
+    }
+
 }

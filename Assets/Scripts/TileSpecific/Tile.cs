@@ -7,7 +7,8 @@ public class Tile : MonoBehaviour
 {
     //SavedLevelObject
     public TileType type;
-    //public GameObject Prefab;
+    public int InteractableID;
+
     private void Awake()
     {
         //SaveSystem.tiles.Add(this);
@@ -20,5 +21,7 @@ public enum TypeOfTile
     Platform,
     Button,
     Wall,
-    SpawnTile
+    SpawnTile,
+    Switch,
+    Gate
 }

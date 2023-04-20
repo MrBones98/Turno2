@@ -25,8 +25,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void OnDrag(PointerEventData eventData)
-    {
-        //print("dragging");
+    { 
         transform.position = eventData.position;
         RaycastHit hitInfo;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -52,8 +51,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.SetParent(_originalHandParent);
         if (_bot != null)
         {
+            //TODO
+            //Don' Destroy, pass object to gamanager list as well as previous bot position c:
             Destroy(gameObject);
-            //_bot.GetComponent<Bot>().Move(Vector3.forward);
         }
     }
 }
