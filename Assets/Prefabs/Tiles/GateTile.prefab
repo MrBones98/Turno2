@@ -542,7 +542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 828678489602887024, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.186
       objectReference: {fileID: 0}
     - target: {fileID: 828678489602887024, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_LocalPosition.y
@@ -618,6 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  InteractableID: 0
 --- !u!114 &7081961416839899143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,13 +631,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dbd4934f45934856a712a354163c88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showObjects: 0
   _gateCentre: {fileID: 3246412718129987513}
   _gateN: {fileID: 9018695383190096052}
   _gateS: {fileID: 8312175959208503376}
   _gateE: {fileID: 3307880576005142446}
   _gateW: {fileID: 2852138994667811200}
   GateColor: {r: 0.5109024, g: 0.8396226, b: 0.77415395, a: 1}
-  OpenDistance: -0.5
+  OpenDistance: -0.4
+  _gateSpeed: 2
 --- !u!4 &7607556794507309207 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 828678489602887024, guid: 16de64849e2288f46a90be82e49aa986, type: 3}

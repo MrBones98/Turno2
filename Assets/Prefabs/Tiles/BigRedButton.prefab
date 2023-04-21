@@ -222,8 +222,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425f986e51e3e43468eb4805b4a3103f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showObjects: 0
   _buttonObject: {fileID: 8940064459191407851}
   _buttonColor: {r: 0.8396226, g: 0.14653791, b: 0.14653791, a: 1}
+  _pressDistance: -0.09
+  _pressSpeed: 0.3
 --- !u!114 &-7144860992555514257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  InteractableID: 0
   _buttonCollider: {fileID: 1044734508612276673}
 --- !u!4 &2064024721714899353 stripped
 Transform:
