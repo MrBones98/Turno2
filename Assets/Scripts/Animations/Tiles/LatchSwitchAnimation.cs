@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -22,6 +23,20 @@ public class LatchSwitchAnimation : MonoBehaviour
     private Vector3 _buttonStartPosition;
     [SerializeField]
     private float _pressSpeed = 1f;
+
+    private void OnEnable()
+    {
+        ScriptableObjectLoader.onLevelLoaded += OnLevelLoaded;
+    }
+    private void OnDisable()
+    {
+        ScriptableObjectLoader.onLevelLoaded -= OnLevelLoaded;
+    }
+
+    private void OnLevelLoaded()
+    {
+        CacheButtonPosition();
+    }
 
     private void Awake()
     {
@@ -68,6 +83,11 @@ public class LatchSwitchAnimation : MonoBehaviour
         _lightMaterialInstance = _lightObject.GetComponent<MeshRenderer>().material;
         _pilonMaterialInstance = _pilonObject.GetComponent<MeshRenderer>().material;
 
+    }
+
+
+    private void CacheButtonPosition()
+    {
         _buttonStartPosition = _buttonObject.transform.position;
     }
 }

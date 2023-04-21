@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5040764526338475180}
   - component: {fileID: 1072716937741022855}
   - component: {fileID: 8407808297032261060}
-  - component: {fileID: 1312776114824923940}
   m_Layer: 0
   m_Name: Pilon
   m_TagString: Untagged
@@ -84,20 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1312776114824923940
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981802345473021899}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &5307339622030319369
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +192,6 @@ GameObject:
   - component: {fileID: 5896700547417958670}
   - component: {fileID: 7069554528925403330}
   - component: {fileID: 3115269725630091199}
-  - component: {fileID: 6771172108763846157}
   m_Layer: 0
   m_Name: SwitchButton
   m_TagString: Untagged
@@ -280,19 +264,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6771172108763846157
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5325815363314051656}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8094122233560561536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -302,7 +273,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 57383642975557578, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_Name
-      value: Switch_Latch
+      value: Switch_Momentary
       objectReference: {fileID: 0}
     - target: {fileID: 179362292644361128, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_RootOrder
@@ -352,6 +323,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2567896517559338704, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8973112858036087981, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: _baseColor.a
       value: 1
@@ -368,42 +343,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 57383642975557578, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
   m_PrefabInstance: {fileID: 8094122233560561536}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3749662098556550284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8115424234123960394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a7ad356f24a9e47a0545eea4db243b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 4
-  InteractableID: 0
-  _isLatchSwitch: 1
---- !u!114 &7817159050787784673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8115424234123960394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60feb555edbb1440ba9559319f953727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showObjects: 0
-  _buttonObject: {fileID: 5325815363314051656}
-  _lightObject: {fileID: 5307339622030319369}
-  _pilonObject: {fileID: 2981802345473021899}
-  _latchSwitchColor: {r: 0.78543687, g: 0.20714669, b: 0.8962264, a: 1}
-  _deactivatedLightColor: {r: 0, g: 0, b: 0, a: 1}
-  _pilonColor: {r: 0.8235295, g: 0.8235295, b: 0.80392164, a: 1}
-  _pressDistance: -0.075
-  _pressSpeed: 0.3
 --- !u!54 &2366416549049713408
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -420,6 +359,42 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3749662098556550284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115424234123960394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a7ad356f24a9e47a0545eea4db243b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
+  InteractableID: 0
+  _isLatchSwitch: 0
+--- !u!114 &7817159050787784673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115424234123960394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60feb555edbb1440ba9559319f953727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showObjects: 0
+  _buttonObject: {fileID: 5325815363314051656}
+  _lightObject: {fileID: 5307339622030319369}
+  _pilonObject: {fileID: 2981802345473021899}
+  _latchSwitchColor: {r: 0.12771447, g: 0.23326676, b: 0.7735849, a: 1}
+  _deactivatedLightColor: {r: 0, g: 0, b: 0, a: 1}
+  _pilonColor: {r: 0.8235295, g: 0.8235295, b: 0.80392164, a: 1}
+  _pressDistance: -0.075
+  _pressSpeed: 0.3
 --- !u!4 &8922783130381613808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 828678489602887024, guid: 16de64849e2288f46a90be82e49aa986, type: 3}

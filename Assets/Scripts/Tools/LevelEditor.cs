@@ -11,8 +11,9 @@ namespace Editor
         Button,
         Wall,
         SpawnTile,
-        Switch,
-        Gate
+        LatchSwitch,
+        Gate,
+        MomentarySwitch
     }
     public class LevelEditor : MonoBehaviour
     {
@@ -113,8 +114,10 @@ namespace Editor
 
 
                 newTileInstance.transform.position = new Vector3(tileObject.position[0], tileObject.position[1], tileObject.position[2]);
+                newTileInstance.GetComponent<Tile>().InteractableID = tileObject.InteractableID;
+
             }
-            foreach(Transform child in _levelContainer.transform)
+            foreach (Transform child in _levelContainer.transform)
             {
                 _runtimeTileObjects.Add(child.gameObject);
                 RuntimeTilePositions.Add(child.position);

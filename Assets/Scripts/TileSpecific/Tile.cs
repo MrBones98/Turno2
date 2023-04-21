@@ -7,7 +7,7 @@ public class Tile : MonoBehaviour
 {
     //SavedLevelObject
     public TileType type;
-    public int InteractableID;
+    public int InteractableID =0;
 
     private void Awake()
     {
@@ -22,6 +22,7 @@ public enum TypeOfTile
     Button,
     Wall,
     SpawnTile,
-    Switch,
-    Gate
+    LatchMomentary,
+    Gate,
+    MomentarySwitch
 }

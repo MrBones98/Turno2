@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -20,6 +21,7 @@ public class BigRedButtonAnimation : MonoBehaviour
     private Vector3 _buttonStartPosition;
     [SerializeField]
     private float _pressSpeed = .3f;
+
 
     private void Awake()
     {
@@ -47,6 +49,24 @@ public class BigRedButtonAnimation : MonoBehaviour
     private void CacheEverything()
     {
         _buttonMaterialInstance = _buttonObject.GetComponent<MeshRenderer>().material;
+        //CacheBigRedButtonPosition();
+    }
+
+    private void CacheBigRedButtonPosition()
+    {
         _buttonStartPosition = _buttonObject.transform.position;
+    }
+    private void OnEnable()
+    {
+        ScriptableObjectLoader.onLevelLoaded += OnLevelLoaded;
+    }
+    private void OnDisable()
+    {
+        ScriptableObjectLoader.onLevelLoaded -= OnLevelLoaded;
+    }
+
+    private void OnLevelLoaded()
+    {
+        CacheBigRedButtonPosition();
     }
 }

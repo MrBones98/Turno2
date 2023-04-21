@@ -2204,7 +2204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91be7f0c310921f41b7c02c18e8412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelToLoad: {fileID: 11400000, guid: 06cc852bd129e53439704e807956b621, type: 2}
+  _levelToLoad: {fileID: 11400000, guid: 6e8dea442e351cd479701edec0ed2f76, type: 2}
   _levelContainer: {fileID: 1656812747}
   _prefabList:
   - Type: 0
@@ -2219,6 +2219,8 @@ MonoBehaviour:
     Prefab: {fileID: 8115424234123960394, guid: 90963df85fe6448a68b2398a2cb51c5e, type: 3}
   - Type: 5
     Prefab: {fileID: 7122627758479895085, guid: fe00d1a57f1774413a3a40cdd4e127f9, type: 3}
+  - Type: 6
+    Prefab: {fileID: 8115424234123960394, guid: 99c608d6cfda07846a37826f4314ad92, type: 3}
   _cardPrefabs:
   - {fileID: 7803988124549132850, guid: 0cc5c627362312a47ac68daddf3b8f15, type: 3}
   - {fileID: 1591430563561157666, guid: 991f7fffc2660454dbfb1a52ef7e050d, type: 3}

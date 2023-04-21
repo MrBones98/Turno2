@@ -86,6 +86,7 @@ public class ScriptableObjectLoader : MonoBehaviour
 
 
             newTileInstance.transform.position = new Vector3(tileObject.position[0], tileObject.position[1], tileObject.position[2]);
+            newTileInstance.GetComponent<Tile>().InteractableID = tileObject.InteractableID;
 
             foreach (Transform child in _levelContainer.transform)
             {

@@ -31,8 +31,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if(Physics.Raycast(ray, out hitInfo))
         {
+            print( hitInfo.collider.gameObject.name);
             if (hitInfo.collider.GetComponent<Bot>())
             {
+                print(hitInfo.collider.gameObject.name);
                 _bot= hitInfo.collider.gameObject;
                 _bot.GetComponent<Bot>().SetDistance(_moveCount);
                 GameManager.Instance.AssignPlayer(_bot);

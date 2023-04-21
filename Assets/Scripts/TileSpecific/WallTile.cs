@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallTile : Tile
+public class WallTile : Tile, ISwitchActivatable
 {
-    // Start is called before the first frame update
-    void Start()
+    private GateAnimation _animation;
+    public void Activate()
     {
-        
+        _animation.OpenGate();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Deactivate()
     {
-        
+        _animation.CloseGate();
+    }
+
+    private void Awake()
+    {
+        _animation = gameObject.GetComponent<GateAnimation>();
     }
 }

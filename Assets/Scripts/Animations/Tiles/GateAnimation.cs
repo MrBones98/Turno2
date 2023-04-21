@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using DG.Tweening;
+using System;
 
 public class GateAnimation : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GateAnimation : MonoBehaviour
     [SerializeField]
     private Color GateColor;
 
-    private Vector3 _gateClosedPos_C,_gateClosedPos_N,_gateClosedPos_S,_gateClosedPos_E,_gateClosedPos_W;
+    [SerializeField]private Vector3 _gateClosedPos_C,_gateClosedPos_N,_gateClosedPos_S,_gateClosedPos_E,_gateClosedPos_W;
     [SerializeField]
     private float OpenDistance = -.5f;
     [SerializeField]
@@ -26,7 +27,7 @@ public class GateAnimation : MonoBehaviour
 
     private void Awake()
     {
-        CacheEverything();
+        CacheMaterials();
 
         SetColors();
     }
@@ -54,7 +55,7 @@ public class GateAnimation : MonoBehaviour
         _gateW.transform.DOMove(_gateClosedPos_W, _gateSpeed);
     }
 
-    private void CacheEverything()
+    private void CacheMaterials()
     {
         _gMC = _gateCentre.GetComponent<MeshRenderer>().material;
         _gMN = _gateN.GetComponent<MeshRenderer>().material;
@@ -63,6 +64,11 @@ public class GateAnimation : MonoBehaviour
         _gMW = _gateW.GetComponent<MeshRenderer>().material;
 
         // cache closed gate positions
+        //CacheGatePosition();
+    }
+
+    private void CacheGatePosition()
+    {
         _gateClosedPos_C = _gateCentre.transform.position;
         _gateClosedPos_N = _gateN.transform.position;
         _gateClosedPos_S = _gateS.transform.position;
@@ -77,5 +83,19 @@ public class GateAnimation : MonoBehaviour
         _gMS.color = GateColor;
         _gME.color = GateColor;
         _gMW.color = GateColor;
+    }
+    private void OnEnable()
+    {
+        ScriptableObjectLoader.onLevelLoaded += OnLevelLoaded;
+    }
+
+    private void OnLevelLoaded()
+    {
+        CacheGatePosition();
+    }
+
+    private void OnDisable()
+    {
+        ScriptableObjectLoader.onLevelLoaded -= OnLevelLoaded;
     }
 }

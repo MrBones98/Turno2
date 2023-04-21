@@ -1,6 +1,8 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +27,30 @@ public class GameManager : MonoBehaviour
     {
         ScriptableObjectLoader.onLevelLoaded += LoadLevel;
         WinTile.onButtonPressed += FinishLevel;
+        SwitchTile.onSwitchPressed += Activate;
+        SwitchTile.onSwitchReleased += DeActivate;
+    }
+
+    private void DeActivate(int id)
+    {
+        foreach (GameObject tiles in TileGameObjects)
+        {
+            if (tiles.GetComponent<Tile>().InteractableID == id)
+            {
+                tiles.GetComponent<ISwitchActivatable>().Deactivate();
+            }
+        }
+    }
+
+    private void Activate(int id)
+    {
+        foreach (GameObject tiles in TileGameObjects)
+        {
+            if(tiles.GetComponent<Tile>().InteractableID == id)
+            {
+                tiles.GetComponent<ISwitchActivatable>().Activate();
+            }
+        }
     }
 
     private void FinishLevel()
@@ -104,6 +130,7 @@ public class GameManager : MonoBehaviour
     {
         ScriptableObjectLoader.onLevelLoaded -= LoadLevel;
         WinTile.onButtonPressed -= FinishLevel;
+        SwitchTile.onSwitchPressed -= Activate;
     }
 
     private void LoadLevel()
