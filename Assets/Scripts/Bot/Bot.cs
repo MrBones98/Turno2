@@ -40,11 +40,12 @@ public class Bot : MonoBehaviour
                 RaycastHit hit;
                 WallTile wallTile;
 
-                if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out hit, 1))
+                if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out hit, 1,5))
                 {
-                    if (hit.transform.GetComponent<WallTile>())
+                    print(hit.collider.gameObject.name);
+                    if (hit.transform.GetComponentInParent<WallTile>())
                     {
-                        wallTile = hit.transform.GetComponent<WallTile>();
+                        wallTile = hit.transform.GetComponentInParent<WallTile>();
 
                     }
                     else
@@ -57,16 +58,26 @@ public class Bot : MonoBehaviour
                 {
                     wallTile = null;
                 }
-                if (wallTile != null)
-                {
-                    print("no movement, wall in front");
-                }
-                else
+                if (wallTile == null || (wallTile!=null && wallTile.HasColision==false))
                 {
                     StartCoroutine(StepDelay(_botStepDelay));
                     _parentGameObject.transform.position += correctedDirection;
                 }
+                else
+                {
+                    print("no movement, wall in front");
+                }
+                //if (wallTile != null)
+                //{
+                //    print("no movement, wall in front");
+                //}
+                //else if(wallTile.HasColision==true)
+                //{
+                //    StartCoroutine(StepDelay(_botStepDelay));
+                //    _parentGameObject.transform.position += correctedDirection;
+                //}
             }
+            _stepCount = 0;
         }
         //TODO
         //today switch to rigidbody
