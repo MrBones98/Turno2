@@ -84,9 +84,11 @@ public class ScriptableObjectLoader : MonoBehaviour
             GameObject newTileInstance = Instantiate(prefab, _levelContainer.transform);
             newTileInstance.name = $"X: {newTileInstance.transform.position.x} | Z: {newTileInstance.transform.position.z}";
 
-
-            newTileInstance.transform.position = new Vector3(tileObject.position[0], tileObject.position[1], tileObject.position[2]);
+            //Jesus dude
+            newTileInstance.transform.position = new Vector3(tileObject.Position[0], tileObject.Position[1], tileObject.Position[2]);
             newTileInstance.GetComponent<Tile>().InteractableID = tileObject.InteractableID;
+            newTileInstance.GetComponent<Tile>().Direction = new Vector2(tileObject.Direction[0], tileObject.Direction[1]);
+            newTileInstance.GetComponent<Tile>().Distance = tileObject.Distance;
 
             foreach (Transform child in _levelContainer.transform)
             {

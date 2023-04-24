@@ -11,7 +11,9 @@ public class Bot : MonoBehaviour
     private Vector3 _lookDirection;
     private bool _isActive = true;
     private Rigidbody _rigidBody;
-    
+
+    public delegate void OnFinishedMove();
+    public static OnFinishedMove onFinishedMove;
     private void OnEnable()
     {
         WinTile.onButtonPressed += SwitchState;
@@ -78,6 +80,7 @@ public class Bot : MonoBehaviour
                 //}
             }
             _stepCount = 0;
+            onFinishedMove();
         }
         //TODO
         //today switch to rigidbody

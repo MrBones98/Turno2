@@ -23,12 +23,20 @@ public class GameManager : MonoBehaviour
 
     public delegate void OnGameStart();
     public static event OnGameStart onGameStarted;
+    public delegate void OnBotMove();
+    public static event OnBotMove onBotMove;
     private void OnEnable()
     {
         ScriptableObjectLoader.onLevelLoaded += LoadLevel;
         WinTile.onButtonPressed += FinishLevel;
         SwitchTile.onSwitchPressed += Activate;
         SwitchTile.onSwitchReleased += DeActivate;
+        Bot.onFinishedMove += UpdateTurn;
+    }
+
+    private void UpdateTurn()
+    {
+        onBotMove();
     }
 
     private void DeActivate(int id)
@@ -131,6 +139,7 @@ public class GameManager : MonoBehaviour
         ScriptableObjectLoader.onLevelLoaded -= LoadLevel;
         WinTile.onButtonPressed -= FinishLevel;
         SwitchTile.onSwitchPressed -= Activate;
+        Bot.onFinishedMove -= UpdateTurn;
     }
 
     private void LoadLevel()

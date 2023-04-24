@@ -4,8 +4,10 @@ using UnityEngine;
 public class TileObject
 {
     public TileType Type;
-    public float[] position;
+    public float[] Position;
     public int InteractableID;
+    public float[] Direction;
+    public int Distance;
     //TODO
     //add id for referencing
     //bool for Interactable/switcheable/activation blah (check interface pls)
@@ -15,12 +17,21 @@ public class TileObject
         InteractableID = tile.InteractableID;
 
         Vector3 tilePos = tile.transform.position;
-        position = new float[]
+        Position = new float[]
         {
             tilePos.x,
             tilePos.y,
             tilePos.z
         };
+
+        Vector2 movementDirection = tile.Direction;
+        Direction = new float[]
+        {
+            movementDirection.x,
+            movementDirection.y,
+        };
+
+        Distance = tile.Distance;
 
     }
 }

@@ -13,7 +13,8 @@ namespace Editor
         SpawnTile,
         LatchSwitch,
         Gate,
-        MomentarySwitch
+        MomentarySwitch,
+        Moving
     }
     public class LevelEditor : MonoBehaviour
     {
@@ -113,9 +114,10 @@ namespace Editor
                 newTileInstance.name = $"X: {newTileInstance.transform.position.x} | Z: {newTileInstance.transform.position.z}";
 
 
-                newTileInstance.transform.position = new Vector3(tileObject.position[0], tileObject.position[1], tileObject.position[2]);
+                newTileInstance.transform.position = new Vector3(tileObject.Position[0], tileObject.Position[1], tileObject.Position[2]);
                 newTileInstance.GetComponent<Tile>().InteractableID = tileObject.InteractableID;
-
+                //TODO
+                //Add moving platform direction & distance here as well on the level editor
             }
             foreach (Transform child in _levelContainer.transform)
             {
