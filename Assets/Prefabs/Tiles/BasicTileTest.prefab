@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2002732318121686559}
   - component: {fileID: 2002732318121686552}
   - component: {fileID: 8973112858036087981}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BasicTileTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   InteractableID: 0
+  Direction: {x: 0, y: 0}
+  Distance: 0
 --- !u!114 &8973112858036087981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2567896517559338711}
   - component: {fileID: 2567896517559338704}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PotentialTriggerPLatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

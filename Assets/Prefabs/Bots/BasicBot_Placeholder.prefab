@@ -357,6 +357,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parentGameObject: {fileID: 4543900161054584840}
   _botStepDelay: 2
+  _goundcheckOffset: -0.3
+  _platformGroundCheckLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!54 &869183059123660004
 Rigidbody:
   m_ObjectHideFlags: 0
