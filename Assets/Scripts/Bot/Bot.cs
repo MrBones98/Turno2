@@ -41,6 +41,7 @@ public class Bot : MonoBehaviour
             {
                 RaycastHit hit;
                 WallTile wallTile;
+                PushableBox box;
 
                 if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out hit, 1,5))
                 {
@@ -54,16 +55,29 @@ public class Bot : MonoBehaviour
                     {
                         wallTile = null;
                     }
+                    if (hit.transform.GetComponent<PushableBox>())
+                    {
+                        box =hit.transform.GetComponent<PushableBox>();
+                    }
+                    else
+                    {
+                        box =null;
+                    }
                     //_rigidBody.MovePosition(_parentTransform.position+direction);
                 }
                 else
                 {
                     wallTile = null;
+                    box =null;
                 }
                 if (wallTile == null || (wallTile!=null && wallTile.HasColision==false))
                 {
                     StartCoroutine(StepDelay(_botStepDelay));
                     _parentGameObject.transform.position += correctedDirection;
+                    if (box != null)
+                    {
+                        box.Move(correctedDirection);
+                    }
                 }
                 else
                 {

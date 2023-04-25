@@ -261,6 +261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveCount: 1
   _cardValueText: {fileID: 2505207582688347803}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &-190923795221594423
 MonoBehaviour:
   m_ObjectHideFlags: 0

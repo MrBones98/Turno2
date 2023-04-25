@@ -6,6 +6,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 {
     [SerializeField] [Range(1,4)]private int _moveCount;
     [SerializeField] private TextMeshProUGUI _cardValueText;
+    [SerializeField] private LayerMask _layerMask;
 
     private Transform _originalHandParent = null;
     private GameObject _bot;
@@ -29,9 +30,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.position = eventData.position;
         RaycastHit hitInfo;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out hitInfo))
+        if(Physics.Raycast(ray, out hitInfo, 40f, _layerMask))
         {
-            print( hitInfo.collider.gameObject.name);
+            
             if (hitInfo.collider.GetComponent<Bot>())
             {
                 print(hitInfo.collider.gameObject.name);

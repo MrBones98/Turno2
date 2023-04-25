@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3053540449842319010}
   - component: {fileID: 7151846732365786471}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 7952076795007555404}
   - component: {fileID: 4075621451881511859}
   - component: {fileID: 6604778499064756227}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 2281080931519739045}
   - component: {fileID: 6834844922297333552}
   - component: {fileID: 6279593583277280458}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AntennaLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 8158801877643542217}
   - component: {fileID: 5118466540910581149}
   - component: {fileID: 869183059123660004}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8313841361161784719}
   - component: {fileID: 5030950964742793469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BasicBot_Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 956010609993145542}
   - component: {fileID: 5259967349272961958}
   - component: {fileID: 2958729748157312908}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Antenna
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 6007266063945868626}
   - component: {fileID: 3316363273199464590}
   - component: {fileID: 6812957603982190702}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,7 +627,7 @@ GameObject:
   - component: {fileID: 2657829186180858904}
   - component: {fileID: 7597321237866377723}
   - component: {fileID: 7732826911312987501}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,7 +721,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 873364483263589270}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,8 @@ namespace Editor
         LatchSwitch,
         Gate,
         MomentarySwitch,
-        Moving
+        Moving,
+        BoxSpawnTile
     }
     public class LevelEditor : MonoBehaviour
     {
@@ -22,6 +23,7 @@ namespace Editor
         [SerializeField] private Camera _camera;
         [SerializeField] private GameObject _levelContainer;
         [SerializeField] private GameObject[] _tilePrefab;
+        [SerializeField] private LayerMask _layerMask;
 
         [SerializeField]
         [OnInspectorGUI("UpdatePrefabList")]
@@ -176,7 +178,7 @@ namespace Editor
                     RaycastHit hitInfo;
                     Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                 
-                    if(Physics.Raycast(ray, out hitInfo))
+                    if(Physics.Raycast(ray, out hitInfo,40f,_layerMask))
                     {   
                         PlaceTile(CheckCoordinates(hitInfo.point));
                     }
@@ -186,7 +188,7 @@ namespace Editor
                     RaycastHit hitInfo;
                     Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-                    if (Physics.Raycast(ray, out hitInfo))
+                    if (Physics.Raycast(ray, out hitInfo,40f, _layerMask))
                     {
                         RemoveTileAt(CheckCoordinates(hitInfo.point));
                     }

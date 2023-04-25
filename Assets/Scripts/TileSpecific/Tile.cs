@@ -28,5 +28,6 @@ public enum TypeOfTile
     LatchMomentary,
     Gate,
     MomentarySwitch,
-    Moving
+    Moving,
+    BoxSpawnTile
 }

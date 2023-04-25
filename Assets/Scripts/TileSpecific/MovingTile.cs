@@ -6,11 +6,17 @@ using UnityEngine;
 public class MovingTile : Tile
 {
     private int _count=0;
+    private MovingTileAnimation _animation;
     private void Awake()
     {
         //TODO
         //Take into consideration the Direction x or y to rotate model correctly (might need a container to not mess up
         //the transform+ direction
+        _animation = GetComponent<MovingTileAnimation>();
+    }
+    private void Start()
+    {
+        _animation.LightForward();        
     }
     private void OnEnable()
     {
@@ -25,10 +31,12 @@ public class MovingTile : Tile
             if (_count % 2 == 0)
             {
                 transform.position = transform.position + new Vector3(Direction.x, 0, Direction.y);
+                _animation.LightBack(); 
             }
             else
             {
                 transform.position = transform.position + new Vector3(-Direction.x, 0, -Direction.y);
+                _animation.LightForward();
             }
             distance--;
         }
