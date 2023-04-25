@@ -20,7 +20,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         //keep track of mouse position vs anchor point to have card movement relative to the grabbing point
         //AKA click on a corner and move it, without it jumping back to it
-        print("begin");
+        //print("begin");
         _originalHandParent = transform.parent;
         transform.SetParent(transform.parent.parent);
     }
@@ -35,7 +35,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             
             if (hitInfo.collider.GetComponent<Bot>())
             {
-                print(hitInfo.collider.gameObject.name);
+                //print(hitInfo.collider.gameObject.name);
                 _bot= hitInfo.collider.gameObject;
                 _bot.GetComponent<Bot>().SetDistance(_moveCount);
                 GameManager.Instance.AssignPlayer(_bot);
@@ -50,7 +50,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        print("end");
+        //print("end");
         transform.SetParent(_originalHandParent);
         if (_bot != null)
         {

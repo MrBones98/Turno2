@@ -31,9 +31,8 @@ public class Bot : MonoBehaviour
     public void Move(Vector3 direction)
     {
         if(_parentGameObject != null)
-        {
-            
-            print(_parentGameObject.gameObject.name);
+        {           
+            //print(_parentGameObject.gameObject.name);
         }
 
         if (_isActive)
@@ -100,7 +99,6 @@ public class Bot : MonoBehaviour
                     StartCoroutine(StepDelay(_botStepDelay));
                         _parentGameObject.transform.position += correctedDirection;
 
-                    print(_willIBeGrounded);
 
                     if (box != null)
                     {
@@ -108,7 +106,7 @@ public class Bot : MonoBehaviour
                     }
                     if (!_willIBeGrounded)
                     {
-                        print('f');
+                        print("Bot will fall");
                     }
                 }
                 else
