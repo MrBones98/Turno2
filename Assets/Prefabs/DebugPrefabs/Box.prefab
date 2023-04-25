@@ -127,3 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011f522b93640e443bfa20e31cecd0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _platform: {fileID: 57383642975557578, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+  _mask:
+    serializedVersion: 2
+    m_Bits: 128

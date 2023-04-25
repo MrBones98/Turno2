@@ -84,6 +84,10 @@ public class Bot : MonoBehaviour
                         _willIBeGrounded = false;
 
                     }
+                    else
+                    {
+                        _willIBeGrounded = true; 
+                    }
                     //Collider[] platformColliders;
                     //platformColliders =Physics.OverlapSphere(transform.position + new Vector3(_gizmoPosition.x, _goundcheckOffset, _gizmoPosition.z), 0.3f, _platformGroundCheckLayer);
 
