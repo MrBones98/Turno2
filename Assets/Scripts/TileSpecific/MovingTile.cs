@@ -22,12 +22,17 @@ public class MovingTile : Tile
         int distance = Distance;
         while (distance>0)
         {
-            //TODO 
-            //Add either count and due rest from % to know ehter it goes forwards or backwards
-            //or bool returning functions with the same count > 0 || < 0
-            transform.position = transform.position + new Vector3(Direction.x, 0, Direction.y);
+            if (_count % 2 == 0)
+            {
+                transform.position = transform.position + new Vector3(Direction.x, 0, Direction.y);
+            }
+            else
+            {
+                transform.position = transform.position + new Vector3(-Direction.x, 0, -Direction.y);
+            }
             distance--;
         }
+        _count++;
     }
 
     private void OnDisable()
