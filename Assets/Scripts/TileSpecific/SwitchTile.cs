@@ -21,9 +21,9 @@ public class SwitchTile : Tile, ISwitchActivatable
     }
     private void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name + " / " + gameObject.name);
         if (other.GetComponent<Bot>())
         {
+        print(other.gameObject.name + " / " + gameObject.name);
             onSwitchPressed(InteractableID);
         }
     }

@@ -30,11 +30,6 @@ public class Bot : MonoBehaviour
     }
     public void Move(Vector3 direction)
     {
-        if(_parentGameObject != null)
-        {           
-            //print(_parentGameObject.gameObject.name);
-        }
-
         if (_isActive)
         {
             Vector3 correctedDirection = direction.normalized;

@@ -3181,7 +3181,7 @@ MonoBehaviour:
     Prefab: {fileID: 3705887263343481408, guid: b0e4783ba5a984fe7be4ecd2f3400315, type: 3}
   - Type: 8
     Prefab: {fileID: 613288901978696674, guid: 9c45646e88ce3b246b75125ab66ab2d3, type: 3}
-  _currentLevel: {fileID: 11400000, guid: 7f6bfe72afe365d4383dfe9cc270e274, type: 2}
+  _currentLevel: {fileID: 11400000, guid: b51165f2ac6e35f4891f9ee8e2ecb051, type: 2}
   RuntimeTilePositions: []
 --- !u!1 &1244863699
 GameObject:

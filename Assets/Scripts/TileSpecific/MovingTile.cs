@@ -26,6 +26,7 @@ public class MovingTile : Tile
     private void UpdateTurn()
     {
         int distance = Distance;
+        print("Moving platform moving");
         while (distance>0)
         {
             if (_count % 2 == 0)
