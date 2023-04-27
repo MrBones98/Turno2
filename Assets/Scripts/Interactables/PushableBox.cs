@@ -31,7 +31,7 @@ public class PushableBox : MonoBehaviour
         }
         else
         {
-            print('f');
+            print("Spawning Platform");
             transform.position += direction;
             SpawnPlatform();
         }
@@ -53,7 +53,7 @@ public class PushableBox : MonoBehaviour
     }
     private IEnumerator SphereCastDelay()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(0.5f);
     }
     private void OnDrawGizmos()
     {

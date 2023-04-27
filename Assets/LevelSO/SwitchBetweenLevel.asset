@@ -253,6 +253,36 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+  - Type: 0
+    Position:
+    - 8
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 9
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 7
+    - 0
+    - 7
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
   Name: 
   MoveOne: 4
   MoveTwo: 2

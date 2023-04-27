@@ -25,8 +25,12 @@ public class MovingTile : Tile
 
     private void UpdateTurn()
     {
+        StartCoroutine(nameof(MovingDelay));
+    }
+    private IEnumerator MovingDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
         int distance = Distance;
-        print("Moving platform moving");
         while (distance>0)
         {
             if (_count % 2 == 0)
