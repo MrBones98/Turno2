@@ -9,10 +9,22 @@ public class PushableBox : MonoBehaviour
 
     private Vector3 _debugDirection;
     private bool _willBePlatform = false;
-   public void Move(Vector3 direction)
+   public void CheckMovementDirection(Vector3 direction)
    {
         RaycastHit groundHit;
         _debugDirection = direction;
+        //StartCoroutine(nameof(SphereCastDelay));
+        //if (Physics.SphereCast(transform.position + new Vector3(direction.x, -0.3f, direction.z), 0.4f, transform.position + new Vector3(direction.x, -0.3f, direction.z),out groundHit) )       
+        if(!Physics.Raycast(transform.position, _debugDirection,1,_mask))
+        {
+            print(direction);
+            //print(groundHit.collider.name);
+            //if(groundHit.collider.transform.gameObject.layer == _mask)
+            //{
+            TransfromIntoPlatform();
+            //}
+        }
+        StartCoroutine(nameof(SphereCastDelay));
         if (!_willBePlatform)
         {
             transform.position += direction;
@@ -23,12 +35,7 @@ public class PushableBox : MonoBehaviour
             transform.position += direction;
             SpawnPlatform();
         }
-        StartCoroutine(nameof(SphereCastDelay));
-        if (!Physics.SphereCast(transform.position + new Vector3(direction.x, -0.3f, direction.z), 0.3f, transform.position + new Vector3(direction.x, -0.3f, direction.z),out groundHit, _mask) )       
-        {
-            TransfromIntoPlatform();
-        }
-        print($"will it in this direction next turn be a platform:{_willBePlatform}");
+        //print($"will it in this direction next turn be a platform:{_willBePlatform}");
         
 
    }
@@ -40,17 +47,19 @@ public class PushableBox : MonoBehaviour
     }
 
     public void TransfromIntoPlatform()
-   {
+    {
         _willBePlatform = true;
-   }
+        print($"Box will be platform: {_willBePlatform}");
+    }
     private IEnumerator SphereCastDelay()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(4);
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
-        Gizmos.DrawSphere(transform.position + new Vector3(_debugDirection.x, -0.3f, _debugDirection.z), 0.3f);
+        Gizmos.color = Color.magenta;
+        //Gizmos.DrawSphere(transform.position + new Vector3(_debugDirection.x, -0.3f, _debugDirection.z), 0.3f);
+        Gizmos.DrawRay(transform.position, _debugDirection);
     }
 
 }

@@ -23,7 +23,7 @@ public class SwitchTile : Tile, ISwitchActivatable
     {
         if (other.GetComponent<Bot>())
         {
-        print(other.gameObject.name + " / " + gameObject.name);
+            //print(other.gameObject.name + " / " + gameObject.name);
             onSwitchPressed(InteractableID);
         }
     }

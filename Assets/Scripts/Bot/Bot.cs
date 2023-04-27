@@ -36,78 +36,82 @@ public class Bot : MonoBehaviour
             _gizmoPosition = correctedDirection;
             _lookDirection = (_parentGameObject.transform.position +direction )- _parentGameObject.transform.position;
             _parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
-            while (_stepCount>0)
-            //while(_stepCount > 0)
+            for (int i = 0; i < _stepCount; i++)
             {
-                //print(_stepCount);
-                RaycastHit facingHit;
-                RaycastHit groundHit;
-                WallTile wallTile;
-                PushableBox box;
 
-                if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out facingHit, 1,5))
-                {
-                    //print(facingHit.collider.gameObject.name);
-                    if (facingHit.transform.GetComponent<WallTile>())
+
+                //while(_stepCount > 0)
+                
+                    //print(_stepCount);
+                    RaycastHit facingHit;
+                    RaycastHit groundHit;
+                    WallTile wallTile;
+                    PushableBox box;
+
+                    if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out facingHit, 1))
                     {
-                        wallTile = facingHit.transform.GetComponentInParent<WallTile>();
+                        //print(facingHit.collider.gameObject.name);
+                        if (facingHit.transform.GetComponent<WallTile>())
+                        {
+                            wallTile = facingHit.transform.GetComponent<WallTile>();
+
+                        }
+                        else
+                        {
+                            wallTile = null;
+                        }
+                        if (facingHit.transform.GetComponent<PushableBox>())
+                        {
+                            box = facingHit.transform.GetComponent<PushableBox>();
+                        }
+                        else
+                        {
+                            box = null;
+                        }
 
                     }
                     else
                     {
                         wallTile = null;
+                        box = null;
                     }
-                    if (facingHit.transform.GetComponent<PushableBox>())
+                    print(box);
+                    if (wallTile == null || (wallTile != null && wallTile.HasColision == false))
                     {
-                        box =facingHit.transform.GetComponent<PushableBox>();
+                        //if (!Physics.SphereCast(transform.position, 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
+                        if (!Physics.SphereCast(transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
+                        {
+                            _willIBeGrounded = false;
+
+                        }
+                        else
+                        {
+                            _willIBeGrounded = true;
+                        }
+
+                        StartCoroutine(StepDelay(_botStepDelay, correctedDirection));
+                        //_rigidBody.MovePosition(transform.position+direction);
+
+
+                        if (box != null)
+                        {
+                        
+                            box.CheckMovementDirection(correctedDirection);
+                        }
+                        if (!_willIBeGrounded)
+                        {
+                            print("Bot will fall");
+                        }
                     }
                     else
                     {
-                        box =null;
-                    }
-                    
-                }
-                else
-                {
-                    wallTile = null;
-                    box =null;
-                }
-                if (wallTile == null || (wallTile!=null && wallTile.HasColision==false))
-                {
-                    //if (!Physics.SphereCast(transform.position, 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
-                    if (!Physics.SphereCast(transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
-                    {
-                        _willIBeGrounded = false;
-
-                    }
-                    else
-                    {
-                        _willIBeGrounded = true; 
+                        print("no movement, wall in front");
                     }
 
                 
-                    StartCoroutine(StepDelay(_botStepDelay,correctedDirection));
-                
-                    //_parentGameObject.transform.position += correctedDirection;
-
-                    if (box != null)
-                    {
-                        box.Move(correctedDirection);
-                    }
-                    if (!_willIBeGrounded)
-                    {
-                        print("Bot will fall");
-                    }
-                }
-                else
-                {
-                    print("no movement, wall in front");
-                }
-               
             }
-            //_stepCount = 0;
-            onFinishedMove();
-
+                _stepCount = 0;
+                onFinishedMove();
         }
         //TODO
         //today switch to rigidbody
@@ -130,15 +134,9 @@ public class Bot : MonoBehaviour
     }
     private IEnumerator StepDelay(float botStepDelay, Vector3 direction)
     {
-        //while(Vector3.Distance(transform.position, transform.position+ direction) > 0)
-        //{
-       
             yield return new WaitForSeconds(botStepDelay);
-            _rigidBody.MovePosition(transform.position+direction);
-            print(_stepCount);
-            _stepCount--;
-        
-        //}
+            _parentGameObject.transform.position += direction;
+
     }
     private void OnDrawGizmos()
     {
