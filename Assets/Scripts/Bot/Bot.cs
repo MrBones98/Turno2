@@ -8,12 +8,12 @@ public class Bot : MonoBehaviour
     [SerializeField] [Range(0.5f, 2f)] private float _botStepDelay;
     [SerializeField] private float _goundcheckOffset;
     [SerializeField] private LayerMask _platformGroundCheckLayer;
+    [SerializeField] private Rigidbody _rigidBody;
 
     private int _stepCount;
-    private Vector3 _lookDirection;
     private bool _willIBeGrounded = true;
     private bool _isActive = true;
-    private Rigidbody _rigidBody;
+    private Vector3 _lookDirection;
     private Vector3 _gizmoPosition;
 
     public delegate void OnFinishedMove();
@@ -25,7 +25,7 @@ public class Bot : MonoBehaviour
     }
     private void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody>(); 
+        //_rigidBody = GetComponent<Rigidbody>(); 
         //_parentTransform = transform.GetComponentInParent<Transform>(); //change to gameobject
     }
     public void Move(Vector3 direction)
@@ -36,8 +36,10 @@ public class Bot : MonoBehaviour
             _gizmoPosition = correctedDirection;
             _lookDirection = (_parentGameObject.transform.position +direction )- _parentGameObject.transform.position;
             _parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
-            for (int i = 0; i < _stepCount; i++)
+            while (_stepCount>0)
+            //while(_stepCount > 0)
             {
+                //print(_stepCount);
                 RaycastHit facingHit;
                 RaycastHit groundHit;
                 WallTile wallTile;
@@ -46,7 +48,7 @@ public class Bot : MonoBehaviour
                 if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out facingHit, 1,5))
                 {
                     //print(facingHit.collider.gameObject.name);
-                    if (facingHit.transform.GetComponentInParent<WallTile>())
+                    if (facingHit.transform.GetComponent<WallTile>())
                     {
                         wallTile = facingHit.transform.GetComponentInParent<WallTile>();
 
@@ -63,7 +65,7 @@ public class Bot : MonoBehaviour
                     {
                         box =null;
                     }
-                    //_rigidBody.MovePosition(_parentTransform.position+direction);
+                    
                 }
                 else
                 {
@@ -82,18 +84,11 @@ public class Bot : MonoBehaviour
                     {
                         _willIBeGrounded = true; 
                     }
-                    //Collider[] platformColliders;
-                    //platformColliders =Physics.OverlapSphere(transform.position + new Vector3(_gizmoPosition.x, _goundcheckOffset, _gizmoPosition.z), 0.3f, _platformGroundCheckLayer);
 
-                    //if (platformColliders==null)
-                    //{
-                    //    _willIBeGrounded = false;
-
-                    //}
-
-                    StartCoroutine(StepDelay(_botStepDelay));
-                        _parentGameObject.transform.position += correctedDirection;
-
+                
+                    StartCoroutine(StepDelay(_botStepDelay,correctedDirection));
+                
+                    //_parentGameObject.transform.position += correctedDirection;
 
                     if (box != null)
                     {
@@ -110,7 +105,7 @@ public class Bot : MonoBehaviour
                 }
                
             }
-            _stepCount = 0;
+            //_stepCount = 0;
             onFinishedMove();
 
         }
@@ -133,9 +128,17 @@ public class Bot : MonoBehaviour
         WinTile.onButtonPressed += SwitchState;
 
     }
-    private IEnumerator StepDelay(float botStepDelay)
+    private IEnumerator StepDelay(float botStepDelay, Vector3 direction)
     {
-        yield return new WaitForSeconds(botStepDelay);
+        //while(Vector3.Distance(transform.position, transform.position+ direction) > 0)
+        //{
+       
+            yield return new WaitForSeconds(botStepDelay);
+            _rigidBody.MovePosition(transform.position+direction);
+            print(_stepCount);
+            _stepCount--;
+        
+        //}
     }
     private void OnDrawGizmos()
     {
