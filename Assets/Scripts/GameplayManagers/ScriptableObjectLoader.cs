@@ -5,24 +5,47 @@ using Editor;
 
 public class ScriptableObjectLoader : MonoBehaviour
 {
+    public static ScriptableObjectLoader Instance;
+
     [SerializeField] private Level _levelToLoad;
     [SerializeField] private GameObject _levelContainer;
     [SerializeField] private List<SaveLevelPrefab> _prefabList = new();
     [SerializeField] private List<GameObject> _cardPrefabs = new();
     [SerializeField] private GameObject _playerHand; //TODO move to game manager when head's clear
 
-
+    public Level LevelToLoad { get { return _levelToLoad; } set { } }
     public delegate void LevelLoaded();
     public static event LevelLoaded onLevelLoaded;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
     void Start()
     {
         LoadLevel();
+        //LoadCards();
+        //TODO
+        //A SOMEWHAT LESS DUMB INSTANTIATION PLEASE JAHSDJHA AH
+        //ON THE GAME MANAGER (then it can keep track of already instantiated objects and not just values aka
+        //easier to access
+        //Add later a list to keep track of which cards were use for undo button
+    }
+
+    private void LoadCards()
+    {
         for (int i = 0; i < _levelToLoad.MoveOne; i++)
         {
             GameObject cardPrefab = null;
 
-            cardPrefab = Instantiate(_cardPrefabs[0],_playerHand.transform.position, Quaternion.identity);
-            cardPrefab.transform.SetParent(_playerHand.transform,false);
+            cardPrefab = Instantiate(_cardPrefabs[0], _playerHand.transform.position, Quaternion.identity);
+            cardPrefab.transform.SetParent(_playerHand.transform, false);
             GameManager.Cards.Add(cardPrefab);
         }
         for (int i = 0; i < _levelToLoad.MoveTwo; i++)
@@ -49,11 +72,6 @@ public class ScriptableObjectLoader : MonoBehaviour
             cardPrefab.transform.SetParent(_playerHand.transform, false);
             GameManager.Cards.Add(cardPrefab);
         }
-        //TODO
-        //A SOMEWHAT LESS DUMB INSTANTIATION PLEASE JAHSDJHA AH
-        //ON THE GAME MANAGER (then it can keep track of already instantiated objects and not just values aka
-        //easier to access
-        //Add later a list to keep track of which cards were use for undo button
     }
 
     private void LoadLevel()
