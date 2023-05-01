@@ -7,17 +7,45 @@ public class PushableBox : MonoBehaviour
    [SerializeField] private GameObject _platform;
    [SerializeField] private LayerMask _mask;
 
+    private string[] _layersToCheck = { "Platform", "Pushable" };
+
+    private bool _isPushable = true;
+    public bool IsPushable { get { return _isPushable; } set { } }
+
+
     private Vector3 _debugDirection;
     private bool _willBePlatform = false;
    public void CheckMovementDirection(Vector3 direction)
    {
         RaycastHit groundHit;
-        _debugDirection = direction;
+        _debugDirection = transform.transform.position+direction;
+        WallTile wallTile = null;
+        PushableBox box = null;
+        //int interactableLayers = LayerMask.GetMask(_layersToCheck);
         //StartCoroutine(nameof(SphereCastDelay));
         //if (Physics.SphereCast(transform.position + new Vector3(direction.x, -0.3f, direction.z), 0.4f, transform.position + new Vector3(direction.x, -0.3f, direction.z),out groundHit) )       
-        if(!Physics.Raycast(transform.position, _debugDirection,1,_mask))
+        if (Physics.Raycast(transform.position, _debugDirection,out groundHit,1))
         {
-            print(direction);
+            var collision = groundHit.collider.gameObject;
+
+            if (collision.gameObject.GetComponent<WallTile>())
+            {
+                wallTile = collision.gameObject.GetComponent<WallTile>();
+            }
+            else
+            {
+                wallTile = null;
+            }
+            if (collision.gameObject.GetComponent<PushableBox>())
+            {
+                box = collision.gameObject.GetComponent<PushableBox>();
+            }
+            else
+            {
+                box=null;
+            }
+            
+            
             //print(groundHit.collider.name);
             //if(groundHit.collider.transform.gameObject.layer == _mask)
             //{

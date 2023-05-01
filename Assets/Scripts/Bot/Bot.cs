@@ -10,8 +10,10 @@ public class Bot : MonoBehaviour
     [SerializeField] private LayerMask _platformGroundCheckLayer;
     [SerializeField] private Rigidbody _rigidBody;
 
+    //Can serialize/streamline later
+    private string[] _layersToCheck = { "Platform", "Pushable" };
     private int _stepCount;
-    private bool _willIBeGrounded = true;
+    private bool _grounded = true;
     private bool _isActive = true;
     private Vector3 _lookDirection;
     private Vector3 _gizmoPosition;
@@ -36,18 +38,11 @@ public class Bot : MonoBehaviour
             _gizmoPosition = correctedDirection;
             _lookDirection = (_parentGameObject.transform.position + direction) - _parentGameObject.transform.position;
             _parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
-            //for (int i = 0; i < _stepCount; i++)
-            //{
+
 
 
                 StartCoroutine(SolveTurn(correctedDirection));
-                //StartCoroutine(nameof(StepDelay(_botStepDelay,direction));
-                //_stepCount = 0;
-            //}
         }
-        //TODO
-        //today switch to rigidbody
-        //falling off of platforms
         //Quit and Reset   
     }
 
@@ -55,33 +50,55 @@ public class Bot : MonoBehaviour
     {
         RaycastHit facingHit;
         RaycastHit groundHit;
-        WallTile wallTile;
-        PushableBox box;
+        WallTile wallTile = null;
+        PushableBox box = null;
+        int interactableLayers = LayerMask.GetMask(_layersToCheck);
         while(_stepCount > 0)
         {
 
-            if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out facingHit, 1))
+            //if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out facingHit, 1))
+            if(Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.forward, out facingHit,1 ,interactableLayers))
             {
                 //print(facingHit.collider.gameObject.name);
-                if (facingHit.transform.GetComponent<PushableBox>())
-                {
+                //if (facingHit.transform.GetComponent<PushableBox>())
+                //{
 
-                    box = facingHit.transform.GetComponent<PushableBox>();
-                }
-                else
+                //    box = facingHit.transform.GetComponent<PushableBox>();
+                //}
+                //else
+                //{
+                //    box = null;
+                //}
+                //if (facingHit.transform.GetComponent<WallTile>())
+                //{
+                //    wallTile = facingHit.transform.GetComponent<WallTile>();
+
+                //}
+                //else
+                //{
+                //    wallTile = null;
+                //}
+                var collision = facingHit.collider.gameObject;
+                if(interactableLayers ==(interactableLayers | 1 << collision.layer))
                 {
-                    box = null;
-                }
-                if (facingHit.transform.GetComponent<WallTile>())
-                {
-                    wallTile = facingHit.transform.GetComponent<WallTile>();
+                    if (collision.gameObject.GetComponent<WallTile>())
+                    {
+                        wallTile = collision.gameObject.GetComponent<WallTile>();
+                    }
+                    else
+                    {
+                        wallTile=null;
+                    }
+                    if (collision.gameObject.GetComponent<PushableBox>())
+                    {
+                        box = collision.gameObject.GetComponent<PushableBox>();
+                    }
+                    else
+                    {
+                        box=null;
+                    }
 
                 }
-                else
-                {
-                    wallTile = null;
-                }
-
 
 
             }
@@ -94,14 +111,15 @@ public class Bot : MonoBehaviour
             if (wallTile == null || (wallTile != null && wallTile.HasColision == false))
             {
                 //if (!Physics.SphereCast(transform.position, 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
-                if (!Physics.SphereCast(transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
+                //if (!Physics.SphereCast(transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
+                if(!Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.forward, out facingHit,1,_platformGroundCheckLayer))
                 {
-                    _willIBeGrounded = false;
+                    _grounded = false;
 
                 }
                 else
                 {
-                    _willIBeGrounded = true;
+                    _grounded = true;
                 }
 
             
@@ -116,9 +134,9 @@ public class Bot : MonoBehaviour
                 //_rigidBody.MovePosition(transform.position+direction);
 
 
-                if (!_willIBeGrounded)
+                if (!_grounded)
                 {
-                    print("Bot will fall on the next tile");
+                    print("Dead animation");
                 }
             }
             else
