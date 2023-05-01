@@ -44,12 +44,16 @@ public class PushableBox : MonoBehaviour
             {
                 box=null;
             }
-            
-            
+
+            //yeo, array
             //print(groundHit.collider.name);
+            if (!collision.GetComponentInParent<Tile>())
+            {
+                TransfromIntoPlatform();                
+            }
             //if(groundHit.collider.transform.gameObject.layer == _mask)
             //{
-            TransfromIntoPlatform();
+            //TransfromIntoPlatform();
             //}
         }
         StartCoroutine(nameof(SphereCastDelay));
@@ -70,6 +74,7 @@ public class PushableBox : MonoBehaviour
 
     private void SpawnPlatform()
     {
+        gameObject.transform.GetComponent<BoxCollider>().enabled = false;
         Instantiate(_platform, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
         Destroy(gameObject, 1f);
     }
