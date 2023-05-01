@@ -18,7 +18,7 @@ public class PushableBox : MonoBehaviour
    public void CheckMovementDirection(Vector3 direction)
    {
         RaycastHit groundHit;
-        _debugDirection = transform.transform.position+direction;
+        _debugDirection =direction;
         WallTile wallTile = null;
         PushableBox box = null;
         //int interactableLayers = LayerMask.GetMask(_layersToCheck);

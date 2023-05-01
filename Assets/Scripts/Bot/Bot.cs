@@ -136,6 +136,8 @@ public class Bot : MonoBehaviour
 
                 if (!_grounded)
                 {
+                    //check if it's only becaus ethe first collider was from a box taking the object
+                    //ADD Collider aray infor, just loop through the important logic here and in pushableBox
                     print("Dead animation");
                 }
             }
