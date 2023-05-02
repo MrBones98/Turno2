@@ -31,35 +31,58 @@ public class PushableBox : MonoBehaviour
             if (collision.gameObject.GetComponent<WallTile>())
             {
                 wallTile = collision.gameObject.GetComponent<WallTile>();
+                _isPushable = false;
             }
             else
             {
                 wallTile = null;
+                _isPushable = true;
             }
             if (collision.gameObject.GetComponent<PushableBox>())
             {
                 box = collision.gameObject.GetComponent<PushableBox>();
+                _isPushable = false;
             }
             else
             {
                 box=null;
+                _isPushable = true;
             }
 
             //yeo, array
             //print(groundHit.collider.name);
+            //this do separate wall check v
             if (!collision.GetComponentInParent<Tile>())
             {
-                TransfromIntoPlatform();                
+                TransformIntoPlatform();                
             }
             //if(groundHit.collider.transform.gameObject.layer == _mask)
             //{
             //TransfromIntoPlatform();
             //}
         }
+        else
+        {
+            TransformIntoPlatform();
+        }
         StartCoroutine(nameof(SphereCastDelay));
-        if (!_willBePlatform)
+
+        //TODO
+        //EXTRACT THIS INTO SEPARATE FUNCTION (important for box.IsPushable check in Bot movement
+        //print($"will it in this direction next turn be a platform:{_willBePlatform}");
+
+        Move(direction);
+
+   }
+    private void Move(Vector3 direction)
+    {
+        if (!_willBePlatform & _isPushable)
         {
             transform.position += direction;
+        }
+        else if (!_isPushable)
+        {
+            print("no movement, wall in front");
         }
         else
         {
@@ -67,10 +90,8 @@ public class PushableBox : MonoBehaviour
             transform.position += direction;
             SpawnPlatform();
         }
-        //print($"will it in this direction next turn be a platform:{_willBePlatform}");
-        
 
-   }
+    }
 
     private void SpawnPlatform()
     {
@@ -79,7 +100,7 @@ public class PushableBox : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
-    public void TransfromIntoPlatform()
+    public void TransformIntoPlatform()
     {
         _willBePlatform = true;
         print($"Box will be platform: {_willBePlatform}");

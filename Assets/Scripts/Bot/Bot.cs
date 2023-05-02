@@ -124,13 +124,29 @@ public class Bot : MonoBehaviour
 
             
                
+                //TODO
+                //EXTRACT THIS INTO SEPARATE FUNCTION
                 if (box != null)
                 {
 
                     box.CheckMovementDirection(correctedDirection);
+                    
+                    if (!box.IsPushable)
+                    {
+                        print("cant push box");
+                    }
+                    else
+                    {
+                        _parentGameObject.transform.position += correctedDirection;
+                    }
                 }
+                else
+                {
+                    _parentGameObject.transform.position += correctedDirection;
+                }
+                
+
                 yield return new WaitForSeconds(_botStepDelay); 
-               _parentGameObject.transform.position += correctedDirection;
                 //_rigidBody.MovePosition(transform.position+direction);
 
 

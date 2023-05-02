@@ -19,6 +19,7 @@ public class CardHandManager : MonoBehaviour
 
     private void LoadCards()
     {
+        _level = ScriptableObjectLoader.Instance.LevelToLoad;
         if (_isActive)
         {
             for (int i = 0; i < _level.MoveOne; i++)
@@ -63,7 +64,6 @@ public class CardHandManager : MonoBehaviour
     }
     private void Start()
     {
-        _level = ScriptableObjectLoader.Instance.LevelToLoad;
         
     }
     private void Awake()
