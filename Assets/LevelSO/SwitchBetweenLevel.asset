@@ -13,32 +13,12 @@ MonoBehaviour:
   m_Name: SwitchBetweenLevel
   m_EditorClassIdentifier: 
   tileObjects:
-  - Type: 6
-    Position:
-    - 3
-    - 0
-    - 8
-    InteractableID: 2
-    Direction:
-    - 0
-    - 0
-    Distance: 0
   - Type: 8
     Position:
-    - 3
+    - 5
     - 0
     - 6
     InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 4
-    Position:
-    - 4
-    - 0
-    - 6
-    InteractableID: 1
     Direction:
     - 0
     - 0
@@ -47,217 +27,7 @@ MonoBehaviour:
     Position:
     - 7
     - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 8
-    Position:
     - 7
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 8
-    Position:
-    - 7
-    - 0
-    - 6
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 2
-    Position:
-    - 6
-    - 0
-    - 7
-    InteractableID: 2
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 2
-    Position:
-    - 5
-    - 0
-    - 7
-    InteractableID: 2
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 2
-    Position:
-    - 3
-    - 0
-    - 7
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 2
-    Position:
-    - 4
-    - 0
-    - 7
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
-    - 6
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 6
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 7
-    Position:
-    - 4
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 1
-    - 0
-    Distance: 3
-  - Type: 3
-    Position:
-    - 4
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 1
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
-    - 1
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 8
-    - 0
-    - 5
     InteractableID: 0
     Direction:
     - 0
@@ -275,10 +45,240 @@ MonoBehaviour:
     Distance: 0
   - Type: 0
     Position:
-    - 7
+    - 8
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 1
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 1
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 3
+    Position:
+    - 4
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 7
+    Position:
+    - 4
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 1
+    - 0
+    Distance: 3
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 6
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 2
+    Position:
+    - 4
     - 0
     - 7
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 2
+    Position:
+    - 3
+    - 0
+    - 7
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 2
+    Position:
+    - 5
+    - 0
+    - 7
+    InteractableID: 2
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 2
+    Position:
+    - 6
+    - 0
+    - 7
+    InteractableID: 2
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 8
+    Position:
+    - 7
+    - 0
+    - 6
     InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 8
+    Position:
+    - 7
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 0
+    Position:
+    - 7
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 4
+    Position:
+    - 4
+    - 0
+    - 6
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 8
+    Position:
+    - 3
+    - 0
+    - 6
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+  - Type: 6
+    Position:
+    - 3
+    - 0
+    - 8
+    InteractableID: 2
     Direction:
     - 0
     - 0
