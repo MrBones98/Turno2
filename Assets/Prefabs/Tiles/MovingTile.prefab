@@ -328,6 +328,22 @@ MonoBehaviour:
   _lightBack: {fileID: 8157432431241859436}
   _lightColor: {r: 0.9528302, g: 0, b: 0.755809, a: 0}
   _disabledColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!54 &199747459740881126
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3705887263343481408}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!4 &4045961414388205818 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 828678489602887024, guid: 16de64849e2288f46a90be82e49aa986, type: 3}

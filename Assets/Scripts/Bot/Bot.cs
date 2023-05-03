@@ -59,28 +59,11 @@ public class Bot : MonoBehaviour
             //if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out facingHit, 1))
             if(Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.forward, out facingHit,1 ,interactableLayers))
             {
-                //print(facingHit.collider.gameObject.name);
-                //if (facingHit.transform.GetComponent<PushableBox>())
-                //{
-
-                //    box = facingHit.transform.GetComponent<PushableBox>();
-                //}
-                //else
-                //{
-                //    box = null;
-                //}
-                //if (facingHit.transform.GetComponent<WallTile>())
-                //{
-                //    wallTile = facingHit.transform.GetComponent<WallTile>();
-
-                //}
-                //else
-                //{
-                //    wallTile = null;
-                //}
+                
                 var collision = facingHit.collider.gameObject;
                 if(interactableLayers ==(interactableLayers | 1 << collision.layer))
                 {
+                    
                     if (collision.gameObject.GetComponent<WallTile>())
                     {
                         wallTile = collision.gameObject.GetComponent<WallTile>();
@@ -97,7 +80,7 @@ public class Bot : MonoBehaviour
                     {
                         box=null;
                     }
-
+                    //else if(wall tile!= null aka for the check of raycast hit array
                 }
 
 
@@ -107,7 +90,7 @@ public class Bot : MonoBehaviour
                 wallTile = null;
                 box = null;
             }
-            print(box);
+            //print(box);
             if (wallTile == null || (wallTile != null && wallTile.HasColision == false))
             {
                 //if (!Physics.SphereCast(transform.position, 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
