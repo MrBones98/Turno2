@@ -41,7 +41,8 @@ public class PushableBox : MonoBehaviour
             if (collision.gameObject.GetComponent<PushableBox>())
             {
                 box = collision.gameObject.GetComponent<PushableBox>();
-                _isPushable = false;
+                box.CheckMovementDirection(direction);
+                _isPushable = true;
             }
             else
             {
@@ -49,7 +50,7 @@ public class PushableBox : MonoBehaviour
                 _isPushable = true;
             }
 
-            //yeo, array
+            //TODO, array of Raycasthits
             //print(groundHit.collider.name);
             //this do separate wall check v
             if (!collision.GetComponentInParent<Tile>())
