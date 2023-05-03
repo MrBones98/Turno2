@@ -7,6 +7,7 @@ public class MovingTile : Tile
 {
     private int _count=0;
     private MovingTileAnimation _animation;
+    private GameObject _carriedObject;
     private void Awake()
     {
         //TODO
@@ -47,10 +48,40 @@ public class MovingTile : Tile
         }
         _count++;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (IsMovable(other) && _carriedObject==null)
+            _carriedObject = other.gameObject;
+            _carriedObject.transform.parent.parent.SetParent(transform, true);
+            //_carriedObject.transform.parent.parent.position += new Vector3(0, 0.45f, 0);
+
+
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (IsMovable(other))
+            _carriedObject.transform.parent.parent.SetParent(null, true);
+            _carriedObject=null;
+            //_carriedObject.transform.SetParent(_carriedObject.transform.parent.parent);
+    }
+    private bool IsMovable(Collider collider)
+    {
+        if (collider.transform.GetComponent<Bot>() || collider.transform.GetComponent<PushableBox>())
+        {
+            print($"Triggered by: {collider.gameObject.name}");
+            return true;
+
+        }
+        else return false;
+    }
 
     private void OnDisable()
     {
         GameManager.onBotMove -= UpdateTurn;
+    }
+    private void OnValidate()
+    {
+       //Check and set orientation for the platform's direction 
     }
 
 }
