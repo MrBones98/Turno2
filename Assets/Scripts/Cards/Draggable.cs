@@ -16,13 +16,18 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         _cardValueText.text = _moveCount.ToString();
     }
+    private void Start()
+    {
+        _originalHandParent = transform.parent;
+        print(_originalHandParent.name);
+        
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         //keep track of mouse position vs anchor point to have card movement relative to the grabbing point
         //AKA click on a corner and move it, without it jumping back to it
         //print("begin");
-        _originalHandParent = transform.parent;
-        transform.SetParent(transform.parent.parent);
+        transform.SetParent(transform.parent.parent.parent);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -39,7 +44,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 _bot= hitInfo.collider.gameObject;
                 _bot.GetComponent<Bot>().SetDistance(_moveCount);
                 GameManager.Instance.AssignPlayer(_bot);
-
             }
             else
             {
@@ -51,7 +55,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         //print("end");
-        transform.SetParent(_originalHandParent);
+        transform.SetParent(_originalHandParent,false);
+        transform.position = new Vector3(_originalHandParent.position.x, _originalHandParent.position.y, _originalHandParent.position.z);
+
         if (_bot != null)
         {
             //TODO
