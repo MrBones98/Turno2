@@ -50,9 +50,8 @@ public class MovingTile : Tile
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (IsMovable(other) && _carriedObject==null)
-            _carriedObject = other.gameObject;
-            _carriedObject.transform.parent.parent.SetParent(transform, true);
+        if (IsMovable(other))
+            _carriedObject.transform.SetParent(transform, true);
             //_carriedObject.transform.parent.parent.position += new Vector3(0, 0.45f, 0);
 
 
@@ -60,17 +59,26 @@ public class MovingTile : Tile
     private void OnTriggerExit(Collider other)
     {
         if (IsMovable(other))
-            _carriedObject.transform.parent.parent.SetParent(null, true);
+            _carriedObject.transform.SetParent(null, true);
             _carriedObject=null;
             //_carriedObject.transform.SetParent(_carriedObject.transform.parent.parent);
     }
     private bool IsMovable(Collider collider)
     {
-        if (collider.transform.GetComponent<Bot>() || collider.transform.GetComponent<PushableBox>())
+        //TODO
+        //Change it after iplementing interface!!
+        if (collider.transform.GetComponent<Bot>())
         {
+            _carriedObject = collider.transform.parent.parent.gameObject;
             print($"Triggered by: {collider.gameObject.name}");
             return true;
 
+        }
+        else if (collider.transform.GetComponent<PushableBox>())
+        {
+            _carriedObject = collider.gameObject;
+            print($"Triggered by: {collider.gameObject.name}");
+            return true;
         }
         else return false;
     }
