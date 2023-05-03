@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: _moveCount
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7803988124549132848, guid: 0cc5c627362312a47ac68daddf3b8f15, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2143946917, guid: c03e4a30be4c743b6b05ed9dd28af0cd, type: 3}
     - target: {fileID: 7803988124549132850, guid: 0cc5c627362312a47ac68daddf3b8f15, type: 3}
       propertyPath: m_Name
       value: MoveCard4
