@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingTile : Tile
+public class MovingTile : Tile,ISwitchActivatable
 {
     private int _count=0;
     private MovingTileAnimation _animation;
@@ -97,4 +97,13 @@ public class MovingTile : Tile
        //Check and set orientation for the platform's direction 
     }
 
+    public void Activate()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Deactivate()
+    {
+        throw new NotImplementedException();
+    }
 }

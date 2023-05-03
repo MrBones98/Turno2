@@ -8,6 +8,7 @@ public class TileObject
     public int InteractableID;
     public float[] Direction;
     public int Distance;
+    public bool StartsActivated = false;
     //TODO
     //add id for referencing
     //bool for Interactable/switcheable/activation blah (check interface pls)
@@ -15,6 +16,8 @@ public class TileObject
     {
         this.Type = tile.type;
         InteractableID = tile.InteractableID;
+
+        this.StartsActivated = tile.StartsActivated;
 
         Vector3 tilePos = tile.transform.position;
         Position = new float[]

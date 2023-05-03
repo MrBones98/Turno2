@@ -9,6 +9,7 @@ public class Tile : MonoBehaviour
     public int InteractableID =0;
     public Vector2 Direction;
     public int Distance;
+    public bool StartsActivated = false;
 
     private void Awake()
     {

@@ -22,6 +22,13 @@ public class WallTile : Tile, ISwitchActivatable
     private void Awake()
     {
         _animation = gameObject.GetComponent<GateAnimation>();
-        HasColision = true;
+        if (StartsActivated)
+        {
+            Activate();
+        }
+        else
+        {
+            HasColision = true;
+        }
     }
 }
