@@ -19,7 +19,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private void Start()
     {
         _originalHandParent = transform.parent;
-        print(_originalHandParent.name);
+        //print(_originalHandParent.name);
         
     }
     public void OnBeginDrag(PointerEventData eventData)
@@ -68,11 +68,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }
