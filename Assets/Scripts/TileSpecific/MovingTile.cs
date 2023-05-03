@@ -18,6 +18,11 @@ public class MovingTile : Tile
     private void Start()
     {
         _animation.LightForward();        
+        if(Direction.y != 0)
+        {
+            print("Movving Platform should rotate");
+            transform.Rotate(0, 90, 0);
+        }
     }
     private void OnEnable()
     {

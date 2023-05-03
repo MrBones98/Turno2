@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    //SavedLevelObject
     public TileType type;
     public int InteractableID =0;
     public Vector2 Direction;
@@ -13,8 +12,6 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
-        //SaveSystem.tiles.Add(this);
-
         LevelEditor.TilesToSave.Add(this);
         Direction.Normalize();
     }
