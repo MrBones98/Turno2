@@ -90,7 +90,8 @@ public class Bot : MonoBehaviour
             //}
             //print(box);
             yield return new WaitForSeconds(_botStepDelay);
-            RaycastHit[] facingHit =Physics.RaycastAll(_parentGameObject.transform.position,_parentGameObject.transform.forward,1.2f);
+            //RaycastHit[] facingHit =Physics.RaycastAll(_parentGameObject.transform.position,_parentGameObject.transform.forward,1.2f);
+            RaycastHit[] facingHit =Physics.RaycastAll(_raycastOrigin.position,_raycastOrigin.forward,0.8f);
             print($"There are {facingHit.Length} colliders on this step");
             for(int i = 0; i < facingHit.Length; i++)
             {
@@ -204,7 +205,8 @@ public class Bot : MonoBehaviour
     {
         Gizmos.color = Color.black;
         //Gizmos.DrawSphere(transform.position+new Vector3(_gizmoPosition.x, _goundcheckOffset, _gizmoPosition.z), 0.3f);
-        Gizmos.DrawRay(_parentGameObject.transform.position, _parentGameObject.transform.forward);
+        //Gizmos.DrawRay(_parentGameObject.transform.position, _parentGameObject.transform.forward);
+        Gizmos.DrawRay(_raycastOrigin.position, _raycastOrigin.forward*0.8f);
     }
 
 }

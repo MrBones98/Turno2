@@ -13,6 +13,8 @@ public class ScriptableObjectLoader : MonoBehaviour
     [SerializeField] private List<GameObject> _cardPrefabs = new();
     [SerializeField] private GameObject _playerHand; //TODO move to game manager when head's clear
 
+    //for functionality, just assign level to load byt the index of _levels. Iterations could be just selecting buttons, progressing to +1 on finish level
+    [SerializeField] private List<Level> levels = new();
     public Level LevelToLoad { get { return _levelToLoad; } set { } }
     public delegate void LevelLoaded();
     public static event LevelLoaded onLevelLoaded;
