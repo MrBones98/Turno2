@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class Bot : MonoBehaviour
 {
@@ -28,10 +29,9 @@ public class Bot : MonoBehaviour
     }
     private void Awake()
     {
-        //_rigidBody = GetComponent<Rigidbody>(); 
-        //_parentTransform = transform.GetComponentInParent<Transform>(); //change to gameobject
+        SolveTurnAsync();
     }
-    public void Move(Vector3 direction)
+    public void CheckMove(Vector3 direction)
     {
         if (_isActive)
         {
@@ -42,11 +42,44 @@ public class Bot : MonoBehaviour
 
 
 
+            //SIMPLIFIED GAME LOOP
+            //Add WallTile & Pushable Box private references (don't create unless you do var assignment and then return with Task<value>)
+
+            //GameManager ondirection Given to bot "*"
+
+            //raycast // and await for passing the direction to make sure the ray direction is 100% right(?)
+
+            //loop through hits
+        
+            //Assign null or object value to Pushable/Moveable
+        
+            //if Pushable/Moveable !=null
+            //AWAIT Box => raycast=> loop through hits => if != null => AWAIT for next object (recursive check TODO check out how many task is okay to handle and when to stop them all)
+            //else
+            //solved Turn Interactions
+        
+            //Move
+        
+            //Await for Dottween move call (could be async, first get hits properly recognizing)
+        
+            //Movement Finished
+        
+            //MovingPlatform (has been waiting since "*")
+        
+            //Await moving platform
+        
+            //set card input back to true
                 StartCoroutine(SolveTurn(correctedDirection));
         }
-        //Quit and Reset   
     }
+    async void SolveTurnAsync()
+    {
+        print(Time.captureFramerate);
+        await Task.Yield();
+        print(Time.captureFramerate);
+        //allrighty
 
+    }
     public IEnumerator SolveTurn(Vector3 correctedDirection)
     {
         //RaycastHit[] facingHit;
@@ -89,9 +122,10 @@ public class Bot : MonoBehaviour
             //    box = null;
             //}
             //print(box);
-            yield return new WaitForSeconds(_botStepDelay);
             //RaycastHit[] facingHit =Physics.RaycastAll(_parentGameObject.transform.position,_parentGameObject.transform.forward,1.2f);
             RaycastHit[] facingHit =Physics.RaycastAll(_raycastOrigin.position,_raycastOrigin.forward,0.8f);
+            //Physics.OverlapSphere
+            yield return new WaitForSeconds(_botStepDelay);
             print($"There are {facingHit.Length} colliders on this step");
             for(int i = 0; i < facingHit.Length; i++)
             {
@@ -140,8 +174,6 @@ public class Bot : MonoBehaviour
                 
                 print(_grounded);
                
-                //TODO
-                //EXTRACT THIS INTO SEPARATE FUNCTION
                 if (box != null)
                 {
 
@@ -160,15 +192,8 @@ public class Bot : MonoBehaviour
                 {
                     _parentGameObject.transform.position += correctedDirection;
                 }
-                
-
-                //_rigidBody.MovePosition(transform.position+direction);
-
-
                 if (_grounded == false)
                 {
-                    //check if it's only becaus ethe first collider was from a box taking the object
-                    //ADD Collider aray infor, just loop through the important logic here and in pushableBox
                     print("Dead animation");
                 }
                 yield return new WaitForSeconds(_botStepDelay);
@@ -204,8 +229,6 @@ public class Bot : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        //Gizmos.DrawSphere(transform.position+new Vector3(_gizmoPosition.x, _goundcheckOffset, _gizmoPosition.z), 0.3f);
-        //Gizmos.DrawRay(_parentGameObject.transform.position, _parentGameObject.transform.forward);
         Gizmos.DrawRay(_raycastOrigin.position, _raycastOrigin.forward*0.8f);
     }
 

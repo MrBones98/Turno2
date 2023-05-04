@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        _bot.GetComponent<Bot>().Move(moveVector);
+        _bot.GetComponent<Bot>().CheckMove(moveVector);
     }
     void Update()
     {
