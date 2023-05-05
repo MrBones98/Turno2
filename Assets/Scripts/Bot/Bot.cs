@@ -55,34 +55,36 @@ public class Bot : MonoBehaviour
             //raycast // and await for passing the direction to make sure the ray direction is 100% right(?)
 
             //loop through hits
-        
+
             //Assign null or object value to Pushable/Moveable
-        
+
             //if Pushable/Moveable !=null
             //AWAIT Box => raycast=> loop through hits => if != null => AWAIT for next object (recursive check TODO check out how many task is okay to handle and when to stop them all)
             //else
             //solved Turn Interactions
-        
+
             //Move
-        
+
             //Await for Dottween move call (could be async, first get hits properly recognizing)
-        
+
             //Movement Finished
-        
+
             //MovingPlatform (has been waiting since "*")
-        
+
             //Await moving platform
-        
+
             //set card input back to true
-                StartCoroutine(SolveTurn(correctedDirection));
+            // StartCoroutine(SolveTurn(correctedDirection));
+            SolveTurnAsync(direction);  
         }
     }
     async Task SolveCollisionsAsync(Vector3 direction)
     {
         //Raycast check
-        await Task.Yield();
+        //print($"origin Ray: ({_parentGameObject.transform.position}), Direction: ({_parentGameObject.transform.forward})");
+        await Task.Delay((int)(_botStepDelay)*1000);
 
-        RaycastHit[] facingHit = Physics.RaycastAll(_parentGameObject.transform.position, _parentGameObject.transform.forward, 1f);
+        RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,_raycastOrigin.position+direction, 1f);
         
         for (int i = 0; i < facingHit.Length; i++)
         {
@@ -102,8 +104,10 @@ public class Bot : MonoBehaviour
             {
                 _pushableBox = facingHit[i].collider.gameObject.GetComponent<PushableBox>();
             }
-            print(facingHit[i].collider.gameObject.layer.ToString());
+            //print(facingHit[i].collider.gameObject.layer.ToString());
+            print(facingHit[i].collider.gameObject.name);
         }
+        print($"There are {facingHit.Length} colliders on this step");
         //await solve collisions to move
 
     }
@@ -120,23 +124,28 @@ public class Bot : MonoBehaviour
             {
                 _grounded=false;
             }
+            await Task.Delay((int)_botStepDelay*1000);
             if(pushablebox != null)
             {
                 //Var CheckMoveDirection ASYNC from bot
                 //await ^^/ can add bool return value for box.IsPushable
                 
-                if (true)
-                {
-                    Debug.LogWarning("Add Box Direction Check");
-                }
-                else
-                {
-                    //Move Bot with direction
-                }
+                //if (pushablebox)
+                //{
+                //    Debug.LogWarning("Add Box Direction Check");
+                //}
+                //else
+                //{
+                //    //Move Bot with direction
+                    _parentGameObject.transform.position += direction;
+
+                //}
             }
             else
             {
                 //Move Bot with direction
+                _parentGameObject.transform.position += direction;
+
             }
             if (_grounded == false)
             {
@@ -159,6 +168,10 @@ public class Bot : MonoBehaviour
             await solveCollisionsTask;
             var solveMovementTask = SolveMovementAsync(_wallTile,_platformCached, _pushableBox, direction);
             await solveMovementTask;
+            _stepCount--;
+            _wallTile = null;
+            _pushableBox = null;
+            _platformCached = false;
         }
         //Move await=>loop through hits
         onFinishedMove();
@@ -318,7 +331,7 @@ public class Bot : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawRay(_raycastOrigin.position, _raycastOrigin.forward*0.8f);
+        Gizmos.DrawRay(_raycastOrigin.position, _raycastOrigin.forward* 0.8f);
     }
 
 }
