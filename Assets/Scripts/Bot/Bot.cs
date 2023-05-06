@@ -89,30 +89,30 @@ public class Bot : MonoBehaviour
         //print($"origin Ray: ({_parentGameObject.transform.position}), Direction: ({_parentGameObject.transform.forward})");
         await Task.Delay((int)(_botStepDelay)*1000);
 
-        RaycastHit[] facingHit = Physics.SphereCastAll(_raycastOrigin.position, 0.40f, _raycastOrigin.position,0.1f, _collidableLayers);
-        //RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,_raycastOrigin.position+direction, 1f,_collidableLayers);
-        
+        RaycastHit[] facingHit = Physics.SphereCastAll(_raycastOrigin.position, 0.45f, _raycastOrigin.up,1.5f, _collidableLayers); 
+        //RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,-_raycastOrigin.transform.up, 2f,_collidableLayers);
+        //Collider[] facingHit = Physics.OverlapSphere(_raycastOrigin.position, 0.51f, _collidableLayers);
         for (int i = 0; i < facingHit.Length; i++)
         {
-            if (_platformCached == false && facingHit[i].collider.gameObject.layer == 7)
+            if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
             {
                 _platformCached = true;
             }
-            if (facingHit[i].collider.gameObject.GetComponent<WallTile>())
+            if (facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>())
             {
-                _wallTile = facingHit[i].collider.gameObject.GetComponent<WallTile>();
+                _wallTile = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>();
             }
             else if (_wallTile == null)
             {
                 _wallTile = null;
             }
-            if (_pushableBox == null || facingHit[i].collider.gameObject.GetComponent<PushableBox>())
+            if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
             {
-                _pushableBox = facingHit[i].collider.gameObject.GetComponent<PushableBox>();
+                _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
             }
 
             //print(facingHit[i].collider.gameObject.layer.ToString());
-            print(facingHit[i].collider.gameObject.name);
+            print(facingHit[i].collider.GetComponent<Collider>().gameObject.name);
         }
         print($"There are {facingHit.Length} colliders on this step");
         //await solve collisions to move
@@ -121,9 +121,10 @@ public class Bot : MonoBehaviour
     async Task SolveMovementAsync(WallTile walltile,bool platformCached, PushableBox pushablebox, Vector3 direction)
     {
         print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}");
+        await Task.Delay((int)_botStepDelay*1000);
         if(walltile == null ||( walltile!= null && !walltile.HasColision))
         {
-            if(platformCached || !walltile.HasColision)
+            if(platformCached)
             {
                 _grounded = true;
             }
@@ -131,12 +132,15 @@ public class Bot : MonoBehaviour
             {
                 _grounded=false;
             }
-            await Task.Delay((int)_botStepDelay*1000);
+            if(_wallTile!=null && !walltile.HasColision)
+            {
+                _grounded = true;
+            }
             if(pushablebox != null)
             {
                 //Var CheckMoveDirection ASYNC from bot
                 //await ^^/ can add bool return value for box.IsPushable
-                
+
                 //if (pushablebox)
                 //{
                 //    Debug.LogWarning("Add Box Direction Check");
@@ -144,7 +148,17 @@ public class Bot : MonoBehaviour
                 //else
                 //{
                 //    //Move Bot with direction
-                    _parentGameObject.transform.position += direction;
+                pushablebox.CheckMovementDirection(direction);
+                if (!pushablebox.IsPushable)
+                {
+
+                }
+                else
+                {
+                _parentGameObject.transform.position += direction;
+
+                }
+
 
                 //}
             }
@@ -158,6 +172,7 @@ public class Bot : MonoBehaviour
             {
                 //do another await for if (box=> will be platform/became platform)
                 //Dead Anim
+                
                 print("No platform underneath Bot => Death after movement");
             }
         }
@@ -338,8 +353,8 @@ public class Bot : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
-        //Gizmos.DrawRay(_raycastOrigin.position, _raycastOrigin.forward* 0.8f);
+        //Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
+        Gizmos.DrawRay(_raycastOrigin.position, -_raycastOrigin.transform.up);
     }
 
 }

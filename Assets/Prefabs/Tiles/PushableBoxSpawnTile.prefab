@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2567896517559338704, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2002732318121686552, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
@@ -83,5 +83,6 @@ MonoBehaviour:
   InteractableID: 0
   Direction: {x: 0, y: 0}
   Distance: 0
+  StartsActivated: 0
   _box: {fileID: 5746839918106236395, guid: 86b99714815d49b42b3171ddcaa16e85, type: 3}
   _offset: 0.5
