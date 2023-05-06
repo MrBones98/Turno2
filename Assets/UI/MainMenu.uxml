@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Root" style="flex-direction: row; padding-left: 3%; padding-right: 3%; padding-top: 3%; padding-bottom: 3%; flex-grow: 1;">
+        <ui:VisualElement name="LeftPanel" style="width: 40%; height: 100%;" />
+        <ui:VisualElement name="RightPanel" style="height: 100%; width: 60%;" />
+    </ui:VisualElement>
+</ui:UXML>

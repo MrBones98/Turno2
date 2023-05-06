@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Root" style="flex-grow: 1;">
+        <ui:Label text="MUSIC VOLUME" display-tooltip-when-elided="true" name="BGMVolText" />
+        <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="BGMVolSlider" />
+        <ui:Label text="FX VOLUME" display-tooltip-when-elided="true" name="SFXVolText" />
+        <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="SFXVolSlider" />
+        <ui:Button text="BACK" display-tooltip-when-elided="true" name="BackButton" />
+    </ui:VisualElement>
+</ui:UXML>

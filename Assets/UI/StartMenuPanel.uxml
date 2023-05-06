@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Root" style="align-items: stretch; flex-grow: 1;">
+        <ui:Label text="TURNO" display-tooltip-when-elided="true" name="GameTitleText" style="-unity-text-align: middle-center;" />
+        <ui:VisualElement name="ButtonContainer">
+            <ui:Button text="START" display-tooltip-when-elided="true" name="StartGame" />
+            <ui:Button text="LEVEL SELECT" display-tooltip-when-elided="true" name="LevelSelect" />
+            <ui:Button text="OPTIONS" display-tooltip-when-elided="true" name="Options" />
+            <ui:Button text="QUIT TO DESKTOP" display-tooltip-when-elided="true" name="QuitGame" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
