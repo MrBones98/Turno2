@@ -13,7 +13,9 @@ public class Bot : MonoBehaviour
     [SerializeField] private Transform _raycastOrigin;
 
     //Can serialize/streamline later
-    private string[] _layersToCheck = { "Platform", "Pushable" };
+    private string[] _layersToCheck = { "Platform", "Pushable", "Wall"};
+    int _collidableLayers;
+
     private int _stepCount;
     private bool _grounded = true;
     private bool _isActive = true;
@@ -34,7 +36,9 @@ public class Bot : MonoBehaviour
     private void Awake()
     {
         //SolveTurnAsync();
+        _collidableLayers = LayerMask.GetMask(_layersToCheck);
     }
+    //Could make this async and wait for it on Game Manager
     public void CheckMove(Vector3 direction)
     {
         if (_isActive)
@@ -78,17 +82,19 @@ public class Bot : MonoBehaviour
             SolveTurnAsync(direction);  
         }
     }
+    //Can remove direction parameter here
     async Task SolveCollisionsAsync(Vector3 direction)
     {
         //Raycast check
         //print($"origin Ray: ({_parentGameObject.transform.position}), Direction: ({_parentGameObject.transform.forward})");
         await Task.Delay((int)(_botStepDelay)*1000);
 
-        RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,_raycastOrigin.position+direction, 1f);
+        RaycastHit[] facingHit = Physics.SphereCastAll(_raycastOrigin.position, 0.40f, _raycastOrigin.position,0.1f, _collidableLayers);
+        //RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,_raycastOrigin.position+direction, 1f,_collidableLayers);
         
         for (int i = 0; i < facingHit.Length; i++)
         {
-            if(_platformCached==false && facingHit[i].collider.gameObject.layer == 7)
+            if (_platformCached == false && facingHit[i].collider.gameObject.layer == 7)
             {
                 _platformCached = true;
             }
@@ -96,14 +102,15 @@ public class Bot : MonoBehaviour
             {
                 _wallTile = facingHit[i].collider.gameObject.GetComponent<WallTile>();
             }
-            else if(_wallTile == null)
+            else if (_wallTile == null)
             {
-                _wallTile=null;
+                _wallTile = null;
             }
-            if(_pushableBox== null || facingHit[i].collider.gameObject.GetComponent<PushableBox>())
+            if (_pushableBox == null || facingHit[i].collider.gameObject.GetComponent<PushableBox>())
             {
                 _pushableBox = facingHit[i].collider.gameObject.GetComponent<PushableBox>();
             }
+
             //print(facingHit[i].collider.gameObject.layer.ToString());
             print(facingHit[i].collider.gameObject.name);
         }
@@ -114,9 +121,9 @@ public class Bot : MonoBehaviour
     async Task SolveMovementAsync(WallTile walltile,bool platformCached, PushableBox pushablebox, Vector3 direction)
     {
         print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}");
-        if(walltile == null || walltile!= null && walltile.HasColision)
+        if(walltile == null ||( walltile!= null && !walltile.HasColision))
         {
-            if(platformCached)
+            if(platformCached || !walltile.HasColision)
             {
                 _grounded = true;
             }
@@ -331,7 +338,8 @@ public class Bot : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawRay(_raycastOrigin.position, _raycastOrigin.forward* 0.8f);
+        Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
+        //Gizmos.DrawRay(_raycastOrigin.position, _raycastOrigin.forward* 0.8f);
     }
 
 }
