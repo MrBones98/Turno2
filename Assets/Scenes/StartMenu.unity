@@ -641,7 +641,7 @@ MonoBehaviour:
   _LevelSelectLeftPanelDoc: {fileID: 9197481963319205126, guid: bcf976985962f41ed9a61c158a487834, type: 3}
   _LevelSelectRightPanelDoc: {fileID: 9197481963319205126, guid: 2b9b2ccfe9e024edc8b9d902809a6ee3, type: 3}
   _OptionsPanelDoc: {fileID: 9197481963319205126, guid: bf33fa0019b5046e7a0e34683a8ee72f, type: 3}
-  _controller: {fileID: 385418623}
+  LevelSelectButtonTemplate: {fileID: 9197481963319205126, guid: a111f4999d7144a0f8aceeade3726bcd, type: 3}
 --- !u!114 &385418622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,10 +670,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1352355d9034e12979cfe557f4a1f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels:
+  _levels:
   - {fileID: 11400000, guid: 8d7f9bf62e88d48b1a12d126fb1bf3c2, type: 2}
   - {fileID: 11400000, guid: 9cbe2324769eb45d8ba41c7291187bf5, type: 2}
-  - {fileID: 11400000, guid: 8cd4170ce72394193aedb76f6e5dff97, type: 2}
   - {fileID: 11400000, guid: 8cd4170ce72394193aedb76f6e5dff97, type: 2}
   - {fileID: 11400000, guid: 3b74e4795943749fd8898b1966f94baf, type: 2}
   - {fileID: 11400000, guid: bf279b83c2b56446bbe98efde76b10fb, type: 2}
@@ -700,6 +699,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db856c0d8b88d48bb9dd2f05e4e8bf06, type: 2}
   - {fileID: 11400000, guid: 277c6033e13b74099b21648eeb86d509, type: 2}
   - {fileID: 11400000, guid: 7b131f94db20f4950a9010d6532b80fa, type: 2}
+  _menuHandler: {fileID: 385418621}
 --- !u!1 &418613968
 GameObject:
   m_ObjectHideFlags: 0
