@@ -63,3 +63,29 @@
     justify-content: center;
     padding-top: 2%;
 }
+
+.GameSpaceButton {
+    height: 50%;
+    width: 10%;
+    margin-top: 0;
+    margin-left: 1%;
+    -unity-font-definition: url('project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&guid=fc1d487999cd947a3b9a69750f855049&type=2#telegren SDF');
+    font-size: 46px;
+    padding-top: 0.3%;
+    border-left-width: 13px;
+    border-right-width: 13px;
+    border-top-width: 13px;
+    border-bottom-width: 13px;
+    min-height: 80px;
+    max-height: 100px;
+    max-width: 155px;
+    min-width: 56px;
+}
+
+.GameSpaceButton:hover {
+    border-left-color: rgba(200, 182, 182, 255);
+    border-right-color: rgba(200, 182, 182, 255);
+    border-top-color: rgba(200, 182, 182, 255);
+    border-bottom-color: rgba(200, 182, 182, 255);
+    transition-duration: 0.2s;
+}
