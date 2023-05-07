@@ -8,7 +8,7 @@ public class PushableBox : MonoBehaviour
    [SerializeField] private GameObject _platform;
    [SerializeField] private LayerMask _mask;
 
-    private string[] _layersToCheck = { "Platform", "Pushable", "Wall, Player" };
+    private string[] _layersToCheck = { "Platform", "Pushable", "Wall", "Player" };
     int _collidableLayers;
 
     private bool _isPushable = true;
@@ -43,18 +43,18 @@ public class PushableBox : MonoBehaviour
     async Task SolveCollisionAsync(Vector3 direction)
     {
         Vector3 raySpawnPos = new Vector3(transform.position.x, -1, transform.position.z);
-         await Task.Yield();
         //RaycastHit[] hits = Physics.SphereCastAll(raySpawnPos + direction, 0.44f, transform.position + direction, _collidableLayers);
         Collider[] hits = Physics.OverlapSphere(transform.position+ direction,0.44f, _collidableLayers);
+         await Task.Yield();
         for (int i = 0; i < hits.Length; i++)
         {
             if (_platformCached == false && hits[i].GetComponent<Collider>().gameObject.layer == 7)
             {
                 _platformCached = true;
             }
-            if (hits[i].GetComponent<Collider>().gameObject.GetComponent<WallTile>())
+            if (hits[i].gameObject.GetComponent<WallTile>())
             {
-                _wallTile = hits[i].GetComponent<Collider>().gameObject.GetComponent<WallTile>();
+                _wallTile = hits[i].gameObject.GetComponent<WallTile>();
             }
             else if (_wallTile == null)
             {
@@ -79,14 +79,15 @@ public class PushableBox : MonoBehaviour
             {
                 _willBePlatform = false;
             }
+            else if(_wallTile != null && !wallTile.HasColision)
+            {
+                _willBePlatform = false;
+            }
             else
             {
                 _willBePlatform = true;
             }
-            if (_wallTile != null && !wallTile.HasColision)
-            {
-                _willBePlatform = false;
-            }
+            
             if (pushableBox != null)
             {
                 //Move Bot with direction

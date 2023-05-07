@@ -153,7 +153,6 @@ GameObject:
   - component: {fileID: 4734288460650374576}
   - component: {fileID: 2281080931519739045}
   - component: {fileID: 6834844922297333552}
-  - component: {fileID: 6279593583277280458}
   m_Layer: 6
   m_Name: AntennaLight
   m_TagString: Untagged
@@ -226,19 +225,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6279593583277280458
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747914087657966183}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2080157367721146489
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,13 +341,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentGameObject: {fileID: 4543900161054584840}
-  _botStepDelay: 1.5
+  _botStepDelay: 0.5
   _goundcheckOffset: -0.3
   _platformGroundCheckLayer:
     serializedVersion: 2
     m_Bits: 128
   _rigidBody: {fileID: 897543692849153366}
   _raycastOrigin: {fileID: 6872722620707866361}
+  _isPushable: 0
+  _canBePushed: 0
 --- !u!1 &4543900161054584840
 GameObject:
   m_ObjectHideFlags: 0

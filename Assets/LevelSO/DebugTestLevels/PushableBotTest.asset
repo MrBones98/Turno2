@@ -256,7 +256,7 @@ MonoBehaviour:
     Distance: 0
     StartsActivated: 0
   Name: 
-  MoveOne: 3
-  MoveTwo: 3
-  MoveThree: 3
+  MoveOne: 10
+  MoveTwo: 10
+  MoveThree: 10
   MoveFour: 0

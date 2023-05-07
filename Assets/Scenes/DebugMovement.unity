@@ -2507,7 +2507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91be7f0c310921f41b7c02c18e8412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelToLoad: {fileID: 11400000, guid: b51165f2ac6e35f4891f9ee8e2ecb051, type: 2}
+  _levelToLoad: {fileID: 11400000, guid: 018da173353396e46a4dd1d003b4c5fb, type: 2}
   _levelContainer: {fileID: 1656812747}
   _prefabList:
   - Type: 0
@@ -2528,12 +2528,15 @@ MonoBehaviour:
     Prefab: {fileID: 3705887263343481408, guid: b0e4783ba5a984fe7be4ecd2f3400315, type: 3}
   - Type: 8
     Prefab: {fileID: 613288901978696674, guid: 9c45646e88ce3b246b75125ab66ab2d3, type: 3}
+  - Type: 9
+    Prefab: {fileID: 5909006104125178624, guid: 8c8cf7d1f7f1a1e43b4969377bbf853a, type: 3}
   _cardPrefabs:
   - {fileID: 7803988124549132850, guid: 0cc5c627362312a47ac68daddf3b8f15, type: 3}
   - {fileID: 1591430563561157666, guid: 991f7fffc2660454dbfb1a52ef7e050d, type: 3}
   - {fileID: 2734939334832268198, guid: 4c9082161dbe99b4db628e6cbebacfef, type: 3}
   - {fileID: 7972874987294395290, guid: 917ba3b03bd35b748a3145b0a90c435d, type: 3}
   _playerHand: {fileID: 1946364975}
+  levels: []
 --- !u!114 &1510465935
 MonoBehaviour:
   m_ObjectHideFlags: 0

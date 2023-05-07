@@ -11,12 +11,13 @@ public class Bot : MonoBehaviour
     [SerializeField] private LayerMask _platformGroundCheckLayer;
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private Transform _raycastOrigin;
-
-    public bool IsPushable { get { return _isPushable; } set { } }
-
     [SerializeField] private bool _isPushable;
-    
-    private string[] _layersToCheck = { "Platform", "Pushable", "Wall, Player"};
+
+    public bool IsPushableBot { get { return _isPushable; } set { } }
+    public bool CanBePushed { get { return _canBePushed; } set { }}
+
+    [SerializeField]private bool _canBePushed;
+    private string[] _layersToCheck = { "Platform", "Pushable", "Wall", "Player"};
     int _collidableLayers;
     private int _stepCount;
     private bool _grounded = true;
@@ -27,6 +28,7 @@ public class Bot : MonoBehaviour
     private Vector3 _gizmoPosition;
     private WallTile _wallTile= null;
     private PushableBox _pushableBox = null;
+    private Bot _pushableBot = null;
 
     public delegate void OnFinishedMove();
     public static OnFinishedMove onFinishedMove;
@@ -54,12 +56,14 @@ public class Bot : MonoBehaviour
             SolveTurnAsync(direction);  
         }
     }
-    //Can remove direction parameter here
-    async Task SolveCollisionsAsync(Vector3 direction)
+    async Task SolvePushCollisionsAsync(Vector3 direction)
     {
-        await Task.Delay((int)(_botStepDelay)*1000);
-
-        RaycastHit[] facingHit = Physics.SphereCastAll(_raycastOrigin.position, 0.45f, _raycastOrigin.up,1.5f, _collidableLayers); 
+        Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x,-1, _parentGameObject.transform.position.z) + direction;
+        if (IsPushableBot) //Debug purposes, delete
+            print(correctedPushDirection);
+        await Task.Delay((int)(_botStepDelay) * 1000);
+        
+        RaycastHit[] facingHit = Physics.SphereCastAll(correctedPushDirection, 0.44f,  Vector3.up, 1.5f, _collidableLayers);
         //RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,-_raycastOrigin.transform.up, 2f,_collidableLayers);
         //Collider[] facingHit = Physics.OverlapSphere(_raycastOrigin.position, 0.51f, _collidableLayers);
         for (int i = 0; i < facingHit.Length; i++)
@@ -67,6 +71,10 @@ public class Bot : MonoBehaviour
             if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
             {
                 _platformCached = true;
+            }
+            else
+            {
+                _platformCached = false;
             }
             if (facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>())
             {
@@ -76,15 +84,74 @@ public class Bot : MonoBehaviour
             {
                 _wallTile = null;
             }
-            if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
+            if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>()) //?????????????????????
             {
                 _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
             }
+
+            if (facingHit[i].collider.GetComponent<Bot>())
+            {
+                _pushableBot = facingHit[i].collider.GetComponent<Bot>();
+                if (!_pushableBot.IsPushableBot)
+                {
+                    _pushableBot = null;
+                }
+            }
+            print(facingHit[i].collider.gameObject.name);
+        }
+        if (IsPushableBot) //Debug purposes, delete
+            print($"There are {facingHit.Length} colliders on this step");
+    }
+    async Task SolveCollisionsAsync(Vector3 direction)
+    {
+        await Task.Delay((int)(_botStepDelay) * 1000);
+        
+        RaycastHit[] facingHit = Physics.SphereCastAll(_raycastOrigin.position, 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
+        //RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,-_raycastOrigin.transform.up, 2f,_collidableLayers);
+        //Collider[] facingHit = Physics.OverlapSphere(_raycastOrigin.position, 0.51f, _collidableLayers);
+        for (int i = 0; i < facingHit.Length; i++)
+        {
+            if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
+            {
+                _platformCached = true;
+            }
+            else
+            {
+                _platformCached = false;
+            }
+            if (facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>())
+            {
+                _wallTile = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>();
+            }
+            else if (_wallTile == null)
+            {
+                _wallTile = null;
+            }
+            if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>()) //?????????????????????
+            {
+                _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
+            }
+
+            if (facingHit[i].collider.GetComponent<Bot>())
+            {
+                _pushableBot = facingHit[i].collider.GetComponent<Bot>();
+                if (!_pushableBot.IsPushableBot)
+                {
+                    _pushableBot = null;
+                }
+            }
+            print(facingHit[i].collider.gameObject.name);
+        }
+
+        if (facingHit.Length == 0)
+        {
+            _platformCached = false;
         }
     }
-    async Task SolveMovementAsync(WallTile walltile,bool platformCached, PushableBox pushablebox, Vector3 direction)
+    async Task SolveMovementAsync(WallTile walltile,bool platformCached, PushableBox pushablebox, Vector3 direction,Bot pushableBot)
     {
-        //print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}");
+        if(IsPushableBot) //Debug purposes, delete
+            print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}, PushableBot = {pushableBot}");
         await Task.Delay((int)_botStepDelay*1000);
         if(walltile == null ||( walltile!= null && !walltile.HasColision))
         {
@@ -96,6 +163,8 @@ public class Bot : MonoBehaviour
             {
                 _grounded=false;
             }
+            if (IsPushableBot) //Debug purposes, delete
+                print(platformCached);
             if(_wallTile!=null && !walltile.HasColision)
             {
                 _grounded = true;
@@ -107,58 +176,79 @@ public class Bot : MonoBehaviour
                 await pushablebox.SolveTurnAsync(direction);
                 if (!pushablebox.IsPushable)
                 {
+                    _canBePushed = false;
                     print("can't move or push box");
                 }
                 else
                 {
+                    _canBePushed=true;
                     _parentGameObject.transform.position += direction;
 
                 }
             }
+            else if (pushableBot != null)
+            {
+               await pushableBot.SolvePushAsync(direction);
+                if (!pushableBot.CanBePushed)
+                {
+                    _canBePushed = false;
+                    print("Can't push Bot");
+                }
+                else
+                {
+                    print("bot can be pushed");
+                    _canBePushed = true;
+                    _parentGameObject.transform.position += direction;
+                }
+                
+            }
             else
             {
                 //Move Bot with direction
+                print("box and bot are null");
+                _canBePushed = true;
                 _parentGameObject.transform.position += direction;
-
             }
+            
             if (_grounded == false)
             {
                 //do another await for if (box=> will be platform/became platform)
                 //Dead Anim
-                
-                print("No platform underneath Bot => Death after movement");
+                if (IsPushableBot) //Debug purposes, delete
+                    print("No platform underneath Bot => Death after movement");
             }
         }
         else
         {
+            _canBePushed = false;
             print($"No movement in {direction}, a wall blocks the path!");
         }
     }
     async void SolveTurnAsync(Vector3 direction)
     {
-
         while(_stepCount > 0)
         {
             var solveCollisionsTask = SolveCollisionsAsync(direction);
             await solveCollisionsTask;
-            var solveMovementTask = SolveMovementAsync(_wallTile,_platformCached, _pushableBox, direction);
+            var solveMovementTask = SolveMovementAsync(_wallTile,_platformCached, _pushableBox, direction, _pushableBot);
             await solveMovementTask;
             _stepCount--;
             _wallTile = null;
             _pushableBox = null;
+            _pushableBot = null;
             _platformCached = false;
         }
         //Move await=>loop through hits
         onFinishedMove();
-        
-        //so 2 functions for resolution
-        //1 for check move (the one that has both calls for them and awaits move result before going through the next bot._stepCount
-        
-        //allrighty
-
     }
    
-
+    public async Task SolvePushAsync(Vector3 direction)
+    {
+        var solvePushCollisionsTask = SolvePushCollisionsAsync(direction);
+        await solvePushCollisionsTask;
+        var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, direction, _pushableBot);
+        await solveMovementTask;
+    }
     public void SwitchState()
     {
         _isActive = !_isActive;
