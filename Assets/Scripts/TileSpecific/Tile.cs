@@ -27,5 +27,6 @@ public enum TypeOfTile
     Gate,
     MomentarySwitch,
     Moving,
-    BoxSpawnTile
+    BoxSpawnTile,
+    PushableBotSpawnTile
 }
