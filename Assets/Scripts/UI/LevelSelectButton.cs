@@ -22,6 +22,9 @@ public class LevelSelectButton
         Button.name = $"{Level.Name}Button";
         Button.text = $"{lvlNumber} - {Level.Name}";
 
-        Debug.Log($"Button {LevelNumber} - {Level.Name} Instantiated");
+        
+        Button.RegisterCallback<ClickEvent>((evt) => MainMenuController.LoadSelectedLvl(LevelNumber));
+
+        //Debug.Log($"Button {LevelNumber} - {Level.Name} Instantiated");
     }
 }
