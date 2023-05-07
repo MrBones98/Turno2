@@ -49,44 +49,12 @@ public class Bot : MonoBehaviour
             _lookDirection = (_parentGameObject.transform.position + direction) - _parentGameObject.transform.position;
             _parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
 
-
-
-            //SIMPLIFIED GAME LOOP
-            //Add WallTile & Pushable Box private references (don't create unless you do var assignment and then return with Task<value>)
-
-            //GameManager ondirection Given to bot "*"
-
-            //raycast // and await for passing the direction to make sure the ray direction is 100% right(?)
-
-            //loop through hits
-
-            //Assign null or object value to Pushable/Moveable
-
-            //if Pushable/Moveable !=null
-            //AWAIT Box => raycast=> loop through hits => if != null => AWAIT for next object (recursive check TODO check out how many task is okay to handle and when to stop them all)
-            //else
-            //solved Turn Interactions
-
-            //Move
-
-            //Await for Dottween move call (could be async, first get hits properly recognizing)
-
-            //Movement Finished
-
-            //MovingPlatform (has been waiting since "*")
-
-            //Await moving platform
-
-            //set card input back to true
-            // StartCoroutine(SolveTurn(correctedDirection));
             SolveTurnAsync(direction);  
         }
     }
     //Can remove direction parameter here
     async Task SolveCollisionsAsync(Vector3 direction)
     {
-        //Raycast check
-        //print($"origin Ray: ({_parentGameObject.transform.position}), Direction: ({_parentGameObject.transform.forward})");
         await Task.Delay((int)(_botStepDelay)*1000);
 
         RaycastHit[] facingHit = Physics.SphereCastAll(_raycastOrigin.position, 0.45f, _raycastOrigin.up,1.5f, _collidableLayers); 
@@ -110,17 +78,11 @@ public class Bot : MonoBehaviour
             {
                 _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
             }
-
-            //print(facingHit[i].collider.gameObject.layer.ToString());
-            print(facingHit[i].collider.GetComponent<Collider>().gameObject.name);
         }
-        print($"There are {facingHit.Length} colliders on this step");
-        //await solve collisions to move
-
     }
     async Task SolveMovementAsync(WallTile walltile,bool platformCached, PushableBox pushablebox, Vector3 direction)
     {
-        print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}");
+        //print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}");
         await Task.Delay((int)_botStepDelay*1000);
         if(walltile == null ||( walltile!= null && !walltile.HasColision))
         {
@@ -138,29 +100,18 @@ public class Bot : MonoBehaviour
             }
             if(pushablebox != null)
             {
-                //Var CheckMoveDirection ASYNC from bot
-                //await ^^/ can add bool return value for box.IsPushable
-
-                //if (pushablebox)
-                //{
-                //    Debug.LogWarning("Add Box Direction Check");
-                //}
-                //else
-                //{
-                //    //Move Bot with direction
-                pushablebox.CheckMovementDirection(direction);
+                //Move Bot with direction
+                //pushablebox.CheckMovementDirection(direction);
+                await pushablebox.SolveTurnAsync(direction);
                 if (!pushablebox.IsPushable)
                 {
-
+                    print("can't move or push box");
                 }
                 else
                 {
-                _parentGameObject.transform.position += direction;
+                    _parentGameObject.transform.position += direction;
 
                 }
-
-
-                //}
             }
             else
             {
@@ -204,133 +155,7 @@ public class Bot : MonoBehaviour
         //allrighty
 
     }
-    public IEnumerator SolveTurn(Vector3 correctedDirection)
-    {
-        //RaycastHit[] facingHit;
-        RaycastHit groundHit;
-        
-        WallTile wallTile = null;
-        PushableBox box = null;
-        bool platformCheck = false;
-        int interactableLayers = LayerMask.GetMask(_layersToCheck);
-        while(_stepCount > 0)
-        {
-
-            RaycastHit[] facingHit =Physics.RaycastAll(_raycastOrigin.position,_raycastOrigin.forward,0.8f);
-            yield return new WaitForSeconds(_botStepDelay);
-            print($"There are {facingHit.Length} colliders on this step");
-            for(int i = 0; i < facingHit.Length; i++)
-            {
-                if (platformCheck== false && facingHit[i].collider.gameObject.layer ==7)
-                {
-                    print(facingHit[i].collider.gameObject.layer.ToString());
-                    platformCheck = true;
-                }
-                
-                //print(i);
-                if (facingHit[i].collider.gameObject.GetComponent<WallTile>())
-                {
-                    wallTile = facingHit[i].collider.gameObject.GetComponent<WallTile>();
-                }
-                else if(wallTile == null)
-                {
-                    wallTile = null;
-                }
-                if(box == null || facingHit[i].collider.gameObject.GetComponent<PushableBox>())
-                {
-                    box = facingHit[i].collider.gameObject.GetComponent<PushableBox>();
-                }
-                  print(facingHit[i].collider.gameObject.name); 
-            }
-            ////if (Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.TransformDirection(Vector3.forward), out facingHit, 1))
-            //if(Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.forward, out facingHit,1 ,interactableLayers))
-                //var collision = facingHit.collider.gameObject;
-                //if(interactableLayers ==(interactableLayers | 1 << collision.layer))
-                //{
-                    
-                //    if (collision.gameObject.GetComponent<WallTile>())
-                //    {
-                //        wallTile = collision.gameObject.GetComponent<WallTile>();
-                //    }
-                //    else
-                //    {
-                //        wallTile=null;
-                //    }
-                //    if (collision.gameObject.GetComponent<PushableBox>())
-                //    {
-                //        box = collision.gameObject.GetComponent<PushableBox>();
-                //    }
-                //    else
-                //    {
-                //        box=null;
-                //    }
-                    //else if(wall tile!= null aka for the check of raycast hit array
-                //}
-            //else
-            //{
-            //    wallTile = null;
-            //    box = null;
-            //}
-            //print(box);
-            //RaycastHit[] facingHit =Physics.RaycastAll(_parentGameObject.transform.position,_parentGameObject.transform.forward,1.2f);
-            //Physics.OverlapSphere
-            if (wallTile == null || (wallTile != null && wallTile.HasColision == false))
-            {
-                //if (!Physics.SphereCast(transform.position, 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
-                //if (!Physics.SphereCast(transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), 0.3f, transform.position + new Vector3(correctedDirection.x, _goundcheckOffset, correctedDirection.z), out groundHit, _platformGroundCheckLayer))
-                //if(!Physics.Raycast(_parentGameObject.transform.position, _parentGameObject.transform.forward, out facingHit,1,_platformGroundCheckLayer))
-                //{
-                //    _grounded = false;
-
-                //}
-                //else
-                //{
-                //    _grounded = true;
-                //}
-                if(platformCheck == false)
-                {
-                    _grounded = false;
-                }
-                else
-                {
-                    _grounded = true;
-                }
-                
-                print(_grounded);
-               
-                if (box != null)
-                {
-
-                    box.CheckMovementDirection(correctedDirection);
-                    
-                    if (!box.IsPushable)
-                    {
-                        print("cant push box");
-                    }
-                    else
-                    {
-                        _parentGameObject.transform.position += correctedDirection;
-                    }
-                }
-                else
-                {
-                    _parentGameObject.transform.position += correctedDirection;
-                }
-                if (_grounded == false)
-                {
-                    print("Dead animation");
-                }
-                yield return new WaitForSeconds(_botStepDelay);
-            }
-            else
-            {
-                print("no movement, wall in front");
-            }
-            platformCheck = false;
-            _stepCount--;
-        }
-        onFinishedMove();
-    }
+   
 
     public void SwitchState()
     {
