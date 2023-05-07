@@ -7,7 +7,7 @@
     padding-top: 2%;
     padding-left: 3px;
     padding-bottom: 0;
-    color: rgba(0, 0, 0, 255);
+    color: rgb(0, 0, 0);
 }
 
 .MenuHeaderText {
@@ -28,7 +28,7 @@
     height: 70px;
     -unity-font-style: bold;
     font-size: 20px;
-    color: rgba(0, 0, 0, 255);
+    color: rgb(0, 0, 0);
     background-color: rgba(84, 79, 79, 0.09);
     border-left-width: 3px;
     border-right-width: 3px;
@@ -71,7 +71,7 @@
     margin-left: 1%;
     -unity-font-definition: url('project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&guid=fc1d487999cd947a3b9a69750f855049&type=2#telegren SDF');
     font-size: 46px;
-    padding-top: 0.3%;
+    padding-top: 0.5%;
     border-left-width: 13px;
     border-right-width: 13px;
     border-top-width: 13px;
@@ -83,9 +83,26 @@
 }
 
 .GameSpaceButton:hover {
-    border-left-color: rgba(200, 182, 182, 255);
-    border-right-color: rgba(200, 182, 182, 255);
-    border-top-color: rgba(200, 182, 182, 255);
-    border-bottom-color: rgba(200, 182, 182, 255);
+    border-left-color: rgb(200, 182, 182);
+    border-right-color: rgb(200, 182, 182);
+    border-top-color: rgb(200, 182, 182);
+    border-bottom-color: rgb(200, 182, 182);
     transition-duration: 0.2s;
+}
+
+.GameMenuButton {
+    margin-top: 0;
+}
+
+.GameMenuText {
+}
+
+.GameMenuHeader {
+    margin-top: 0;
+    -unity-text-align: lower-center;
+}
+
+.GameMenuSlider {
+    width: 80%;
+    margin-bottom: 13px;
 }

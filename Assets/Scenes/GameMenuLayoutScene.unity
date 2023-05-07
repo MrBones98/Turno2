@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a308ddab2aea4feb8b7a65f9c5939b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuHandler: {fileID: 616057437}
+  _handler: {fileID: 616057437}
 --- !u!114 &616057437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIDoc: {fileID: 616057438}
+  PauseMenuDoc: {fileID: 9197481963319205126, guid: 6469845e6dc4c45e18c120c28c36d41d, type: 3}
+  WinMenuDoc: {fileID: 9197481963319205126, guid: 26dec2b798bf34690bac3d23b16e81b3, type: 3}
 --- !u!114 &616057438
 MonoBehaviour:
   m_ObjectHideFlags: 0

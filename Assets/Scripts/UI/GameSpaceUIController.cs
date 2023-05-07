@@ -7,14 +7,18 @@ using UnityEngine.UIElements;
 public class GameSpaceUIController : MonoBehaviour
 {
     [SerializeField]
-    private GameSpaceUIHandler _menuHandler;
+    private GameSpaceUIHandler _handler;
 
     private void Awake()
     {
-        Init();
+        InitGameUI();
+        InitPauseMenu();
+        InitWinMenu();
+        _handler.ClearMenus();
     }
 
-    #region Element interaction Methods
+    #region debug methods
+
     private void DebugLoadLevel(int direction)
     {
         if (direction > 0)
@@ -26,6 +30,15 @@ public class GameSpaceUIController : MonoBehaviour
             print("Load Prev Level Clicked");
         }
     }
+
+    public void DebugSliderValue(string name, float val)
+    {
+        print($"{name} slider has {val} value");
+    }
+
+    #endregion
+
+    #region Element interaction Methods
 
     private void GiveMoveCard(int amount)
     {
@@ -41,41 +54,112 @@ public class GameSpaceUIController : MonoBehaviour
     {
         print("Undo Clicked");
     }
+
+    private void OnPauseMenuClicked()
+    {
+        print("Pause Clicked");
+        _handler.DrawPauseMenu();
+    }
+
+    public void ShowWinScreen()
+    {
+        print("Showing Win Screen");
+        _handler.DrawWinMenu();
+    }
+
+    // pause menu
+    private void ClosePauseMenu()
+    {
+        _handler.ClearMenus();
+    }
+
+    private void GoToMainMenu()
+    {
+        print("Go To Main Menu Clicked");
+    }
+
+    // audio options
+    private void SetBGMVol(float target)
+    {
+
+    }
+
+    private void SetSFXVol(float target)
+    {
+
+    }
+
     #endregion
 
     #region init methods
 
-    private void Init()
+    private void InitGameUI()
     {
-        _menuHandler._root = _menuHandler.UIDoc.rootVisualElement;
+        _handler._root = _handler.UIDoc.rootVisualElement;
 
-        _menuHandler.UndoButton = _menuHandler._root.Q<Button>(GameSpaceUIHandler.k_UndoButtonName);
-        _menuHandler.UndoButton.clicked += () => OnUndoClicked();
+        //_handler.WinMenu = _handler.WinMenuDoc.CloneTree();
 
-        _menuHandler.ResetButton = _menuHandler._root.Q<Button>(GameSpaceUIHandler.k_ResetButtonName);
-        _menuHandler.ResetButton.clicked += () => OnResetClicked();
+        _handler.CentralPanel = _handler._root.Q<VisualElement>(GameSpaceUIHandler.k_CentralPanel);
+
+        _handler.UndoButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_UndoButtonName);
+        _handler.UndoButton.clicked += () => OnUndoClicked();
+        
+        _handler.ResetButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_ResetButtonName);
+        _handler.ResetButton.clicked += () => OnResetClicked();
+
+        _handler.PauseButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_PauseButton);
+        _handler.PauseButton.clicked += () => OnPauseMenuClicked();
 
 
         // debug methods
-        _menuHandler.GiveMove1Button = _menuHandler._root.Q<Button>(GameSpaceUIHandler.k_Give1MoveButtonName);
-        _menuHandler.GiveMove1Button.clicked += () => GiveMoveCard(1);
+        _handler.GiveMove1Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give1MoveButtonName);
+        _handler.GiveMove1Button.clicked += () => GiveMoveCard(1);
 
-        _menuHandler.GiveMove2Button = _menuHandler._root.Q<Button>(GameSpaceUIHandler.k_Give2MoveButtonName);
-        _menuHandler.GiveMove2Button.clicked += () => GiveMoveCard(2);
+        _handler.GiveMove2Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give2MoveButtonName);
+        _handler.GiveMove2Button.clicked += () => GiveMoveCard(2);
 
-        _menuHandler.GiveMove3Button = _menuHandler._root.Q<Button>(GameSpaceUIHandler.k_Give3MoveButtonName);
-        _menuHandler.GiveMove3Button.clicked += () => GiveMoveCard(3);
+        _handler.GiveMove3Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give3MoveButtonName);
+        _handler.GiveMove3Button.clicked += () => GiveMoveCard(3);
 
-        _menuHandler.GiveMove4Button = _menuHandler._root.Q<Button>(GameSpaceUIHandler.k_Give4MoveButtonName);
-        _menuHandler.GiveMove4Button.clicked += () => GiveMoveCard(4);
+        _handler.GiveMove4Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give4MoveButtonName);
+        _handler.GiveMove4Button.clicked += () => GiveMoveCard(4);
 
 
-        _menuHandler.NextLvlButton = _menuHandler._root.Q<Button>(GameSpaceUIHandler.k_NextLvlButtonName);
-        _menuHandler.NextLvlButton.clicked += () => DebugLoadLevel(1);
+        _handler.NextLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_NextLvlButtonName);
+        _handler.NextLvlButton.clicked += () => DebugLoadLevel(1);
 
-        _menuHandler.PrevLvlButton = _menuHandler._root.Q<Button>(GameSpaceUIHandler.k_PrevLvlMoveButtonName);
-        _menuHandler.PrevLvlButton.clicked += () => DebugLoadLevel(0);
+        _handler.PrevLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_PrevLvlMoveButtonName);
+        _handler.PrevLvlButton.clicked += () => DebugLoadLevel(0);
+    }
 
+    private void InitPauseMenu()
+    {
+        _handler.PauseMenu = _handler.PauseMenuDoc.CloneTree();
+
+        _handler.MainMenuButton = _handler.PauseMenu.Q<Button>(GameSpaceUIHandler.k_MainMenuButtonName);
+        _handler.MainMenuButton.clicked += () => GoToMainMenu();
+
+        _handler.ContinueButton = _handler.PauseMenu.Q<Button>(GameSpaceUIHandler.k_ContinueButtonName);
+        _handler.ContinueButton.clicked += () => ClosePauseMenu();
+
+        _handler.BGMVolSlider = _handler.PauseMenu.Q<Slider>(GameSpaceUIHandler.k_BGMSliderName);
+        _handler.BGMVolSlider.RegisterValueChangedCallback(evt =>
+        {
+            DebugSliderValue(GameSpaceUIHandler.k_BGMSliderName, evt.newValue);
+            SetBGMVol(evt.newValue);
+        });
+
+        _handler.SFXVolSlider = _handler.PauseMenu.Q<Slider>(GameSpaceUIHandler.k_SFXSliderName);
+        _handler.SFXVolSlider.RegisterValueChangedCallback(evt =>
+        {
+            DebugSliderValue(GameSpaceUIHandler.k_SFXSliderName, evt.newValue);
+            SetBGMVol(evt.newValue);
+        });
+    }
+
+    private void InitWinMenu()
+    {
+        _handler.WinMenu = _handler.WinMenuDoc.CloneTree();
     }
 
     #endregion

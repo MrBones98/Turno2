@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MenuStyles.uss?fileID=7433441132597879392&amp;guid=0fca17f0ae99945f2bc779d4c1796174&amp;type=3#MenuStyles" />
+    <ui:VisualElement name="Root" style="flex-grow: 1;">
+        <ui:VisualElement name="TopPanel" style="height: 50%; justify-content: center;">
+            <ui:Label text="!!!YOU PUSHED THE BUTTON!!!" display-tooltip-when-elided="true" name="WinText" class="MainMenuButton" style="align-items: center; -unity-text-align: middle-center; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; justify-content: center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomPanel" style="flex-direction: row; justify-content: center; flex-grow: 1;">
+            <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="MainMenu" class="GameMenuButton MainMenuButton" style="margin-top: 0;" />
+            <ui:Button text="Redo" display-tooltip-when-elided="true" name="RedoLevel" class="GameMenuButton MainMenuButton" />
+            <ui:Button text="Next Level" display-tooltip-when-elided="true" name="NextLevel" class="GameMenuButton MainMenuButton" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
