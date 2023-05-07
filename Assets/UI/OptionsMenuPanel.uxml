@@ -1,9 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="Root" style="flex-grow: 1;">
-        <ui:Label text="MUSIC VOLUME" display-tooltip-when-elided="true" name="BGMVolText" />
-        <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="BGMVolSlider" />
-        <ui:Label text="FX VOLUME" display-tooltip-when-elided="true" name="SFXVolText" />
-        <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="SFXVolSlider" />
-        <ui:Button text="BACK" display-tooltip-when-elided="true" name="BackButton" />
+    <Style src="project://database/Assets/UI/MenuStyles.uss?fileID=7433441132597879392&amp;guid=0fca17f0ae99945f2bc779d4c1796174&amp;type=3#MenuStyles" />
+    <ui:VisualElement name="Root" style="flex-grow: 1; justify-content: center;">
+        <ui:Label text="MUSIC VOLUME" display-tooltip-when-elided="true" name="BGMVolText" class="MenuHeaderText" />
+        <ui:Slider picking-mode="Ignore" value="42" high-value="100" name="BGMVolSlider" focusable="false" class="MenuSlider" style="flex-direction: column;" />
+        <ui:Label text="FX VOLUME" display-tooltip-when-elided="true" name="SFXVolText" class="MenuHeaderText" />
+        <ui:Slider picking-mode="Ignore" value="42" high-value="100" name="SFXVolSlider" focusable="false" class="MenuSlider" style="justify-content: center;" />
+        <ui:Button text="BACK" display-tooltip-when-elided="true" name="BackButton" focusable="false" class="MainMenuButton" />
     </ui:VisualElement>
 </ui:UXML>

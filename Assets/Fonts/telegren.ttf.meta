@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 1e6bd4f5ffee8453885b70a359a212db
+guid: 3e2d55c45f2b245918b9255d04c67475
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
   fontSize: 16
-  forceTextureCase: 1
+  forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Norwester
+  - Telegrama
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

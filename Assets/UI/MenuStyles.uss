@@ -1,0 +1,65 @@
+.GameTitleText {
+    -unity-text-align: middle-left;
+    font-size: 50px;
+    -unity-font: none;
+    -unity-font-definition: url('project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&guid=fc1d487999cd947a3b9a69750f855049&type=2#telegren SDF');
+    -unity-font-style: bold;
+    padding-top: 2%;
+    padding-left: 3px;
+    padding-bottom: 0;
+    color: rgba(0, 0, 0, 255);
+}
+
+.MenuHeaderText {
+    -unity-font-definition: url('project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&guid=fc1d487999cd947a3b9a69750f855049&type=2#telegren SDF');
+    -unity-font-style: bold;
+    font-size: 30px;
+    padding-top: 4%;
+    height: 11%;
+    margin-top: 32px;
+    margin-bottom: 11px;
+}
+
+.MainMenuButton {
+    -unity-font-definition: url('project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&guid=fc1d487999cd947a3b9a69750f855049&type=2#telegren SDF');
+    padding-top: 2%;
+    -unity-text-align: middle-left;
+    margin-top: 36px;
+    height: 70px;
+    -unity-font-style: bold;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 255);
+    background-color: rgba(84, 79, 79, 0.09);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgba(0, 0, 0, 0.69);
+    border-right-color: rgba(0, 0, 0, 0.68);
+    border-top-color: rgba(0, 0, 0, 0.6);
+    border-bottom-color: rgba(0, 0, 0, 0.76);
+    max-height: 70px;
+}
+
+.MainMenuButton:hover {
+    scale: 1 1.1;
+    translate: 0 0;
+    transition-duration: 0.15s;
+}
+
+.MainMenuButton:active {
+    scale: 0.9 0.9;
+    border-left-color: rgba(0, 0, 0, 0.48);
+    border-right-color: rgba(0, 0, 0, 0.48);
+    border-top-color: rgba(0, 0, 0, 0.48);
+    border-bottom-color: rgba(0, 0, 0, 0.48);
+}
+
+.MenuSlider {
+    -unity-font-definition: url('project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&guid=fc1d487999cd947a3b9a69750f855049&type=2#telegren SDF');
+    font-size: 12px;
+    flex-direction: column;
+    height: 5%;
+    justify-content: center;
+    padding-top: 2%;
+}
