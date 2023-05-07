@@ -8,7 +8,7 @@ public class PushableBox : MonoBehaviour
    [SerializeField] private GameObject _platform;
    [SerializeField] private LayerMask _mask;
 
-    private string[] _layersToCheck = { "Platform", "Pushable", "Wall" };
+    private string[] _layersToCheck = { "Platform", "Pushable", "Wall, Player" };
     int _collidableLayers;
 
     private bool _isPushable = true;

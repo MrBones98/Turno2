@@ -12,10 +12,12 @@ public class Bot : MonoBehaviour
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private Transform _raycastOrigin;
 
-    //Can serialize/streamline later
-    private string[] _layersToCheck = { "Platform", "Pushable", "Wall"};
-    int _collidableLayers;
+    public bool IsPushable { get { return _isPushable; } set { } }
 
+    [SerializeField] private bool _isPushable;
+    
+    private string[] _layersToCheck = { "Platform", "Pushable", "Wall, Player"};
+    int _collidableLayers;
     private int _stepCount;
     private bool _grounded = true;
     private bool _isActive = true;

@@ -15,7 +15,8 @@ namespace Editor
         Gate,
         MomentarySwitch,
         Moving,
-        BoxSpawnTile
+        BoxSpawnTile,
+        PushableBotSpawnTile
     }
     public class LevelEditor : MonoBehaviour
     {
