@@ -73,29 +73,39 @@ public class Bot : MonoBehaviour
         if(direction.x<0 || direction.z < 0)
         {
             rayOrientation = direction - _parentGameObject.transform.position;
+            //rayOrientation = -direction;
         }
         else
         {
             rayOrientation = direction;
         }
-
+        print(rayOrientation);
+       
         if (_raisingPathDirection == Vector3.zero || _raisingPathDirection != direction)
         {
 
             //RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, _parentGameObject.transform.position +direction, 1.0f,_platformGroundCheckLayer);
             RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, rayOrientation, _stepCount,_platformGroundCheckLayer);
-            print($"platforms on the path {platformsToRaise.Length} ");
-            if(platformsToRaise.Length > 0)
+            //print($"platforms on the path {platformsToRaise.Length} ");
+            if (_highlightedPath.Count > 0)
             {
-                print(platformsToRaise[0].collider.gameObject.name);
+                foreach (Transform transform in _highlightedPath)
+                {
+                    transform.position-= new Vector3(0, 0.3f, 0);
+                }
+                _highlightedPath.Clear();
             }
             foreach (var item in platformsToRaise)
             {
                 //await Task.Delay(100);
                 //item.collider.transform.DOMoveY(0.3f, 2);
                 Transform platformToShow = item.collider.transform.parent.transform;
-                _highlightedPath.Add(platformToShow);
-                print(platformToShow.name);
+                if(!(Vector3.Distance(platformToShow.position, _parentGameObject.transform.position)> 1.40f && (Vector3.Distance(platformToShow.position, _parentGameObject.transform.position) < 1.5f)))
+                {
+                    _highlightedPath.Add(platformToShow);
+                }
+                //print(Vector3.Distance(platformToShow.position, _parentGameObject.transform.position));
+                //print(platformToShow.name);
                 //platformToShow.DOMoveY(5f, 10);
                 platformToShow.position += new Vector3(0, 0.3f, 0);
             }
