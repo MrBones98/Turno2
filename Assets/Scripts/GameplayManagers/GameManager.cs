@@ -13,12 +13,17 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;
+    [SerializeField] private float _highlightHeight;
+    [SerializeField] private LayerMask _highlightPathLayer;
+
 
     //[OnValueChanged("AssignPlayer")]
     private GameObject _bot;
+    [SerializeField] private GameObject _botParentGameObject;
     private DirectionalInputBot _directionalInputBot;
-
-
+    private DirectionIs _raisingPathDirection;
+    private List<Transform> _highlightedPath = new();
+    private int _currentBotStepCount;
     //public WinTile WinTile;
 
     //ON THE LEVEL SO ADD COUNT OF BUTTONS FOR WINNING FOR DIFFERENT NEEED AMOUNTS
@@ -83,8 +88,7 @@ public class GameManager : MonoBehaviour
     }
     public  void GiveChosenBotDirection(DirectionIs directionIs)
     {
-        Vector3 moveVector; //perhaps pass it to bot
-        
+        Vector3 moveVector;
 
         if(directionIs == DirectionIs.PosX)
         {
@@ -107,6 +111,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         _bot.GetComponent<Bot>().CheckMove(moveVector);
+        ClearPath();
     }
 
     void Update()
@@ -116,6 +121,8 @@ public class GameManager : MonoBehaviour
         {
             if (_bot.GetComponent<Bot>().IsFocused)
             {
+                ShowDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
+                print(_botParentGameObject.transform.position);
                 if (Input.GetMouseButtonDown(0))
                 {
                     GiveChosenBotDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
@@ -124,11 +131,61 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    public void ShowDirection(DirectionIs direction)
+    {
+        Vector3 rayOrientation;
+
+        rayOrientation = MoveUtils.SetDirection(direction);
+        print(rayOrientation);
+
+        if (MoveUtils.SetDirection(_raisingPathDirection) == Vector3.zero || _raisingPathDirection != direction)
+        {
+            //RaycastHit[] platformsToRaise = Physics.RaycastAll(_botParentGameObject.transform.position, rayOrientation, _currentBotStepCount, _highlightPathLayer);
+            RaycastHit[] platformsToRaise = _bot.GetComponent<Bot>().PlatformsToRaise(rayOrientation);
+            print($"platforms on the path {platformsToRaise.Length} ");
+            ClearPath();
+            foreach (var item in platformsToRaise)
+            {
+                //await Task.Delay(100);
+                //item.collider.transform.DOMoveY(0.3f, 2);
+                Transform platformToShow = item.collider.transform.parent.transform;
+                //if (!(Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) > 1.40f && (Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) < 1.5f)))
+                //{
+                _highlightedPath.Add(platformToShow);
+                //}
+
+                platformToShow.position += new Vector3(0, _highlightHeight, 0);
+            }
+
+        }
+
+        _raisingPathDirection = direction;
+
+        //await Task.Delay(1000);
+        //foreach (var item in platformsToRaise)
+        //{
+        //    await Task.Delay(100);
+        //    item.collider.gameObject.GetComponentInParent<Transform>().DOMoveY(-0.3f, 2);
+        //}
+    }
+
+    private void ClearPath()
+    {
+        if (_highlightedPath.Count > 0)
+        {
+            foreach (Transform transform in _highlightedPath)
+            {
+                transform.position -= new Vector3(0, _highlightHeight, 0);
+            }
+            _highlightedPath.Clear();
+        }
+    }
 
     public void AssignPlayer(GameObject selectedBot)
     {
         _bot = selectedBot;
         _directionalInputBot = _bot.GetComponent<DirectionalInputBot>();
+        _botParentGameObject = _bot.transform.parent.transform.parent.gameObject;
         //_bot.GetComponent<Bot>().ShowDirection();
     }
     private void OnDisable()
@@ -142,5 +199,11 @@ public class GameManager : MonoBehaviour
     private void LoadLevel()
     {
         onGameStarted();
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        //Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
+        //Gizmos.DrawRay(_raycastOrigin.position, -_raycastOrigin.transform.up);
     }
 }

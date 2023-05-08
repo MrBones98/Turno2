@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118466540910581149, guid: 5a90907f872644428aba3b335277087b, type: 3}
       propertyPath: _botStepDelay
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5259967349272961958, guid: 5a90907f872644428aba3b335277087b, type: 3}
       propertyPath: m_Materials.Array.data[0]

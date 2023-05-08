@@ -16,8 +16,11 @@ public class WinTile : Tile, ISwitchActivatable
     }
     private void OnTriggerEnter(Collider other)
     {
-        onButtonPressed();
-        print("Wiiiiiiiiiiiiiii");
+        if (other.GetComponent<Bot>())
+        {
+            onButtonPressed();
+            print("Wiiiiiiiiiiiiiii");
+        }
     }
 
     public void Activate()

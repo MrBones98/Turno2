@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentGameObject: {fileID: 4543900161054584840}
-  _botStepDelay: 0.75
+  _botStepDelay: 1
   _goundcheckOffset: -0.3
   _platformGroundCheckLayer:
     serializedVersion: 2

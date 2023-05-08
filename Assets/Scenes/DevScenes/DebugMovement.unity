@@ -2162,7 +2162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1092194180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2488,7 +2488,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510465932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 581.99976, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2507,7 +2507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91be7f0c310921f41b7c02c18e8412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelToLoad: {fileID: 11400000, guid: b51165f2ac6e35f4891f9ee8e2ecb051, type: 2}
+  _levelToLoad: {fileID: 11400000, guid: 5792b73cffffc44b5a5f69163fa1a174, type: 2}
   _levelContainer: {fileID: 1656812747}
   _prefabList:
   - Type: 0
@@ -2551,6 +2551,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _winScreen: {fileID: 1090003988}
   _gameplayUI: {fileID: 1092194179}
+  _highlightHeight: 0.3
+  _highlightPathLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _botParentGameObject: {fileID: 0}
 --- !u!114 &1510465936
 MonoBehaviour:
   m_ObjectHideFlags: 0

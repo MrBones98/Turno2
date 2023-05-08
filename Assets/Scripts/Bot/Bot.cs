@@ -20,6 +20,8 @@ public class Bot : MonoBehaviour
     public bool IsPushableBot { get { return _isPushable; } set { } }
     public bool CanBePushed { get { return _canBePushed; } set { }}
     public bool IsFocused{ get { return _isFocused; } set { } }
+    public GameObject ParentGameObject { get { return _parentGameObject; } set { } }
+    public int StepCount { get { return _stepCount; } set { } }
 
     private string[] _layersToCheck = { "Platform", "Pushable", "Wall", "Player"};
     int _collidableLayers;
@@ -32,13 +34,9 @@ public class Bot : MonoBehaviour
     private Vector3 _lookDirection;
     private Vector3 _movementDirection;
     private Vector3 _gizmoPosition;
-    private DirectionIs _raisingPathDirection;
-    private Vector3 _raisingPathDirectionReference;//delete Later
     private WallTile _wallTile= null;
     private PushableBox _pushableBox = null;
     private Bot _pushableBot = null;
-    private DirectionalInputBot _directionalInputBot;
-    private List<Transform> _highlightedPath = new();
 
     public delegate void OnFinishedMove();
     public static OnFinishedMove onFinishedMove;
@@ -49,17 +47,14 @@ public class Bot : MonoBehaviour
     }
     private void Awake()
     {
-        //SolveTurnAsync();
         _collidableLayers = LayerMask.GetMask(_layersToCheck);
-        _directionalInputBot = GetComponent<DirectionalInputBot>();
+        //_directionalInputBot = GetComponent<DirectionalInputBot>();
     }
     //Could make this async and wait for it on Game Manager
     public void CheckMove(Vector3 direction)
     {
         if (_isActive)
         {
-            ClearPath();
-            //ShowDirection();
             _isFocused = false;
             _movementDirection = direction;
             Vector3 correctedDirection = direction.normalized;
@@ -70,103 +65,16 @@ public class Bot : MonoBehaviour
             SolveTurnAsync(direction);  
         }
     }
-    public void ShowDirection(DirectionIs direction)
+    
+    public RaycastHit[] PlatformsToRaise(Vector3 orientation)
     {
-        Vector3 rayOrientation;
-        //if(direction.x<0 || direction.z < 0)
-        //{
-        //    rayOrientation = direction - _parentGameObject.transform.position;
-        //    //rayOrientation = -direction;
-        //}
-        //else
-        //{
-        //    rayOrientation = direction;
-        //}
-        rayOrientation = MoveUtils.SetDirection(direction);
-        print(rayOrientation);
-       
-        if (MoveUtils.SetDirection(_raisingPathDirection) == Vector3.zero || _raisingPathDirection != direction)
-        {
-
-            //RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, _parentGameObject.transform.position +direction, 1.0f,_platformGroundCheckLayer);
-            RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, rayOrientation, _stepCount,_highlightPathLayer);
-            print($"platforms on the path {platformsToRaise.Length} ");
-            ClearPath();
-            foreach (var item in platformsToRaise)
-            {
-                //await Task.Delay(100);
-                //item.collider.transform.DOMoveY(0.3f, 2);
-                Transform platformToShow = item.collider.transform.parent.transform;
-                if (!(Vector3.Distance(platformToShow.position, _parentGameObject.transform.position) > 1.40f && (Vector3.Distance(platformToShow.position, _parentGameObject.transform.position) < 1.5f)))
-                {
-                    _highlightedPath.Add(platformToShow);
-                }
-                //print(Vector3.Distance(platformToShow.position, _parentGameObject.transform.position));
-                //print(platformToShow.name);
-                //platformToShow.DOMoveY(5f, 10);
-                platformToShow.position += new Vector3(0,_highlightHeight, 0);
-            }
-
-        }
-        //else
-        //{
-        //    foreach (var item in _highlightedPath)
-        //    {
-        //        item.position -= new Vector3(0, 0.3f, 0);
-        //        _highlightedPath.Remove(item);
-        //    }
-
-
-
-        //}
-        _raisingPathDirection = direction;
-        
-        //await Task.Delay(1000);
-        //foreach (var item in platformsToRaise)
-        //{
-        //    await Task.Delay(100);
-        //    item.collider.gameObject.GetComponentInParent<Transform>().DOMoveY(-0.3f, 2);
-        //}
-    }
-
-    private void ClearPath()
-    {
-        if (_highlightedPath.Count > 0)
-        {
-            foreach (Transform transform in _highlightedPath)
-            {
-                transform.position -= new Vector3(0, _highlightHeight, 0);
-            }
-            _highlightedPath.Clear();
-        }
-    }
-
-    private void Update()
-    {
-        if (IsFocused)
-        {
-            
-            ShowDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
-        }
-    }
-
-    private bool DirectionHasChanged(Vector3 vector3)
-    {
-        if(vector3 == _raisingPathDirectionReference)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return Physics.RaycastAll(_parentGameObject.transform.position, orientation, _stepCount, _highlightPathLayer);
     }
 
     async Task SolvePushCollisionsAsync(Vector3 direction)
     {
         Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x,-1, _parentGameObject.transform.position.z) + direction;
         if (IsPushableBot) //Debug purposes, delete
-            print(correctedPushDirection);
         await Task.Delay((int)(_botStepDelay) * 1000);
         
         RaycastHit[] facingHit = Physics.SphereCastAll(correctedPushDirection, 0.44f,  Vector3.up, 1.5f, _collidableLayers);
@@ -380,7 +288,7 @@ public class Bot : MonoBehaviour
         Gizmos.color = Color.black;
         //Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
         //Gizmos.DrawRay(_raycastOrigin.position, -_raycastOrigin.transform.up);
-        Gizmos.DrawRay(_parentGameObject.transform.position, MoveUtils.SetDirection(_raisingPathDirection));
+        //Gizmos.DrawRay(_parentGameObject.transform.position, MoveUtils.SetDirection(_raisingPathDirection));
     }
 
 }
