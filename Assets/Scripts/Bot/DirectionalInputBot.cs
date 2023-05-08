@@ -56,7 +56,7 @@ public class DirectionalInputBot : MonoBehaviour
 
             }
         }
-        print(_direction);
+        //print(_direction);
         return _direction;
     }
 }
