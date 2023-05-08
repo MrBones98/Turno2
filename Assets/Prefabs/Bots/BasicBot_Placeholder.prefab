@@ -347,10 +347,13 @@ MonoBehaviour:
   _platformGroundCheckLayer:
     serializedVersion: 2
     m_Bits: 128
+  _highlightPathLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   _rigidBody: {fileID: 897543692849153366}
   _raycastOrigin: {fileID: 6872722620707866361}
   _isPushable: 0
-  _canBePushed: 0
+  _highlightHeight: 0.3
 --- !u!114 &3899978284399370434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae90ef059371404db44c4249ee59ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _calculate: 0
 --- !u!1 &4543900161054584840
 GameObject:
   m_ObjectHideFlags: 0

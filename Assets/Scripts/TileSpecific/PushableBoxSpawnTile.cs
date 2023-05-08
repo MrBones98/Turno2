@@ -15,7 +15,7 @@ public class PushableBoxSpawnTile : Tile
     private void SpawnBox()
     {
         GameObject box = Instantiate(_box, transform.position + new Vector3(0,_offset,0), Quaternion.identity);
-        
+        box.transform.SetParent(transform, true);
     }
 
     private void Awake()

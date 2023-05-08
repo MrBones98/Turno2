@@ -11,9 +11,11 @@ public class Bot : MonoBehaviour
     [SerializeField] [Range(0.5f, 2f)] private float _botStepDelay;
     [SerializeField] private float _goundcheckOffset;
     [SerializeField] private LayerMask _platformGroundCheckLayer;
+    [SerializeField] private LayerMask _highlightPathLayer;
     [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private Transform _raycastOrigin;
     [SerializeField] private bool _isPushable;
+    [SerializeField] private float _highlightHeight;
 
     public bool IsPushableBot { get { return _isPushable; } set { } }
     public bool CanBePushed { get { return _canBePushed; } set { }}
@@ -30,7 +32,7 @@ public class Bot : MonoBehaviour
     private Vector3 _lookDirection;
     private Vector3 _movementDirection;
     private Vector3 _gizmoPosition;
-    private Vector3 _raisingPathDirection;
+    private DirectionIs _raisingPathDirection;
     private Vector3 _raisingPathDirectionReference;//delete Later
     private WallTile _wallTile= null;
     private PushableBox _pushableBox = null;
@@ -56,6 +58,7 @@ public class Bot : MonoBehaviour
     {
         if (_isActive)
         {
+            ClearPath();
             //ShowDirection();
             _isFocused = false;
             _movementDirection = direction;
@@ -67,49 +70,43 @@ public class Bot : MonoBehaviour
             SolveTurnAsync(direction);  
         }
     }
-    public void ShowDirection(Vector3 direction)
+    public void ShowDirection(DirectionIs direction)
     {
         Vector3 rayOrientation;
-        if(direction.x<0 || direction.z < 0)
-        {
-            rayOrientation = direction - _parentGameObject.transform.position;
-            //rayOrientation = -direction;
-        }
-        else
-        {
-            rayOrientation = direction;
-        }
+        //if(direction.x<0 || direction.z < 0)
+        //{
+        //    rayOrientation = direction - _parentGameObject.transform.position;
+        //    //rayOrientation = -direction;
+        //}
+        //else
+        //{
+        //    rayOrientation = direction;
+        //}
+        rayOrientation = MoveUtils.SetDirection(direction);
         print(rayOrientation);
        
-        if (_raisingPathDirection == Vector3.zero || _raisingPathDirection != direction)
+        if (MoveUtils.SetDirection(_raisingPathDirection) == Vector3.zero || _raisingPathDirection != direction)
         {
 
             //RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, _parentGameObject.transform.position +direction, 1.0f,_platformGroundCheckLayer);
-            RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, rayOrientation, _stepCount,_platformGroundCheckLayer);
-            //print($"platforms on the path {platformsToRaise.Length} ");
-            if (_highlightedPath.Count > 0)
-            {
-                foreach (Transform transform in _highlightedPath)
-                {
-                    transform.position-= new Vector3(0, 0.3f, 0);
-                }
-                _highlightedPath.Clear();
-            }
+            RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, rayOrientation, _stepCount,_highlightPathLayer);
+            print($"platforms on the path {platformsToRaise.Length} ");
+            ClearPath();
             foreach (var item in platformsToRaise)
             {
                 //await Task.Delay(100);
                 //item.collider.transform.DOMoveY(0.3f, 2);
                 Transform platformToShow = item.collider.transform.parent.transform;
-                if(!(Vector3.Distance(platformToShow.position, _parentGameObject.transform.position)> 1.40f && (Vector3.Distance(platformToShow.position, _parentGameObject.transform.position) < 1.5f)))
+                if (!(Vector3.Distance(platformToShow.position, _parentGameObject.transform.position) > 1.40f && (Vector3.Distance(platformToShow.position, _parentGameObject.transform.position) < 1.5f)))
                 {
                     _highlightedPath.Add(platformToShow);
                 }
                 //print(Vector3.Distance(platformToShow.position, _parentGameObject.transform.position));
                 //print(platformToShow.name);
                 //platformToShow.DOMoveY(5f, 10);
-                platformToShow.position += new Vector3(0, 0.3f, 0);
+                platformToShow.position += new Vector3(0,_highlightHeight, 0);
             }
-            
+
         }
         //else
         //{
@@ -118,9 +115,9 @@ public class Bot : MonoBehaviour
         //        item.position -= new Vector3(0, 0.3f, 0);
         //        _highlightedPath.Remove(item);
         //    }
-            
 
-            
+
+
         //}
         _raisingPathDirection = direction;
         
@@ -131,12 +128,25 @@ public class Bot : MonoBehaviour
         //    item.collider.gameObject.GetComponentInParent<Transform>().DOMoveY(-0.3f, 2);
         //}
     }
+
+    private void ClearPath()
+    {
+        if (_highlightedPath.Count > 0)
+        {
+            foreach (Transform transform in _highlightedPath)
+            {
+                transform.position -= new Vector3(0, _highlightHeight, 0);
+            }
+            _highlightedPath.Clear();
+        }
+    }
+
     private void Update()
     {
         if (IsFocused)
         {
             
-            ShowDirection(MoveUtils.SetDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate())));
+            ShowDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
         }
     }
 
@@ -370,7 +380,7 @@ public class Bot : MonoBehaviour
         Gizmos.color = Color.black;
         //Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
         //Gizmos.DrawRay(_raycastOrigin.position, -_raycastOrigin.transform.up);
-        Gizmos.DrawRay(_parentGameObject.transform.position, _raisingPathDirection);
+        Gizmos.DrawRay(_parentGameObject.transform.position, MoveUtils.SetDirection(_raisingPathDirection));
     }
 
 }
