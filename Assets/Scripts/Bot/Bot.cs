@@ -15,11 +15,13 @@ public class Bot : MonoBehaviour
 
     public bool IsPushableBot { get { return _isPushable; } set { } }
     public bool CanBePushed { get { return _canBePushed; } set { }}
+    public bool IsFocused{ get { return _isFocused; } set { } }
 
-    [SerializeField]private bool _canBePushed;
     private string[] _layersToCheck = { "Platform", "Pushable", "Wall", "Player"};
     int _collidableLayers;
     private int _stepCount;
+    private bool _isFocused;
+    private bool _canBePushed;
     private bool _grounded = true;
     private bool _isActive = true;
     private bool _platformCached = false;
@@ -47,6 +49,7 @@ public class Bot : MonoBehaviour
     {
         if (_isActive)
         {
+            _isFocused = false;
             _movementDirection = direction;
             Vector3 correctedDirection = direction.normalized;
             _gizmoPosition = correctedDirection;
@@ -240,6 +243,7 @@ public class Bot : MonoBehaviour
         }
         //Move await=>loop through hits
         onFinishedMove();
+        
     }
    
     public async Task SolvePushAsync(Vector3 direction)
@@ -256,6 +260,7 @@ public class Bot : MonoBehaviour
     public void SetDistance(int distance)
     {
         _stepCount = distance;
+        _isFocused = true;
     }
     private void OnDisable()
     {
