@@ -47,6 +47,7 @@ public class GameSpaceUIController : MonoBehaviour
 
     private void OnResetClicked()
     {
+        _handler.ClearMenus();
         print("Reset Clicked");
     }
 
@@ -58,6 +59,7 @@ public class GameSpaceUIController : MonoBehaviour
     private void OnPauseMenuClicked()
     {
         print("Pause Clicked");
+        _handler.ClearMenus();
         _handler.DrawPauseMenu();
     }
 
@@ -65,6 +67,13 @@ public class GameSpaceUIController : MonoBehaviour
     {
         print("Showing Win Screen");
         _handler.DrawWinMenu();
+    }
+
+    // win menu
+    private void LoadNextLevel()
+    {
+        _handler.ClearMenus();
+        print("Load Next Level");
     }
 
     // pause menu
@@ -75,6 +84,7 @@ public class GameSpaceUIController : MonoBehaviour
 
     private void GoToMainMenu()
     {
+        _handler.ClearMenus();
         print("Go To Main Menu Clicked");
     }
 
@@ -112,32 +122,32 @@ public class GameSpaceUIController : MonoBehaviour
 
 
         // debug methods
-        _handler.GiveMove1Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give1MoveButtonName);
-        _handler.GiveMove1Button.clicked += () => GiveMoveCard(1);
+        _handler.DebugGiveMove1Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give1MoveButtonName);
+        _handler.DebugGiveMove1Button.clicked += () => GiveMoveCard(1);
 
-        _handler.GiveMove2Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give2MoveButtonName);
-        _handler.GiveMove2Button.clicked += () => GiveMoveCard(2);
+        _handler.DebugGiveMove2Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give2MoveButtonName);
+        _handler.DebugGiveMove2Button.clicked += () => GiveMoveCard(2);
 
-        _handler.GiveMove3Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give3MoveButtonName);
-        _handler.GiveMove3Button.clicked += () => GiveMoveCard(3);
+        _handler.DebugGiveMove3Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give3MoveButtonName);
+        _handler.DebugGiveMove3Button.clicked += () => GiveMoveCard(3);
 
-        _handler.GiveMove4Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give4MoveButtonName);
-        _handler.GiveMove4Button.clicked += () => GiveMoveCard(4);
+        _handler.DebugGiveMove4Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give4MoveButtonName);
+        _handler.DebugGiveMove4Button.clicked += () => GiveMoveCard(4);
 
 
-        _handler.NextLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_NextLvlButtonName);
-        _handler.NextLvlButton.clicked += () => DebugLoadLevel(1);
+        _handler.DebugNextLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_DebugNextLvlButtonName);
+        _handler.DebugNextLvlButton.clicked += () => DebugLoadLevel(1);
 
-        _handler.PrevLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_PrevLvlMoveButtonName);
-        _handler.PrevLvlButton.clicked += () => DebugLoadLevel(0);
+        _handler.DebugPrevLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_DebugPrevLvlMoveButtonName);
+        _handler.DebugPrevLvlButton.clicked += () => DebugLoadLevel(0);
     }
 
     private void InitPauseMenu()
     {
         _handler.PauseMenu = _handler.PauseMenuDoc.CloneTree();
 
-        _handler.MainMenuButton = _handler.PauseMenu.Q<Button>(GameSpaceUIHandler.k_MainMenuButtonName);
-        _handler.MainMenuButton.clicked += () => GoToMainMenu();
+        _handler.MainMenuFromPauseButton = _handler.PauseMenu.Q<Button>(GameSpaceUIHandler.k_MainMenuFromPauseButtonName);
+        _handler.MainMenuFromPauseButton.clicked += () => GoToMainMenu();
 
         _handler.ContinueButton = _handler.PauseMenu.Q<Button>(GameSpaceUIHandler.k_ContinueButtonName);
         _handler.ContinueButton.clicked += () => ClosePauseMenu();
@@ -160,7 +170,17 @@ public class GameSpaceUIController : MonoBehaviour
     private void InitWinMenu()
     {
         _handler.WinMenu = _handler.WinMenuDoc.CloneTree();
+
+        _handler.MainMenuFromWinButton = _handler.WinMenu.Q<Button>(GameSpaceUIHandler.k_MainMenuFromWinButtonName);
+        _handler.MainMenuFromWinButton.clicked += () => GoToMainMenu();
+
+        _handler.NextLevelFromWinButton = _handler.WinMenu.Q<Button>(GameSpaceUIHandler.k_NextLevelButtonName);
+        _handler.NextLevelFromWinButton.clicked += () => LoadNextLevel();
+
+        _handler.RedoButton = _handler.WinMenu.Q<Button>(GameSpaceUIHandler.k_RedoButtonName);
+        _handler.RedoButton.clicked += () => OnResetClicked();
     }
+
 
     #endregion
 }

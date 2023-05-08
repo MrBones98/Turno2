@@ -27,14 +27,19 @@ public class GameSpaceUIHandler : MonoBehaviour
     public const string k_Give3MoveButtonName = "GiveMove3";
     public const string k_Give4MoveButtonName = "GiveMove4";
 
-    public const string k_NextLvlButtonName = "NextLvl";
-    public const string k_PrevLvlMoveButtonName = "PrevLvl";
+    public const string k_DebugNextLvlButtonName = "NextLvl";
+    public const string k_DebugPrevLvlMoveButtonName = "PrevLvl";
 
     // pause menu
-    public const string k_MainMenuButtonName = "MainMenuButton";
+    public const string k_MainMenuFromPauseButtonName = "MainMenuButton";
     public const string k_ContinueButtonName = "ContinueButton";
     public const string k_BGMSliderName = "BGMVolSlider";
     public const string k_SFXSliderName = "SFXVolSlider";
+
+    // win menu
+    public const string k_MainMenuFromWinButtonName = "MainMenu";
+    public const string k_RedoButtonName = "RedoLevel";
+    public const string k_NextLevelButtonName = "NextLevel";
 
     #endregion
 
@@ -55,21 +60,25 @@ public class GameSpaceUIHandler : MonoBehaviour
     [HideInInspector] public Button PauseButton;
 
     // pause menu
-    [HideInInspector] public Button MainMenuButton;
+    [HideInInspector] public Button MainMenuFromPauseButton;
     [HideInInspector] public Button ContinueButton;
     [HideInInspector] public Slider BGMVolSlider;
     [HideInInspector] public Slider SFXVolSlider;
 
+    // win screen
+    [HideInInspector] public Button MainMenuFromWinButton;
+    [HideInInspector] public Button RedoButton;
+    [HideInInspector] public Button NextLevelFromWinButton;
 
 
     // debug menu
-    [HideInInspector] public Button GiveMove1Button;
-    [HideInInspector] public Button GiveMove2Button;
-    [HideInInspector] public Button GiveMove3Button;
-    [HideInInspector] public Button GiveMove4Button;
+    [HideInInspector] public Button DebugGiveMove1Button;
+    [HideInInspector] public Button DebugGiveMove2Button;
+    [HideInInspector] public Button DebugGiveMove3Button;
+    [HideInInspector] public Button DebugGiveMove4Button;
 
-    [HideInInspector] public Button NextLvlButton;
-    [HideInInspector] public Button PrevLvlButton;
+    [HideInInspector] public Button DebugNextLvlButton;
+    [HideInInspector] public Button DebugPrevLvlButton;
 
     #endregion
 
