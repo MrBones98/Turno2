@@ -93,12 +93,12 @@ public class GameSpaceUIController : MonoBehaviour
     // audio options
     private void SetBGMVol(float target)
     {
-
+        AudioManager.instance.SetBGMSound(target);
     }
 
     private void SetSFXVol(float target)
     {
-
+        AudioManager.instance.SetSFXSound(target);
     }
 
     #endregion
@@ -165,7 +165,7 @@ public class GameSpaceUIController : MonoBehaviour
         _handler.SFXVolSlider.RegisterValueChangedCallback(evt =>
         {
             DebugSliderValue(GameSpaceUIHandler.k_SFXSliderName, evt.newValue);
-            SetBGMVol(evt.newValue);
+            SetSFXVol(evt.newValue);
         });
     }
 

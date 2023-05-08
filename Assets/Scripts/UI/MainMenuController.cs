@@ -64,12 +64,12 @@ public class MainMenuController : MonoBehaviour
     // audio options
     private void SetBGMVol(float target)
     {
-
+        AudioManager.instance.SetBGMSound(target);
     }
 
     private void SetSFXVol(float target)
     {
-
+        AudioManager.instance.SetSFXSound(target);
     }
 
     // level Loading

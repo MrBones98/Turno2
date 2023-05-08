@@ -11,9 +11,14 @@ public class AudioManager : MonoBehaviour
     private int _defaultClipIndex;
 
     [SerializeField]
+    private AudioMixer _mixer;
+
+    [SerializeField]
     List<Sound> sounds;
 
     public static AudioManager instance;
+
+
 
     private void Awake()
     {
@@ -26,6 +31,8 @@ public class AudioManager : MonoBehaviour
         {
             DestroyImmediate(gameObject);
         }
+
+        //_mixer 
     }
     
     private void Start()
@@ -88,6 +95,15 @@ public class AudioManager : MonoBehaviour
         }
         return clipName;                                                // otherwise return "default"
 
+    }
+
+    public void SetBGMSound(float sliderValue)          // sets mixer volume, converting slider value from linear to logarithmic
+    {                                                   // mixer uses db which are logarythmic values so passing sliderValue only causes unwanted behaviour
+        _mixer.SetFloat("BGMVol", sliderValue);
+    }
+    public void SetSFXSound(float sliderValue)
+    {
+        _mixer.SetFloat("SFXVol", sliderValue);
     }
 
     [Button, DisableInEditorMode]

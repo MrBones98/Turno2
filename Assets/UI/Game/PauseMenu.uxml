@@ -1,12 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/MenuStyles.uss?fileID=7433441132597879392&amp;guid=0fca17f0ae99945f2bc779d4c1796174&amp;type=3#MenuStyles" />
-    <ui:VisualElement name="Root" style="flex-grow: 1; width: 100%; height: 100%; align-items: center; background-color: rgba(89, 81, 81, 255);">
+    <ui:VisualElement name="Root" style="flex-grow: 1; width: 100%; height: 100%; align-items: center; background-color: rgb(89, 81, 81);">
         <ui:Label text="GAME PAUSED" display-tooltip-when-elided="true" class="MenuHeaderText GameMenuText" style="margin-top: 1px;" />
         <ui:Button text="MAIN MENU" display-tooltip-when-elided="true" name="MainMenuButton" class="MainMenuButton GameMenuButton" />
         <ui:Label text="Music Volume" display-tooltip-when-elided="true" class="MenuHeaderText GameMenuHeader" style="-unity-text-align: lower-center;" />
-        <ui:Slider picking-mode="Ignore" value="50" high-value="100" focusable="false" direction="Horizontal" show-input-field="false" name="BGMVolSlider" class="MenuSlider GameMenuSlider" />
+        <ui:Slider picking-mode="Ignore" value="0" high-value="20" focusable="false" direction="Horizontal" show-input-field="false" name="BGMVolSlider" low-value="-80" class="MenuSlider GameMenuSlider" />
         <ui:Label text="FX Volume" display-tooltip-when-elided="true" class="MenuHeaderText GameMenuHeader" style="margin-top: 0;" />
-        <ui:Slider picking-mode="Ignore" value="42" high-value="100" focusable="false" name="SFXVolSlider" class="MenuSlider GameMenuSlider" />
+        <ui:Slider picking-mode="Ignore" value="0" high-value="20" focusable="false" name="SFXVolSlider" low-value="-80" class="MenuSlider GameMenuSlider" />
         <ui:Button text="CONTINUE" display-tooltip-when-elided="true" name="ContinueButton" class="MainMenuButton GameMenuButton" style="margin-top: 0;" />
     </ui:VisualElement>
 </ui:UXML>

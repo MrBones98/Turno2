@@ -123,6 +123,83 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &270848622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 270848624}
+  - component: {fileID: 270848623}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &270848623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270848622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 429ff1484f4e94ccdaba241bc8836fe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultClipIndex: 0
+  _mixer: {fileID: 24100000, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  sounds:
+  - name: BGM
+    clip: {fileID: 8300000, guid: b03c9a4931541d642b96c3e1099fca0c, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 1
+    isSFX: 0
+    isPLaying: 0
+    _mixer: {fileID: -2030469017748340696, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 65e1149a97d0f7b4abe36d30831827aa, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: f15f05f9316d94b4a939fb4acc7ed161, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+--- !u!4 &270848624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270848622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.726727, y: 0.27035284, z: 2.4623313}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &616057435
 GameObject:
   m_ObjectHideFlags: 0
