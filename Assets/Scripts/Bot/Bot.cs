@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using DG.Tweening;
+using Utils;
 
 public class Bot : MonoBehaviour
 {
@@ -28,9 +30,13 @@ public class Bot : MonoBehaviour
     private Vector3 _lookDirection;
     private Vector3 _movementDirection;
     private Vector3 _gizmoPosition;
+    private Vector3 _raisingPathDirection;
+    private Vector3 _raisingPathDirectionReference;//delete Later
     private WallTile _wallTile= null;
     private PushableBox _pushableBox = null;
     private Bot _pushableBot = null;
+    private DirectionalInputBot _directionalInputBot;
+    private List<Transform> _highlightedPath = new();
 
     public delegate void OnFinishedMove();
     public static OnFinishedMove onFinishedMove;
@@ -43,12 +49,14 @@ public class Bot : MonoBehaviour
     {
         //SolveTurnAsync();
         _collidableLayers = LayerMask.GetMask(_layersToCheck);
+        _directionalInputBot = GetComponent<DirectionalInputBot>();
     }
     //Could make this async and wait for it on Game Manager
     public void CheckMove(Vector3 direction)
     {
         if (_isActive)
         {
+            //ShowDirection();
             _isFocused = false;
             _movementDirection = direction;
             Vector3 correctedDirection = direction.normalized;
@@ -59,6 +67,81 @@ public class Bot : MonoBehaviour
             SolveTurnAsync(direction);  
         }
     }
+    public void ShowDirection(Vector3 direction)
+    {
+        Vector3 rayOrientation;
+        if(direction.x<0 || direction.z < 0)
+        {
+            rayOrientation = direction - _parentGameObject.transform.position;
+        }
+        else
+        {
+            rayOrientation = direction;
+        }
+
+        if (_raisingPathDirection == Vector3.zero || _raisingPathDirection != direction)
+        {
+
+            //RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, _parentGameObject.transform.position +direction, 1.0f,_platformGroundCheckLayer);
+            RaycastHit[] platformsToRaise = Physics.RaycastAll(_parentGameObject.transform.position, rayOrientation, _stepCount,_platformGroundCheckLayer);
+            print($"platforms on the path {platformsToRaise.Length} ");
+            if(platformsToRaise.Length > 0)
+            {
+                print(platformsToRaise[0].collider.gameObject.name);
+            }
+            foreach (var item in platformsToRaise)
+            {
+                //await Task.Delay(100);
+                //item.collider.transform.DOMoveY(0.3f, 2);
+                Transform platformToShow = item.collider.transform.parent.transform;
+                _highlightedPath.Add(platformToShow);
+                print(platformToShow.name);
+                //platformToShow.DOMoveY(5f, 10);
+                platformToShow.position += new Vector3(0, 0.3f, 0);
+            }
+            
+        }
+        //else
+        //{
+        //    foreach (var item in _highlightedPath)
+        //    {
+        //        item.position -= new Vector3(0, 0.3f, 0);
+        //        _highlightedPath.Remove(item);
+        //    }
+            
+
+            
+        //}
+        _raisingPathDirection = direction;
+        
+        //await Task.Delay(1000);
+        //foreach (var item in platformsToRaise)
+        //{
+        //    await Task.Delay(100);
+        //    item.collider.gameObject.GetComponentInParent<Transform>().DOMoveY(-0.3f, 2);
+        //}
+    }
+    private void Update()
+    {
+        if (IsFocused)
+        {
+            
+            ShowDirection(MoveUtils.SetDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate())));
+        }
+    }
+
+    private bool DirectionHasChanged(Vector3 vector3)
+    {
+        if(vector3 == _raisingPathDirectionReference)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     async Task SolvePushCollisionsAsync(Vector3 direction)
     {
         Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x,-1, _parentGameObject.transform.position.z) + direction;
@@ -276,7 +359,8 @@ public class Bot : MonoBehaviour
     {
         Gizmos.color = Color.black;
         //Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
-        Gizmos.DrawRay(_raycastOrigin.position, -_raycastOrigin.transform.up);
+        //Gizmos.DrawRay(_raycastOrigin.position, -_raycastOrigin.transform.up);
+        Gizmos.DrawRay(_parentGameObject.transform.position, _raisingPathDirection);
     }
 
 }

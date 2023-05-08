@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     private void UpdateTurn()
     {
         onBotMove?.Invoke();
-        AssignPlayer(null);
+        //AssignPlayer(null);
     }
 
     private void DeActivate(int id)
@@ -111,23 +111,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //if(Input.GetMouseButtonDown(0))
-        //{
-        //    RaycastHit hitInfo;
-        //    Ray ray =Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        //    if(Physics.Raycast(ray, out hitInfo))
-        //    {
-        //        if (hitInfo.collider.GetComponent<Bot>())
-        //        {
-        //            print("Hit a bot");
-        //            _bot = hitInfo.collider.gameObject;
-        //            //Click on him better to simulate the card grabbing for now,
-        //            //raise event from Bot Component, activate UI
-        //            //that caches bot
-        //        }
-        //    }
-        //}
+        
         if (_bot != null)
         {
             if (_bot.GetComponent<Bot>().IsFocused)
@@ -145,6 +129,7 @@ public class GameManager : MonoBehaviour
     {
         _bot = selectedBot;
         _directionalInputBot = _bot.GetComponent<DirectionalInputBot>();
+        //_bot.GetComponent<Bot>().ShowDirection();
     }
     private void OnDisable()
     {
