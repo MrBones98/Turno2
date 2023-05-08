@@ -179,7 +179,7 @@ public class MainMenuController : MonoBehaviour
             LevelSelectButton newButton = new LevelSelectButton(lvl, index, _menuHandler.LevelSelectButtonTemplate);
 
             _menuHandler._lvlSelectScroll.Add(newButton.Button);
-            newButton.Button.clicked += () => OnLvlSelectButtonClicked(index);
+            //newButton.Button.clicked += () => OnLvlSelectButtonClicked(index);
 
             index++;           
         }      

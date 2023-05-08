@@ -39,6 +39,11 @@ public class GameSpaceUIController : MonoBehaviour
         }
     }
 
+    private void GiveMoveCard(int amount)
+    {
+        print($"Give {amount} move card(s)");
+    }
+
     public void DebugSliderValue(string name, float val)
     {
         print($"{name} slider has {val} value");
@@ -47,11 +52,6 @@ public class GameSpaceUIController : MonoBehaviour
     #endregion
 
     #region Element interaction Methods
-
-    private void GiveMoveCard(int amount)
-    {
-        print($"Give {amount} move card(s)");
-    }
 
     private void OnResetClicked()
     {
