@@ -17,6 +17,14 @@ public class GameSpaceUIController : MonoBehaviour
         _handler.ClearMenus();
     }
 
+    #region public methods
+    public void ShowWinScreen()
+    {
+        print("Showing Win Screen");
+        _handler.DrawWinMenu();
+    }
+    #endregion
+
     #region debug methods
 
     private void DebugLoadLevel(int direction)
@@ -61,12 +69,6 @@ public class GameSpaceUIController : MonoBehaviour
         print("Pause Clicked");
         _handler.ClearMenus();
         _handler.DrawPauseMenu();
-    }
-
-    public void ShowWinScreen()
-    {
-        print("Showing Win Screen");
-        _handler.DrawWinMenu();
     }
 
     // win menu
