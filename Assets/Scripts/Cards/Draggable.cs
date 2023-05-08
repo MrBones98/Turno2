@@ -10,11 +10,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     private Transform _originalHandParent = null;
     private GameObject _bot;
-
+    private DirectionalInputBot _directionalInputBot;
+    private GameManager _gameManager;
 
     private void Awake()
     {
         _cardValueText.text = _moveCount.ToString();
+        _gameManager = GameManager.Instance;
     }
     private void Start()
     {
@@ -44,6 +46,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 _bot= hitInfo.collider.gameObject;
                 _bot.GetComponent<Bot>().SetDistance(_moveCount);
                 GameManager.Instance.AssignPlayer(_bot);
+
+                
+                //_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate());
+
+                
             }
             else
             {

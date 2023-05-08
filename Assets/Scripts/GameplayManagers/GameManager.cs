@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-
+using Utils;
+using System.Threading.Tasks;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     //[OnValueChanged("AssignPlayer")]
     private GameObject _bot;
+    private DirectionalInputBot _directionalInputBot;
 
 
     //public WinTile WinTile;
@@ -36,7 +38,8 @@ public class GameManager : MonoBehaviour
 
     private void UpdateTurn()
     {
-        onBotMove();
+        onBotMove?.Invoke();
+        AssignPlayer(null);
     }
 
     private void DeActivate(int id)
@@ -78,28 +81,24 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    public void GiveChosenBotDirection(int direction)
+    public  void GiveChosenBotDirection(DirectionIs directionIs)
     {
         Vector3 moveVector; //perhaps pass it to bot
         
-        //0 right
-        //1 down
-        //2 left
-        //3 up
 
-        if(direction == 0)
+        if(directionIs == DirectionIs.PosX)
         {
             moveVector = Vector3.right;
         }
-        else if(direction == 1)
+        else if(directionIs==DirectionIs.NegZ)
         {
             moveVector = -Vector3.forward;
         }
-        else if(direction == 2)
+        else if(directionIs ==DirectionIs.NegX)
         {
             moveVector = -Vector3.right;
         }
-        else if (direction == 3)
+        else if (directionIs == DirectionIs.PosZ)
         {
             moveVector = Vector3.forward;
         }
@@ -109,30 +108,43 @@ public class GameManager : MonoBehaviour
         }
         _bot.GetComponent<Bot>().CheckMove(moveVector);
     }
+
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hitInfo;
-            Ray ray =Camera.main.ScreenPointToRay(Input.mousePosition);
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    RaycastHit hitInfo;
+        //    Ray ray =Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if(Physics.Raycast(ray, out hitInfo))
+        //    if(Physics.Raycast(ray, out hitInfo))
+        //    {
+        //        if (hitInfo.collider.GetComponent<Bot>())
+        //        {
+        //            print("Hit a bot");
+        //            _bot = hitInfo.collider.gameObject;
+        //            //Click on him better to simulate the card grabbing for now,
+        //            //raise event from Bot Component, activate UI
+        //            //that caches bot
+        //        }
+        //    }
+        //}
+        if (_bot != null)
+        {
+            if (_bot.GetComponent<Bot>().IsFocused)
             {
-                if (hitInfo.collider.GetComponent<Bot>())
+                if (Input.GetMouseButtonDown(0))
                 {
-                    print("Hit a bot");
-                    _bot = hitInfo.collider.gameObject;
-                    //Click on him better to simulate the card grabbing for now,
-                    //raise event from Bot Component, activate UI
-                    //that caches bot
+                    GiveChosenBotDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
                 }
             }
         }
+
     }
 
     public void AssignPlayer(GameObject selectedBot)
     {
         _bot = selectedBot;
+        _directionalInputBot = _bot.GetComponent<DirectionalInputBot>();
     }
     private void OnDisable()
     {
