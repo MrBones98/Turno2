@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -26,6 +27,7 @@ public class AudioManager : MonoBehaviour
             DestroyImmediate(gameObject);
         }
     }
+    
     private void Start()
     {
         for (int i = 0; i < sounds.Count; i++)
@@ -86,6 +88,12 @@ public class AudioManager : MonoBehaviour
         }
         return clipName;                                                // otherwise return "default"
 
+    }
+
+    [Button, DisableInEditorMode]
+    private void DebugPlayFirstSoundInList()
+    {
+        PlaySound(sounds[0].name);
     }
 }
 
