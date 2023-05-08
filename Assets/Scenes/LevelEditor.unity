@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2693,7 +2693,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1095883523
@@ -3321,7 +3321,7 @@ MonoBehaviour:
     Prefab: {fileID: 613288901978696674, guid: 9c45646e88ce3b246b75125ab66ab2d3, type: 3}
   - Type: 9
     Prefab: {fileID: 5909006104125178624, guid: 8c8cf7d1f7f1a1e43b4969377bbf853a, type: 3}
-  _currentLevel: {fileID: 11400000, guid: 018da173353396e46a4dd1d003b4c5fb, type: 2}
+  _currentLevel: {fileID: 11400000, guid: 2042a3473eaf24b3aab1086b38e45960, type: 2}
   RuntimeTilePositions: []
 --- !u!1 &1244863699
 GameObject:

@@ -12,9 +12,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f664c7288f34bf84dbef09a4c4a5f6b6, type: 3}
   m_Name: T_MeetInTheMiddle
   m_EditorClassIdentifier: 
-  tileObjects: []
-  Name: 
-  MoveOne: 0
-  MoveTwo: 0
-  MoveThree: 0
+  tileObjects:
+  - Type: 7
+    Position:
+    - 7
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 1
+    Distance: 2
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 2
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 1
+    Position:
+    - 4
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 5
+    - 0
+    - 2
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 9
+    Position:
+    - 6
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 4
+    Position:
+    - 6
+    - 0
+    - 4
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 7
+    Position:
+    - 2
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 1
+    - 0
+    Distance: 3
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 2
+    - 0
+    - 3
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  Name: Meet In The Middle
+  MoveOne: 3
+  MoveTwo: 1
+  MoveThree: 1
   MoveFour: 0
