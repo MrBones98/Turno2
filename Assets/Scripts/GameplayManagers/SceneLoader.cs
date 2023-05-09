@@ -3,7 +3,18 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
-   
+    public static SceneLoader Instance;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
     public void GoToMainMenu()
     {
         SceneManager.LoadScene(0);

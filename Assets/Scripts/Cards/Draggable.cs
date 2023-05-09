@@ -12,6 +12,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private GameObject _bot;
     private DirectionalInputBot _directionalInputBot;
     private GameManager _gameManager;
+    private Vector3 _scaleAdditionVector;
 
     private void Awake()
     {
@@ -22,7 +23,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         _originalHandParent = transform.parent;
         //print(_originalHandParent.name);
-        
+        _scaleAdditionVector = new Vector3(transform.localScale.x, transform.localScale.y, 0) * 0.15f;
+
+
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -44,8 +47,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             {
                 //print(hitInfo.collider.gameObject.name);
                 _bot= hitInfo.collider.gameObject;
-                _bot.GetComponent<Bot>().SetDistance(_moveCount);
-                GameManager.Instance.AssignPlayer(_bot);
+                //transform.localScale-= _scaleAdditionVector;
 
                 
                 //_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate());
@@ -54,11 +56,16 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
             else
             {
+                //transform.localScale+= _scaleAdditionVector;
                 _bot= null;
             }
         }
     }
+    //separate raycasting function, returns hitinfo
+    //private RaycastHit TryToGetPlayer()
+    //{
 
+    //}
     public void OnEndDrag(PointerEventData eventData)
     {
         //print("end");
@@ -68,18 +75,22 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (_bot != null)
         {
             //TODO
+            _bot.GetComponent<Bot>().SetDistance(_moveCount);
+            GameManager.Instance.AssignPlayer(_bot);
             //Don' Destroy, pass object to gamanager list as well as previous bot position c:
-            Destroy(gameObject);
+            Destroy(gameObject,0.3f);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         //throw new System.NotImplementedException();
+        //Dotween hover down
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         //throw new System.NotImplementedException();
+        //Dotween hover up
     }
 }

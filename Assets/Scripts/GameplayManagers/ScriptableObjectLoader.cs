@@ -12,10 +12,13 @@ public class ScriptableObjectLoader : MonoBehaviour
     [SerializeField] private List<SaveLevelPrefab> _prefabList = new();
     [SerializeField] private List<GameObject> _cardPrefabs = new();
     [SerializeField] private GameObject _playerHand; //TODO move to game manager when head's clear
-
     //for functionality, just assign level to load byt the index of _levels. Iterations could be just selecting buttons, progressing to +1 on finish level
-    [SerializeField] private List<Level> levels = new();
+    [SerializeField] private List<Level> _levels = new();
+
+    private int _index;
+    public int Index { get { return _index; } set { } }
     public Level LevelToLoad { get { return _levelToLoad; } set { } }
+    public List<Level> Levels { get { return _levels; } set { } }
     public delegate void LevelLoaded();
     public static event LevelLoaded onLevelLoaded;
     private void Awake()
@@ -31,7 +34,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     }
     void Start()
     {
-        LoadLevel();
+        //LoadLevelWithIndex();
         //LoadCards();
         //TODO
         //A SOMEWHAT LESS DUMB INSTANTIATION PLEASE JAHSDJHA AH
@@ -39,7 +42,6 @@ public class ScriptableObjectLoader : MonoBehaviour
         //easier to access
         //Add later a list to keep track of which cards were use for undo button
     }
-
     private void LoadCards()
     {
         for (int i = 0; i < _levelToLoad.MoveOne; i++)
@@ -75,9 +77,14 @@ public class ScriptableObjectLoader : MonoBehaviour
             GameManager.Cards.Add(cardPrefab);
         }
     }
-
-    private void LoadLevel()
+    public void LoadNextLevel()
     {
+        _index++;
+        LoadLevelWithIndex(_index);
+    }
+    public void LoadLevelWithIndex(int index)
+    {
+        _levelToLoad = _levels[index];
         if(_levelToLoad == null)
         {
             Debug.LogError("No Level Object");

@@ -55,7 +55,6 @@ public class Bot : MonoBehaviour
     {
         if (_isActive)
         {
-            _isFocused = false;
             _movementDirection = direction;
             Vector3 correctedDirection = direction.normalized;
             _gizmoPosition = correctedDirection;
@@ -74,7 +73,7 @@ public class Bot : MonoBehaviour
     async Task SolvePushCollisionsAsync(Vector3 direction)
     {
         Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x,-1, _parentGameObject.transform.position.z) + direction;
-        if (IsPushableBot) //Debug purposes, delete
+        if (IsFocused) //Debug purposes, delete
         await Task.Delay((int)(_botStepDelay) * 1000);
         
         RaycastHit[] facingHit = Physics.SphereCastAll(correctedPushDirection, 0.44f,  Vector3.up, 1.5f, _collidableLayers);
@@ -113,7 +112,7 @@ public class Bot : MonoBehaviour
             }
             print(facingHit[i].collider.gameObject.name);
         }
-        if (IsPushableBot) //Debug purposes, delete
+        if (IsFocused) //Debug purposes, delete
             print($"There are {facingHit.Length} colliders on this step");
     }
     async Task SolveCollisionsAsync(Vector3 direction)
@@ -164,7 +163,7 @@ public class Bot : MonoBehaviour
     }
     async Task SolveMovementAsync(WallTile walltile,bool platformCached, PushableBox pushablebox, Vector3 direction,Bot pushableBot)
     {
-        if(IsPushableBot) //Debug purposes, delete
+        if(IsFocused) //Debug purposes, delete
             print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}, PushableBot = {pushableBot}");
         await Task.Delay((int)_botStepDelay*1000);
         if(walltile == null ||( walltile!= null && !walltile.HasColision))
@@ -177,7 +176,7 @@ public class Bot : MonoBehaviour
             {
                 _grounded=false;
             }
-            if (IsPushableBot) //Debug purposes, delete
+            if (IsFocused) //Debug purposes, delete
                 print(platformCached);
             if(_wallTile!=null && !walltile.HasColision)
             {
@@ -191,7 +190,8 @@ public class Bot : MonoBehaviour
                 if (!pushablebox.IsPushable)
                 {
                     _canBePushed = false;
-                    print("can't move or push box");
+                    if(IsFocused)
+                        print("can't move or push box");
                 }
                 else
                 {
@@ -206,11 +206,13 @@ public class Bot : MonoBehaviour
                 if (!pushableBot.CanBePushed)
                 {
                     _canBePushed = false;
-                    print("Can't push Bot");
+                    if (IsFocused)
+                        print("Can't push Bot");
                 }
                 else
                 {
-                    print("bot can be pushed");
+                    if (IsFocused)
+                        print("bot can be pushed");
                     _canBePushed = true;
                     _parentGameObject.transform.position += direction;
                 }
@@ -219,7 +221,8 @@ public class Bot : MonoBehaviour
             else
             {
                 //Move Bot with direction
-                print("box and bot are null");
+                if (IsFocused)
+                    print("box and bot are null");
                 _canBePushed = true;
                 _parentGameObject.transform.position += direction;
             }
@@ -228,7 +231,7 @@ public class Bot : MonoBehaviour
             {
                 //do another await for if (box=> will be platform/became platform)
                 //Dead Anim
-                if (IsPushableBot) //Debug purposes, delete
+                if (IsFocused) //Debug purposes, delete
                     print("No platform underneath Bot => Death after movement");
             }
         }
@@ -253,6 +256,8 @@ public class Bot : MonoBehaviour
             _platformCached = false;
         }
         //Move await=>loop through hits
+        transform.position -= new Vector3(0, 0.2f, 0);
+        _isFocused = false;
         onFinishedMove();
         
     }
@@ -271,6 +276,7 @@ public class Bot : MonoBehaviour
     public void SetDistance(int distance)
     {
         _stepCount = distance;
+        transform.position += new Vector3(0, 0.2f, 0);
         _isFocused = true;
     }
     private void OnDisable()

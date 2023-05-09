@@ -8,7 +8,7 @@ public class GameSpaceUIController : MonoBehaviour
 {
     [SerializeField]
     private GameSpaceUIHandler _handler;
-
+    private ScriptableObjectLoader _instance;
     private void Awake()
     {
         InitGameUI();
@@ -16,7 +16,10 @@ public class GameSpaceUIController : MonoBehaviour
         InitWinMenu();
         _handler.ClearMenus();
     }
-
+    private void Start()
+    {
+        _instance = ScriptableObjectLoader.Instance;
+    }
     #region public methods
     public void ShowWinScreen()
     {
@@ -41,7 +44,7 @@ public class GameSpaceUIController : MonoBehaviour
 
     private void GiveMoveCard(int amount)
     {
-        print($"Give {amount} move card(s)");
+        CardHandManager.Instance.DebugGiveMoveCard(amount);
     }
 
     public void DebugSliderValue(string name, float val)
@@ -75,7 +78,7 @@ public class GameSpaceUIController : MonoBehaviour
     private void LoadNextLevel()
     {
         _handler.ClearMenus();
-        print("Load Next Level");
+       _instance.LoadNextLevel();
     }
 
     // pause menu
@@ -87,7 +90,7 @@ public class GameSpaceUIController : MonoBehaviour
     private void GoToMainMenu()
     {
         _handler.ClearMenus();
-        print("Go To Main Menu Clicked");
+        SceneLoader.Instance.GoToMainMenu();
     }
 
     // audio options

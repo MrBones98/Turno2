@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CardHandManager : MonoBehaviour
 {
+    public static CardHandManager Instance;
+
     [SerializeField] private GameObject[] _slots;
     [SerializeField] private List<GameObject> _cardPrefabs = new();
     [SerializeField] private bool _isActive = false;
@@ -16,7 +18,33 @@ public class CardHandManager : MonoBehaviour
         ScriptableObjectLoader.onLevelLoaded += LoadCards;
         
     }
-
+    private void Awake()
+    {
+        if (_slots == null)
+        {
+            _slotsCount = 0;
+            Debug.LogWarning($"No slots referenced inside of Inspector: {gameObject.name}");
+        }
+        else
+        {
+            _slotsCount = _slots.Length;
+        }
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    public void DebugGiveMoveCard(int amount)
+    {
+        GameObject card = null;
+        card = Instantiate(_cardPrefabs[amount - 1], _slots[amount - 1].transform.position, Quaternion.identity);
+        card.transform.SetParent(transform, false);
+        GameManager.Cards.Add(card);
+    }
     private void LoadCards()
     {
         _level = ScriptableObjectLoader.Instance.LevelToLoad;
@@ -61,23 +89,6 @@ public class CardHandManager : MonoBehaviour
     private void OnDisable()
     {
         ScriptableObjectLoader.onLevelLoaded -= LoadCards;
-    }
-    private void Start()
-    {
-        
-    }
-    private void Awake()
-    {
-        if (_slots == null)
-        {
-            _slotsCount = 0;
-            Debug.LogWarning($"No slots referenced inside of Inspector: {gameObject.name}");
-        }
-        else
-        {
-            _slotsCount = _slots.Length;
-        }
-
     }
     private void OrganizeSlots()
     {

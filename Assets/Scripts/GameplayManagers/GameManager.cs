@@ -40,6 +40,17 @@ public class GameManager : MonoBehaviour
         SwitchTile.onSwitchReleased += DeActivate;
         Bot.onFinishedMove += UpdateTurn;
     }
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else 
+        { 
+            Destroy(this.gameObject);
+        }
+    }
 
     private void UpdateTurn()
     {
@@ -75,17 +86,6 @@ public class GameManager : MonoBehaviour
         _gameplayUI.SetActive(false);
     }
 
-    private void Awake()
-    {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else 
-        { 
-            Destroy(this.gameObject);
-        }
-    }
     public  void GiveChosenBotDirection(DirectionIs directionIs)
     {
         Vector3 moveVector;

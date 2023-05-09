@@ -18,10 +18,15 @@ public class MovingTile : Tile,ISwitchActivatable
     private void Start()
     {
         _animation.LightForward();        
-        if(Direction.y != 0)
+        if(Direction.y < 0)
         {
+           
             print("Movving Platform should rotate");
             transform.Rotate(0, 90, 0);
+        }
+        else if(Direction.y > 0)
+        {
+            transform.Rotate(0, 270, 0);
         }
     }
     private void OnEnable()
@@ -29,10 +34,12 @@ public class MovingTile : Tile,ISwitchActivatable
         GameManager.onBotMove += UpdateTurn;
     }
 
+    //change to async
     private void UpdateTurn()
     {
         StartCoroutine(nameof(MovingDelay));
     }
+    //change to async
     private IEnumerator MovingDelay()
     {
         yield return new WaitForSeconds(0.5f);
