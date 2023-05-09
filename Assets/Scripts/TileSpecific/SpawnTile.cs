@@ -14,8 +14,8 @@ public class SpawnTile : Tile
     }
     private void SpawnBot()
     {
-        //Instantiate(_bot, transform.position + new Vector3(transform.position.x, transform.position.y + _offset, transform.position.z), Quaternion.identity);
-        Instantiate(_bot,this.transform.position + new Vector3(0, _offset, 0),Quaternion.identity);
+       GameObject bot = Instantiate(_bot,this.transform.position + new Vector3(0, _offset, 0),Quaternion.identity);
+       GameManager.SpawnedObjects.Add(bot);
     }
 
     private void OnDisable()

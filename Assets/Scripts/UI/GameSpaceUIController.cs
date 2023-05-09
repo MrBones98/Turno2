@@ -35,10 +35,12 @@ public class GameSpaceUIController : MonoBehaviour
         if (direction > 0)
         {
             print("Load Next Level Clicked");
+            LoadNextLevel(true);
         }
         else
         {
             print("Load Prev Level Clicked");
+            LoadNextLevel(false);
         }
     }
 
@@ -56,9 +58,10 @@ public class GameSpaceUIController : MonoBehaviour
 
     #region Element interaction Methods
 
-    private void OnResetClicked()
+    private async void OnResetClicked()
     {
         _handler.ClearMenus();
+        await GameManager.Instance.Resetlevel();
         print("Reset Clicked");
     }
 
@@ -75,10 +78,10 @@ public class GameSpaceUIController : MonoBehaviour
     }
 
     // win menu
-    private void LoadNextLevel()
+    private void LoadNextLevel(bool isNext)
     {
         _handler.ClearMenus();
-       _instance.LoadNextLevel();
+       _instance.LoadNextLevel(isNext);
     }
 
     // pause menu
@@ -180,7 +183,7 @@ public class GameSpaceUIController : MonoBehaviour
         _handler.MainMenuFromWinButton.clicked += () => GoToMainMenu();
 
         _handler.NextLevelFromWinButton = _handler.WinMenu.Q<Button>(GameSpaceUIHandler.k_NextLevelButtonName);
-        _handler.NextLevelFromWinButton.clicked += () => LoadNextLevel();
+        _handler.NextLevelFromWinButton.clicked += () => LoadNextLevel(true);
 
         _handler.RedoButton = _handler.WinMenu.Q<Button>(GameSpaceUIHandler.k_RedoButtonName);
         _handler.RedoButton.clicked += () => OnResetClicked();

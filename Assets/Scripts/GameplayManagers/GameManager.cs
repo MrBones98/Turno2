@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public static List<GameObject> TileGameObjects = new();
     public static List<GameObject> Cards = new();
+    public static List<GameObject> SpawnedObjects = new();
 
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;
@@ -39,7 +40,9 @@ public class GameManager : MonoBehaviour
         SwitchTile.onSwitchPressed += Activate;
         SwitchTile.onSwitchReleased += DeActivate;
         Bot.onFinishedMove += UpdateTurn;
+        //ScriptableObjectLoader.onLevelQeued += ClearLevel;
     }
+
     private void Awake()
     {
         if(Instance == null)
@@ -51,6 +54,27 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    public async Task ClearLevel()
+    {
+        for (int i = TileGameObjects.Count-1; i >= 0; i--)
+        {
+            Destroy(TileGameObjects[i]);
+        }
+        for (int i = Cards.Count-1; i >= 0; i--)
+        {
+            Destroy(Cards[i]);
+        }
+        for (int i = SpawnedObjects.Count -1; i >= 0; i--)
+        {
+            Destroy(SpawnedObjects[i]);
+        }
+        print("Went into ClearLevel GM");
+        TileGameObjects.Clear();
+        Cards.Clear();
+        SpawnedObjects.Clear();
+        await Task.Yield();
+    }
+
 
     private void UpdateTurn()
     {
@@ -79,11 +103,29 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    private void ShowTileInteractions(int id)
+    {
+        foreach (GameObject tiles in TileGameObjects)
+        {
+            if (tiles.GetComponent<Tile>().InteractableID == id)
+            {
+                //Lift Up
+            }
+        }
+    }
+    public async Task Resetlevel()
+    {
+        print("Reset level");
+        await Task.Yield();
+    }
+    public void UndoMove()
+    {
 
+    }
     private void FinishLevel()
     {
-        _winScreen.SetActive(true);
-        _gameplayUI.SetActive(false);
+        //_winScreen.SetActive(true);
+        //_gameplayUI.SetActive(false);
     }
 
     public  void GiveChosenBotDirection(DirectionIs directionIs)
@@ -122,7 +164,6 @@ public class GameManager : MonoBehaviour
             if (_bot.GetComponent<Bot>().IsFocused)
             {
                 ShowDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
-                print(_botParentGameObject.transform.position);
                 if (Input.GetMouseButtonDown(0))
                 {
                     GiveChosenBotDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
@@ -136,8 +177,7 @@ public class GameManager : MonoBehaviour
         Vector3 rayOrientation;
 
         rayOrientation = MoveUtils.SetDirection(direction);
-        print(rayOrientation);
-
+        
         if (MoveUtils.SetDirection(_raisingPathDirection) == Vector3.zero || _raisingPathDirection != direction)
         {
             //RaycastHit[] platformsToRaise = Physics.RaycastAll(_botParentGameObject.transform.position, rayOrientation, _currentBotStepCount, _highlightPathLayer);
@@ -160,13 +200,6 @@ public class GameManager : MonoBehaviour
         }
 
         _raisingPathDirection = direction;
-
-        //await Task.Delay(1000);
-        //foreach (var item in platformsToRaise)
-        //{
-        //    await Task.Delay(100);
-        //    item.collider.gameObject.GetComponentInParent<Transform>().DOMoveY(-0.3f, 2);
-        //}
     }
 
     private void ClearPath()
@@ -198,7 +231,7 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevel()
     {
-        onGameStarted();
+        onGameStarted?.Invoke();
     }
     private void OnDrawGizmos()
     {

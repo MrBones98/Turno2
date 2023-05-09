@@ -17,11 +17,11 @@ public class Bot : MonoBehaviour
     [SerializeField] private bool _isPushable;
     [SerializeField] private float _highlightHeight;
 
-    public bool IsPushableBot { get { return _isPushable; } set { } }
-    public bool CanBePushed { get { return _canBePushed; } set { }}
-    public bool IsFocused{ get { return _isFocused; } set { } }
-    public GameObject ParentGameObject { get { return _parentGameObject; } set { } }
-    public int StepCount { get { return _stepCount; } set { } }
+    public bool IsPushableBot { get { return _isPushable; }}
+    public bool CanBePushed { get { return _canBePushed; }}
+    public bool IsFocused{ get { return _isFocused; }}
+    public GameObject ParentGameObject { get { return _parentGameObject; }}
+    public int StepCount { get { return _stepCount; }}
 
     private string[] _layersToCheck = { "Platform", "Pushable", "Wall", "Player"};
     int _collidableLayers;
@@ -135,6 +135,7 @@ public class Bot : MonoBehaviour
             if (facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>())
             {
                 _wallTile = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>();
+                print(_wallTile);
             }
             else if (_wallTile == null)
             {
@@ -196,6 +197,7 @@ public class Bot : MonoBehaviour
                 else
                 {
                     _canBePushed=true;
+                    _grounded = true;
                     _parentGameObject.transform.position += direction;
 
                 }

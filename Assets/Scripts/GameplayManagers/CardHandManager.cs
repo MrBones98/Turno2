@@ -20,6 +20,14 @@ public class CardHandManager : MonoBehaviour
     }
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
         if (_slots == null)
         {
             _slotsCount = 0;
@@ -29,20 +37,11 @@ public class CardHandManager : MonoBehaviour
         {
             _slotsCount = _slots.Length;
         }
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
     }
     public void DebugGiveMoveCard(int amount)
     {
-        GameObject card = null;
-        card = Instantiate(_cardPrefabs[amount - 1], _slots[amount - 1].transform.position, Quaternion.identity);
-        card.transform.SetParent(transform, false);
+        GameObject card = Instantiate(_cardPrefabs[amount - 1], _slots[amount - 1].transform.position, Quaternion.identity);
+        card.transform.SetParent(_slots[amount-1].transform, true);
         GameManager.Cards.Add(card);
     }
     private void LoadCards()
@@ -52,34 +51,26 @@ public class CardHandManager : MonoBehaviour
         {
             for (int i = 0; i < _level.MoveOne; i++)
             {
-                GameObject card = null;
-
-                card = Instantiate(_cardPrefabs[0], _slots[0].transform.position, Quaternion.identity);
-                card.transform.SetParent(_slots[0].transform, false);
+                GameObject card = Instantiate(_cardPrefabs[0], _slots[0].transform.position, Quaternion.identity);
+                card.transform.SetParent(_slots[0].transform, true);
                 GameManager.Cards.Add(card);
             }
             for (int i = 0; i < _level.MoveTwo; i++)
             {
-                GameObject card = null;
-
-                card = Instantiate(_cardPrefabs[1], _slots[1].transform.position, Quaternion.identity);
-                card.transform.SetParent(_slots[1].transform, false);
+                GameObject card = Instantiate(_cardPrefabs[1], _slots[1].transform.position, Quaternion.identity);
+                card.transform.SetParent(_slots[1].transform, true);
                 GameManager.Cards.Add(card);
             }
             for (int i = 0; i < _level.MoveThree; i++)
             {
-                GameObject card = null;
-
-                card = Instantiate(_cardPrefabs[2], _slots[2].transform.position, Quaternion.identity);
-                card.transform.SetParent(_slots[2].transform, false);
+                GameObject card = Instantiate(_cardPrefabs[2], _slots[2].transform.position, Quaternion.identity);
+                card.transform.SetParent(_slots[2].transform, true);
                 GameManager.Cards.Add(card);
             }
             for (int i = 0; i < _level.MoveFour; i++)
             {
-                GameObject card = null;
-
-                card = Instantiate(_cardPrefabs[3], _slots[3].transform.position, Quaternion.identity);
-                card.transform.SetParent(_slots[3].transform, false);
+                GameObject card = Instantiate(_cardPrefabs[3], _slots[3].transform.position, Quaternion.identity);
+                card.transform.SetParent(_slots[3].transform, true);
                 GameManager.Cards.Add(card);
             }
         }
