@@ -28,7 +28,7 @@ public class DirectionalInputBot : MonoBehaviour
     public Vector3 Calculate()
     {
         Vector3 direction = Input.mousePosition - CalculateMyScreenSpacePosition();
-        return direction = direction.normalized;
+        return direction.normalized;
         
     }
     public DirectionIs CalculateQuadrants(Vector3 mouseDirection)

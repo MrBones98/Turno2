@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MovingTile : Tile,ISwitchActivatable
 {
@@ -106,10 +107,30 @@ public class MovingTile : Tile,ISwitchActivatable
 
     public void Activate()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public void Deactivate()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void HighlightInteractable()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void HighlightInteractable(float height)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
     {
         throw new NotImplementedException();
     }

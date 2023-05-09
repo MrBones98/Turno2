@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.EventSystems;
 
-public interface ISwitchActivatable
+public interface ISwitchActivatable :IPointerEnterHandler, IPointerExitHandler
 {
     void Activate();
     void Deactivate();
+    public void HighlightInteractable(float height);
 }

@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
     private DirectionIs _raisingPathDirection;
     private List<Transform> _highlightedPath = new();
     private int _currentBotStepCount;
+    private bool _selectCheck = false;
+    private Camera _camera;
+    private Ray _interactableRay;
+    private RaycastHit _hit;
     //public WinTile WinTile;
 
     //ON THE LEVEL SO ADD COUNT OF BUTTONS FOR WINNING FOR DIFFERENT NEEED AMOUNTS
@@ -40,7 +44,27 @@ public class GameManager : MonoBehaviour
         SwitchTile.onSwitchPressed += Activate;
         SwitchTile.onSwitchReleased += DeActivate;
         Bot.onFinishedMove += UpdateTurn;
-        //ScriptableObjectLoader.onLevelQeued += ClearLevel;
+        SwitchTile.onSwitchHighlighted += HighlightInteractable;
+        WallTile.onWallHighlighted += HighlightInteractable;
+    }
+
+    private void HighlightInteractable(int id)
+    {
+        foreach (GameObject tiles in TileGameObjects)
+        {
+            if (tiles.GetComponent<Tile>().InteractableID == id)
+            {
+                if (!_selectCheck)
+                {
+                    tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(_highlightHeight);
+                }
+                else
+                {
+                    tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(-_highlightHeight);
+                }
+            }
+        }
+        _selectCheck = !_selectCheck;
     }
 
     private void Awake()
@@ -68,7 +92,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(SpawnedObjects[i]);
         }
-        print("Went into ClearLevel GM");
         TileGameObjects.Clear();
         Cards.Clear();
         SpawnedObjects.Clear();
@@ -79,7 +102,6 @@ public class GameManager : MonoBehaviour
     private void UpdateTurn()
     {
         onBotMove?.Invoke();
-        //AssignPlayer(null);
     }
 
     private void DeActivate(int id)
@@ -103,16 +125,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private void ShowTileInteractions(int id)
-    {
-        foreach (GameObject tiles in TileGameObjects)
-        {
-            if (tiles.GetComponent<Tile>().InteractableID == id)
-            {
-                //Lift Up
-            }
-        }
-    }
     public async Task Resetlevel()
     {
         print("Reset level");
@@ -126,6 +138,11 @@ public class GameManager : MonoBehaviour
     {
         //_winScreen.SetActive(true);
         //_gameplayUI.SetActive(false);
+    }
+    private void UpdateInteractableRayCast()
+    {
+        _interactableRay = _camera.ScreenPointToRay(Input.mousePosition);
+
     }
 
     public  void GiveChosenBotDirection(DirectionIs directionIs)
@@ -170,6 +187,43 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    UpdateInteractableRayCast();
+        //    if(Physics.Raycast(_interactableRay,out _hit, 100, _highlightPathLayer))
+        //    {
+        //        int idReference = _hit.collider.transform.parent.GetComponent<Tile>().InteractableID;
+        //        print(idReference);
+        //        if (idReference != 0)
+        //        {
+        //            foreach (GameObject tiles in TileGameObjects)
+        //            {
+        //                if (tiles.GetComponent<Tile>().InteractableID == idReference)
+        //                {
+        //                    tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(idReference);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}else if (Input.GetMouseButtonUp(0))
+        //{
+        //    UpdateInteractableRayCast();
+        //    if (Physics.Raycast(_interactableRay, out _hit, 100, _highlightPathLayer))
+        //    {
+        //        int idReference = _hit.collider.transform.parent.GetComponent<Tile>().InteractableID;
+        //        print(idReference);
+        //        if (idReference != 0)
+        //        {
+        //            foreach (GameObject tiles in TileGameObjects)
+        //            {
+        //                if (tiles.GetComponent<Tile>().InteractableID == idReference)
+        //                {
+        //                    tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(idReference);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
     }
     public void ShowDirection(DirectionIs direction)
@@ -226,11 +280,18 @@ public class GameManager : MonoBehaviour
         ScriptableObjectLoader.onLevelLoaded -= LoadLevel;
         WinTile.onButtonPressed -= FinishLevel;
         SwitchTile.onSwitchPressed -= Activate;
+        SwitchTile.onSwitchReleased += DeActivate;
         Bot.onFinishedMove -= UpdateTurn;
+        SwitchTile.onSwitchHighlighted -= HighlightInteractable;
+        WallTile.onWallHighlighted -= HighlightInteractable;
     }
 
     private void LoadLevel()
     {
+        if (_camera == null)
+        {
+            _camera = Camera.main;
+        }
         onGameStarted?.Invoke();
     }
     private void OnDrawGizmos()

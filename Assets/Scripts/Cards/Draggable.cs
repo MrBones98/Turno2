@@ -86,11 +86,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         //throw new System.NotImplementedException();
         //Dotween hover down
+        print("hover card down");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         //throw new System.NotImplementedException();
         //Dotween hover up
+        print("hover card up");
     }
 }

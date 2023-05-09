@@ -245,6 +245,7 @@ public class Bot : MonoBehaviour
     }
     async void SolveTurnAsync(Vector3 direction)
     {
+        _isFocused = false;
         while(_stepCount > 0)
         {
             var solveCollisionsTask = SolveCollisionsAsync(direction);
@@ -257,9 +258,8 @@ public class Bot : MonoBehaviour
             _pushableBot = null;
             _platformCached = false;
         }
-        //Move await=>loop through hits
+        
         transform.position -= new Vector3(0, 0.2f, 0);
-        _isFocused = false;
         onFinishedMove();
         
     }

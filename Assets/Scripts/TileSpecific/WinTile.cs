@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class WinTile : Tile, ISwitchActivatable
 {
@@ -31,5 +32,20 @@ public class WinTile : Tile, ISwitchActivatable
     public void Deactivate()
     {
         //
+    }
+
+    public void HighlightInteractable(float height)
+    {
+       // throw new System.NotImplementedException();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        //throw new System.NotImplementedException();
     }
 }
