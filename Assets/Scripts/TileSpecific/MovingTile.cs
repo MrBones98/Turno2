@@ -35,7 +35,15 @@ public class MovingTile : Tile,ISwitchActivatable
     private void Start()
     {
         _active = StartsActivated;
-        _animation.LightForward();        
+        if (_active)
+        {
+            _animation.LightForward();
+        }
+        else
+        {
+            _animation.LightsOff();
+        }
+
         if(Direction.y < 0)
         {
            
@@ -129,6 +137,7 @@ public class MovingTile : Tile,ISwitchActivatable
     public void Deactivate()
     {
         _active=false;
+        _animation.LightsOff();
     }
 
     public void HighlightInteractable()
