@@ -90,9 +90,10 @@ public class GameSpaceUIController : MonoBehaviour
         _handler.ClearMenus();
     }
 
-    private void GoToMainMenu()
+    private async void GoToMainMenu()
     {
         _handler.ClearMenus();
+        await GameManager.Instance.ClearLevel();
         SceneLoader.Instance.GoToMainMenu();
     }
 

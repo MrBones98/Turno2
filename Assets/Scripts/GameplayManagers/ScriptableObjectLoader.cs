@@ -15,7 +15,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     [SerializeField] private List<Level> _levels = new();
 
     private int _index = 0;
-    public int Index { get { return _index; }}
+    public int Index { get { return _index; }set { _index = value; } }
     public Level LevelToLoad { get { return _levelToLoad; }}
     public List<Level> Levels { get { return _levels; }}
     public delegate void LevelLoaded();
@@ -25,6 +25,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     private void OnEnable()
     {
         SceneLoader.onSceneLoaded+=()=> LoadNextLevel(true);
+        SceneLoader.onSceneLoadedWithIndex += () => LoadLevelWithIndex(Index);
     }
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     }
     public async void LoadNextLevel(bool increaseIndex)
     {
+        print(Index);
         if (!increaseIndex)
         {
             _index--;
@@ -65,9 +67,10 @@ public class ScriptableObjectLoader : MonoBehaviour
         onLevelQeued?.Invoke();
         
     }
-    public void LoadLevelWithIndex(int index)
+    public async void LoadLevelWithIndex(int index)
     {
-        if (index >= 0)
+        print(Index);
+        if (index >= 0 && index <_levels.Count)
         {
             _levelToLoad = _levels[index];
             if(_levelToLoad == null)
@@ -110,6 +113,11 @@ public class ScriptableObjectLoader : MonoBehaviour
             }
             Invoke(nameof(LevelLoadedCall), 0.5f);
         }
+        else if(index>= _levels.Count-1)
+        {
+            await GameManager.Instance.ClearLevel();
+            SceneLoader.Instance.GoToMainMenu();
+        }
         else
         {
             Debug.LogError($"Accessing collection at {index}. It must be positive: resetting to 0");
@@ -124,6 +132,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     private void OnDisable()
     {
         SceneLoader.onSceneLoaded-=()=> LoadNextLevel(true);
-        
+        SceneLoader.onSceneLoadedWithIndex -= () => LoadLevelWithIndex(_index);
+
     }
 }

@@ -8,10 +8,9 @@ using UnityEngine.UIElements;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField]
-    private List<Level> _levels;
-    [SerializeField]
     private MainMenuUIHandler _menuHandler;
     private SceneLoader _sceneLoader;
+    private ScriptableObjectLoader _objectLoader;
 
     private void Awake()
     {
@@ -24,6 +23,7 @@ public class MainMenuController : MonoBehaviour
         _menuHandler.DrawStartMenu();
 
         _sceneLoader = SceneLoader.Instance;
+        _objectLoader = ScriptableObjectLoader.Instance;
     }
 
     #region Debug Methods
@@ -89,6 +89,7 @@ public class MainMenuController : MonoBehaviour
     public static void LoadSelectedLvl(int index)
     {
         print($"Level {index} Selected");
+        SceneLoader.Instance.GoToGameSceneWithLevelIndex(index-1);
     }
 
     #endregion
@@ -165,7 +166,7 @@ public class MainMenuController : MonoBehaviour
 
         _menuHandler._lvlSelectScroll = _menuHandler._lvlSelectRightPanel.Q<ScrollView>(MainMenuUIHandler.k_LvlSelectScrollName);
 
-        PopulateLevelSelect(_levels);
+        PopulateLevelSelect(ScriptableObjectLoader.Instance.Levels);
     }
 
     private void PopulateLevelSelect(List<Level> levels)
