@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+
         if (_bot != null)
         {
             if (_bot.GetComponent<Bot>().IsFocused)
@@ -200,6 +200,12 @@ public class GameManager : MonoBehaviour
         }
 
         //Just Raise Event and subscribe from Intwractables
+        if(!_bot.GetComponent<Bot>().IsMoving)
+        HighlightInteractables();
+    }
+
+    private void HighlightInteractables()
+    {
         if (Input.GetMouseButtonDown(0))
         {
             if (!_raycastCheck)
@@ -231,6 +237,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
     public void ShowDirection(DirectionIs direction)
     {
         Vector3 rayOrientation;

@@ -22,12 +22,14 @@ public class Bot : MonoBehaviour
     public bool IsFocused{ get { return _isFocused; }}
     public GameObject ParentGameObject { get { return _parentGameObject; }}
     public int StepCount { get { return _stepCount; }}
+    public bool IsMoving { get { return _isMoving; }}
 
     private string[] _layersToCheck = { "Platform", "Pushable", "Wall", "Player"};
     int _collidableLayers;
     private int _stepCount;
     private bool _isFocused;
     private bool _canBePushed;
+    private bool _isMoving;
     private bool _grounded = true;
     private bool _isActive = true;
     private bool _platformCached = false;
@@ -73,7 +75,7 @@ public class Bot : MonoBehaviour
     async Task SolvePushCollisionsAsync(Vector3 direction)
     {
         Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x,-1, _parentGameObject.transform.position.z) + direction;
-        if (IsFocused) //Debug purposes, delete
+        //if (IsFocused) //Debug purposes, delete
         await Task.Delay((int)(_botStepDelay) * 1000);
         
         RaycastHit[] facingHit = Physics.SphereCastAll(correctedPushDirection, 0.44f,  Vector3.up, 1.5f, _collidableLayers);
@@ -258,7 +260,7 @@ public class Bot : MonoBehaviour
             _pushableBot = null;
             _platformCached = false;
         }
-        
+        _isMoving = false;
         transform.position -= new Vector3(0, 0.2f, 0);
         onFinishedMove();
         
@@ -280,6 +282,7 @@ public class Bot : MonoBehaviour
         _stepCount = distance;
         transform.position += new Vector3(0, 0.2f, 0);
         _isFocused = true;
+        _isMoving = true;
     }
     private void OnDisable()
     {
