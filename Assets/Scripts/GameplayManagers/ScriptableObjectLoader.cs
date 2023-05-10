@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Editor;
+using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 
 public class ScriptableObjectLoader : MonoBehaviour
@@ -22,11 +22,16 @@ public class ScriptableObjectLoader : MonoBehaviour
     public static event LevelLoaded onLevelLoaded;
     public delegate void OnLevelQeued();
     public static event OnLevelQeued onLevelQeued;
+    private void OnEnable()
+    {
+        SceneLoader.onSceneLoaded+=()=> LoadNextLevel(true);
+    }
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(transform.gameObject);
         }
         else
         {
@@ -35,7 +40,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     }
     void Start()
     {
-        if(_levelToLoad == null)
+        if(_levelToLoad == null && SceneManager.GetActiveScene().buildIndex == 1)
         {
             LoadNextLevel(true);
         }
@@ -103,12 +108,22 @@ public class ScriptableObjectLoader : MonoBehaviour
                     GameManager.TileGameObjects.Add(child.gameObject);
                 }
             }
-            onLevelLoaded();
+            Invoke(nameof(LevelLoadedCall), 0.5f);
         }
         else
         {
             Debug.LogError($"Accessing collection at {index}. It must be positive: resetting to 0");
             _index = 0;
         }
+    }
+    private void LevelLoadedCall()
+    {
+        onLevelLoaded();
+
+    }
+    private void OnDisable()
+    {
+        SceneLoader.onSceneLoaded-=()=> LoadNextLevel(true);
+        
     }
 }

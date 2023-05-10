@@ -4,6 +4,8 @@ using UnityEngine;
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance;
+    public delegate void OnSceneLoaded();
+    public static event OnSceneLoaded onSceneLoaded;
     private void Awake()
     {
         if (Instance == null)
@@ -22,6 +24,11 @@ public class SceneLoader : MonoBehaviour
     public int GetCurrentSceneIndex()
     {
         return SceneManager.GetActiveScene().buildIndex;
+    }
+    public void GoToGameScene()
+    {
+        SceneManager.LoadScene(1);
+        onSceneLoaded?.Invoke();
     }
     public void ReloadScene()
     {

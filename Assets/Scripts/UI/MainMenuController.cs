@@ -11,6 +11,7 @@ public class MainMenuController : MonoBehaviour
     private List<Level> _levels;
     [SerializeField]
     private MainMenuUIHandler _menuHandler;
+    private SceneLoader _sceneLoader;
 
     private void Awake()
     {
@@ -21,6 +22,8 @@ public class MainMenuController : MonoBehaviour
         InitLevelSelectPanels();
 
         _menuHandler.DrawStartMenu();
+
+        _sceneLoader = SceneLoader.Instance;
     }
 
     #region Debug Methods
@@ -75,7 +78,7 @@ public class MainMenuController : MonoBehaviour
     // level Loading
     private void StartGame()
     {
-        print("Start Game");
+        _sceneLoader.GoToGameScene();
     }
 
     private void OnLvlSelectButtonClicked(int index)

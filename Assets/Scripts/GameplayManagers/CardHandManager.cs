@@ -46,6 +46,7 @@ public class CardHandManager : MonoBehaviour
     }
     private void LoadCards()
     {
+            _slots = GameObject.FindGameObjectsWithTag("CardSlot");
         _level = ScriptableObjectLoader.Instance.LevelToLoad;
         if (_isActive)
         {
