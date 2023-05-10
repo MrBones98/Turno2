@@ -9,12 +9,25 @@ public class MovingTile : Tile,ISwitchActivatable
     private int _count=0;
     private MovingTileAnimation _animation;
     private GameObject _carriedObject;
+    private bool _active;
     private void Awake()
     {
         //TODO
         //Take into consideration the Direction x or y to rotate model correctly (might need a container to not mess up
         //the transform+ direction
         _animation = GetComponent<MovingTileAnimation>();
+        //if (!StartsActivated)
+        //{
+        //_animation.LightsOff();
+        //    Deactivate();
+        //    _active = false;
+        //}
+        //else
+        //{
+        //    Activate();
+        //    _active = true;
+        //}
+        _active = StartsActivated;
     }
     private void Start()
     {
@@ -38,6 +51,7 @@ public class MovingTile : Tile,ISwitchActivatable
     //change to async
     private void UpdateTurn()
     {
+        if(_active)
         StartCoroutine(nameof(MovingDelay));
     }
     //change to async
@@ -107,12 +121,12 @@ public class MovingTile : Tile,ISwitchActivatable
 
     public void Activate()
     {
-        //throw new NotImplementedException();
+        _active = true;
     }
 
     public void Deactivate()
     {
-        //throw new NotImplementedException();
+        _active=false;
     }
 
     public void HighlightInteractable()

@@ -26,6 +26,7 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
     }
     private void OnTriggerEnter(Collider other)
     {
+        print(other.name);
         if (other.GetComponent<Bot>())
         {
             onSwitchPressed(InteractableID);
@@ -63,7 +64,8 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
 
     public void HighlightInteractable(float height)
     {
-        print("called highlight");
-        transform.parent.position += new Vector3(0, height, 0);
+        print(height);
+        //print(transform.parent.gameObject.name);
+        transform.position += new Vector3(0, height, 0);
     }
 }

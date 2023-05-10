@@ -1,10 +1,9 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using System;
 using Utils;
 using System.Threading.Tasks;
+using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -24,11 +23,14 @@ public class GameManager : MonoBehaviour
     private DirectionalInputBot _directionalInputBot;
     private DirectionIs _raisingPathDirection;
     private List<Transform> _highlightedPath = new();
+    private List<Transform> _higlightedInteractables = new();
     private int _currentBotStepCount;
     private bool _selectCheck = false;
+    private bool _raycastCheck =false;
     private Camera _camera;
     private Ray _interactableRay;
     private RaycastHit _hit;
+    private int _idReference;
     //public WinTile WinTile;
 
     //ON THE LEVEL SO ADD COUNT OF BUTTONS FOR WINNING FOR DIFFERENT NEEED AMOUNTS
@@ -52,19 +54,23 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject tiles in TileGameObjects)
         {
-            if (tiles.GetComponent<Tile>().InteractableID == id)
+            if (tiles.GetComponent<Tile>().InteractableID == id && tiles.GetComponent<Tile>().IsHighlighted == false)
             {
-                if (!_selectCheck)
-                {
-                    tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(_highlightHeight);
-                }
-                else
-                {
-                    tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(-_highlightHeight);
-                }
+                print(tiles.name);
+               
+                    //tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(_highlightHeight);
+                    _higlightedInteractables.Add(tiles.transform);
+                    tiles.GetComponent<Tile>().IsHighlighted = true;
+                
             }
         }
-        _selectCheck = !_selectCheck;
+        foreach (Transform interactable in _higlightedInteractables)
+        {
+
+            interactable.transform.DOMoveY(_highlightHeight, 0.3f, false);
+            
+        }
+        //_selectCheck = !_selectCheck;
     }
 
     private void Awake()
@@ -187,44 +193,38 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    UpdateInteractableRayCast();
-        //    if(Physics.Raycast(_interactableRay,out _hit, 100, _highlightPathLayer))
-        //    {
-        //        int idReference = _hit.collider.transform.parent.GetComponent<Tile>().InteractableID;
-        //        print(idReference);
-        //        if (idReference != 0)
-        //        {
-        //            foreach (GameObject tiles in TileGameObjects)
-        //            {
-        //                if (tiles.GetComponent<Tile>().InteractableID == idReference)
-        //                {
-        //                    tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(idReference);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}else if (Input.GetMouseButtonUp(0))
-        //{
-        //    UpdateInteractableRayCast();
-        //    if (Physics.Raycast(_interactableRay, out _hit, 100, _highlightPathLayer))
-        //    {
-        //        int idReference = _hit.collider.transform.parent.GetComponent<Tile>().InteractableID;
-        //        print(idReference);
-        //        if (idReference != 0)
-        //        {
-        //            foreach (GameObject tiles in TileGameObjects)
-        //            {
-        //                if (tiles.GetComponent<Tile>().InteractableID == idReference)
-        //                {
-        //                    tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(idReference);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
 
+        //Just Raise Event and subscribe from Intwractables
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!_raycastCheck)
+            {
+                _raycastCheck = true;
+                UpdateInteractableRayCast();
+                if (Physics.Raycast(_interactableRay, out _hit, 100, _highlightPathLayer))
+                {
+                    _idReference = _hit.collider.transform.parent.GetComponent<Tile>().InteractableID;
+                    print(_idReference);
+                    if (_idReference != 0)
+                    {
+                        HighlightInteractable(_idReference);
+                    }
+                }
+            }
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            _raycastCheck = false;
+            if (_idReference != 0)
+            {
+                foreach (Transform interactable in _higlightedInteractables)
+                {
+                    interactable.transform.DOMoveY(0, 0.3f, false);
+                    interactable.GetComponent<Tile>().IsHighlighted = false;
+                }
+                _higlightedInteractables.Clear();
+            }
+        }
     }
     public void ShowDirection(DirectionIs direction)
     {
