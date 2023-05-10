@@ -107,6 +107,11 @@ public class GameManager : MonoBehaviour
 
     private void UpdateTurn()
     {
+
+        Invoke(nameof(BotMoved), 0.3f);
+    }
+    private void BotMoved()
+    {
         onBotMove?.Invoke();
     }
 

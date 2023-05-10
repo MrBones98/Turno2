@@ -27,10 +27,14 @@ public class MovingTile : Tile,ISwitchActivatable
         //    Activate();
         //    _active = true;
         //}
-        _active = StartsActivated;
+    }
+    private void OnEnable()
+    {
+        GameManager.onBotMove += UpdateTurn;
     }
     private void Start()
     {
+        _active = StartsActivated;
         _animation.LightForward();        
         if(Direction.y < 0)
         {
@@ -43,20 +47,18 @@ public class MovingTile : Tile,ISwitchActivatable
             transform.Rotate(0, 270, 0);
         }
     }
-    private void OnEnable()
-    {
-        GameManager.onBotMove += UpdateTurn;
-    }
 
     //change to async
     private void UpdateTurn()
     {
+        print($"Is mving platf active: {_active}");
         if(_active)
         StartCoroutine(nameof(MovingDelay));
     }
     //change to async
     private IEnumerator MovingDelay()
     {
+        print("Platform went into Move Function!");
         yield return new WaitForSeconds(0.5f);
         int distance = Distance;
         while (distance>0)
