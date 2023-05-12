@@ -13,96 +13,6 @@ MonoBehaviour:
   m_Name: T_Teamwork
   m_EditorClassIdentifier: 
   tileObjects:
-  - Type: 1
-    Position:
-    - 8
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 6
-    Position:
-    - 3
-    - 0
-    - 2
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 2
-    Position:
-    - 5
-    - 0
-    - 4
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 8
-    Position:
-    - 4
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 8
-    Position:
-    - 3
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 8
-    Position:
-    - 2
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 7
-    Position:
-    - 2
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 1
-    Distance: 1
-  - Type: 7
-    Position:
-    - 2
-    - 0
-    - 1
-    InteractableID: 0
-    Direction:
-    - 0
-    - 1
-    Distance: 2
-  - Type: 3
-    Position:
-    - 2
-    - 0
-    - 0
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
   - Type: 3
     Position:
     - 2
@@ -113,6 +23,106 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 2
+    - 0
+    - 0
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 7
+    Position:
+    - 2
+    - 0
+    - 1
+    InteractableID: 0
+    Direction:
+    - 0
+    - 1
+    Distance: 2
+    StartsActivated: 1
+  - Type: 7
+    Position:
+    - 2
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 1
+    Distance: 1
+    StartsActivated: 1
+  - Type: 8
+    Position:
+    - 2
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 8
+    Position:
+    - 3
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 8
+    Position:
+    - 4
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 5
+    - 0
+    - 4
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 6
+    Position:
+    - 3
+    - 0
+    - 2
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 1
+    Position:
+    - 8
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
   Name: Teamwork
   MoveOne: 4
   MoveTwo: 1

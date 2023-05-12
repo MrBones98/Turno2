@@ -13,26 +13,72 @@ MonoBehaviour:
   m_Name: T_WaitForIt
   m_EditorClassIdentifier: 
   tileObjects:
-  - Type: 7
+  - Type: 3
     Position:
-    - 5
+    - 4
     - 0
-    - 3
+    - 5
     InteractableID: 0
-    Direction:
-    - 0
-    - -1
-    Distance: 1
-  - Type: 6
-    Position:
-    - 7
-    - 0
-    - 5
-    InteractableID: 1
     Direction:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 3
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
   - Type: 2
     Position:
     - 7
@@ -43,66 +89,29 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
-  - Type: 0
+    StartsActivated: 0
+  - Type: 6
     Position:
-    - 6
-    - 0
-    - 2
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
+    - 7
     - 0
     - 5
-    InteractableID: 0
+    InteractableID: 1
     Direction:
     - 0
     - 0
     Distance: 0
-  - Type: 0
+    StartsActivated: 0
+  - Type: 7
     Position:
     - 5
     - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 2
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 3
-    Position:
     - 3
-    - 0
-    - 2
     InteractableID: 0
     Direction:
     - 0
-    - 0
-    Distance: 0
-  - Type: 3
-    Position:
-    - 4
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
+    - -1
+    Distance: 1
+    StartsActivated: 1
   Name: Wait For It
   MoveOne: 1
   MoveTwo: 2

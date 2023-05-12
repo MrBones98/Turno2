@@ -12,7 +12,216 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f664c7288f34bf84dbef09a4c4a5f6b6, type: 3}
   m_Name: T_Deuces
   m_EditorClassIdentifier: 
-  tileObjects: []
+  tileObjects:
+  - Type: 1
+    Position:
+    - 8
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 7
+    - 0
+    - 5
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 4
+    Position:
+    - 5
+    - 0
+    - 4
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 7
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 2
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 2
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 2
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 8
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 8
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 7
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 7
+    Position:
+    - 4
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 1
+    - 0
+    Distance: 2
+    StartsActivated: 1
   Name: Deuces
   MoveOne: 0
   MoveTwo: 4

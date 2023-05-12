@@ -13,16 +13,149 @@ MonoBehaviour:
   m_Name: T_Warehouse
   m_EditorClassIdentifier: 
   tileObjects:
-  - Type: 7
+  - Type: 0
     Position:
-    - 5
-    - 0
     - 3
+    - 0
+    - 6
     InteractableID: 0
     Direction:
     - 0
-    - 1
-    Distance: 1
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 6
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 6
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 6
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 7
+    - 0
+    - 7
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 7
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 7
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 4
+    - 0
+    - 7
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 3
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 8
+    Position:
+    - 4
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 8
+    Position:
+    - 5
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
   - Type: 1
     Position:
     - 7
@@ -33,136 +166,18 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
-  - Type: 8
+    StartsActivated: 0
+  - Type: 7
     Position:
     - 5
     - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 8
-    Position:
-    - 4
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 3
-    Position:
     - 3
-    - 0
-    - 4
     InteractableID: 0
     Direction:
     - 0
-    - 0
-    Distance: 0
-  - Type: 3
-    Position:
-    - 4
-    - 0
-    - 7
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
-    - 7
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 7
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 7
-    - 0
-    - 7
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 6
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
-    - 6
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 6
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 6
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
+    - 1
+    Distance: 1
+    StartsActivated: 1
   Name: Warehouse
   MoveOne: 2
   MoveTwo: 3

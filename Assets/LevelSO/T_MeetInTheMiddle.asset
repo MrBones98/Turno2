@@ -13,31 +13,42 @@ MonoBehaviour:
   m_Name: T_MeetInTheMiddle
   m_EditorClassIdentifier: 
   tileObjects:
-  - Type: 7
-    Position:
-    - 7
-    - 0
-    - 2
-    InteractableID: 0
-    Direction:
-    - 0
-    - 1
-    Distance: 2
-    StartsActivated: 0
-  - Type: 3
+  - Type: 2
     Position:
     - 2
     - 0
-    - 2
-    InteractableID: 0
+    - 3
+    InteractableID: 1
     Direction:
     - 0
     - 0
     Distance: 0
     StartsActivated: 0
-  - Type: 1
+  - Type: 7
     Position:
+    - 2
+    - 0
     - 4
+    InteractableID: 0
+    Direction:
+    - 1
+    - 0
+    Distance: 3
+    StartsActivated: 1
+  - Type: 4
+    Position:
+    - 6
+    - 0
+    - 4
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 9
+    Position:
+    - 6
     - 0
     - 2
     InteractableID: 0
@@ -57,9 +68,9 @@ MonoBehaviour:
     - 0
     Distance: 0
     StartsActivated: 0
-  - Type: 9
+  - Type: 1
     Position:
-    - 6
+    - 4
     - 0
     - 2
     InteractableID: 0
@@ -68,12 +79,12 @@ MonoBehaviour:
     - 0
     Distance: 0
     StartsActivated: 0
-  - Type: 4
+  - Type: 3
     Position:
-    - 6
+    - 2
     - 0
-    - 4
-    InteractableID: 1
+    - 2
+    InteractableID: 0
     Direction:
     - 0
     - 0
@@ -81,26 +92,15 @@ MonoBehaviour:
     StartsActivated: 0
   - Type: 7
     Position:
-    - 2
+    - 7
     - 0
-    - 4
+    - 2
     InteractableID: 0
     Direction:
+    - 0
     - 1
-    - 0
-    Distance: 3
-    StartsActivated: 0
-  - Type: 2
-    Position:
-    - 2
-    - 0
-    - 3
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
+    Distance: 2
+    StartsActivated: 1
   Name: Meet In The Middle
   MoveOne: 3
   MoveTwo: 1

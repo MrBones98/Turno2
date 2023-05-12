@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: T_LoadingBay
   m_EditorClassIdentifier: 
   tileObjects:
-  - Type: 1
+  - Type: 0
     Position:
-    - 6
+    - 3
     - 0
     - 5
     InteractableID: 0
@@ -23,6 +23,128 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 3
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 5
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 3
+    - 0
+    - 2
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
   - Type: 7
     Position:
     - 3
@@ -33,126 +155,18 @@ MonoBehaviour:
     - 1
     - 0
     Distance: 2
-  - Type: 3
-    Position:
-    - 3
-    - 0
-    - 2
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 3
-    Position:
-    - 5
-    - 0
-    - 2
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 2
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
+    StartsActivated: 1
+  - Type: 1
     Position:
     - 6
     - 0
-    - 2
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
     - 5
     InteractableID: 0
     Direction:
     - 0
     - 0
     Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
+    StartsActivated: 0
   Name: Loading Bay
   MoveOne: 1
   MoveTwo: 3

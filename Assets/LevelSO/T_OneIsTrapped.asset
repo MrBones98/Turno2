@@ -10,12 +10,89 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f664c7288f34bf84dbef09a4c4a5f6b6, type: 3}
-  m_Name: T_TakingTurns
+  m_Name: T_OneIsTrapped
   m_EditorClassIdentifier: 
   tileObjects:
   - Type: 3
     Position:
-    - 1
+    - 4
+    - 0
+    - 10
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 3
+    Position:
+    - 4
+    - 0
+    - 6
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 4
+    - 0
+    - 5
+    InteractableID: 2
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 5
+    - 0
+    - 6
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 4
+    - 0
+    - 7
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 3
+    - 0
+    - 6
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 9
+    - 0
+    - 9
+    InteractableID: 3
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 2
+    Position:
+    - 4
     - 0
     - 0
     InteractableID: 0
@@ -24,22 +101,77 @@ MonoBehaviour:
     - 0
     Distance: 0
     StartsActivated: 0
-  - Type: 7
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 1
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 6
+    - 0
+    - 1
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 9
+    - 0
+    - 8
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 4
+    Position:
+    - 9
+    - 0
+    - 7
+    InteractableID: 2
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 4
+    Position:
+    - 9
+    - 0
+    - 10
+    InteractableID: 1
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 4
+    Position:
+    - 0
+    - 0
+    - 6
+    InteractableID: 3
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 8
     Position:
     - 2
     - 0
-    - 0
-    InteractableID: 0
-    Direction:
-    - 1
-    - 0
-    Distance: 4
-    StartsActivated: 1
-  - Type: 3
-    Position:
-    - 7
-    - 0
-    - 0
+    - 6
     InteractableID: 0
     Direction:
     - 0
@@ -48,7 +180,18 @@ MonoBehaviour:
     StartsActivated: 0
   - Type: 7
     Position:
-    - 7
+    - 8
+    - 0
+    - 10
+    InteractableID: 0
+    Direction:
+    - -1
+    - 0
+    Distance: 3
+    StartsActivated: 1
+  - Type: 7
+    Position:
+    - 4
     - 0
     - 4
     InteractableID: 0
@@ -57,151 +200,19 @@ MonoBehaviour:
     - -1
     Distance: 3
     StartsActivated: 1
-  - Type: 7
-    Position:
-    - 7
-    - 0
-    - 6
-    InteractableID: 0
-    Direction:
-    - 0
-    - 1
-    Distance: 2
-    StartsActivated: 1
-  - Type: 3
-    Position:
-    - 7
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 2
-    Position:
-    - 7
-    - 0
-    - 9
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 2
-    Position:
-    - 3
-    - 0
-    - 8
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 7
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 8
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 0
-    Position:
-    - 2
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 2
-    Position:
-    - 4
-    - 0
-    - 5
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 6
-    Position:
-    - 4
-    - 0
-    - 6
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  - Type: 3
-    Position:
-    - 1
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
   - Type: 1
     Position:
-    - 5
+    - 7
     - 0
-    - 5
+    - 1
     InteractableID: 0
     Direction:
     - 0
     - 0
     Distance: 0
     StartsActivated: 0
-  - Type: 8
-    Position:
-    - 5
-    - 0
-    - 8
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-    StartsActivated: 0
-  Name: Taking Turns
+  Name: One Is Trapped
   MoveOne: 3
-  MoveTwo: 0
+  MoveTwo: 1
   MoveThree: 2
-  MoveFour: 1
+  MoveFour: 2

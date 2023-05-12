@@ -13,196 +13,105 @@ MonoBehaviour:
   m_Name: T_Nautilus
   m_EditorClassIdentifier: 
   tileObjects:
-  - Type: 3
+  - Type: 0
     Position:
-    - 7
+    - 5
     - 0
-    - 3
+    - 5
     InteractableID: 0
     Direction:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 5
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 4
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 4
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
+  - Type: 0
+    Position:
+    - 3
+    - 0
+    - 5
+    InteractableID: 0
+    Direction:
+    - 0
+    - 0
+    Distance: 0
+    StartsActivated: 0
   - Type: 1
     Position:
-    - 8
+    - 3
     - 0
-    - 5
+    - 2
     InteractableID: 0
     Direction:
     - 0
     - 0
     Distance: 0
-  - Type: 2
-    Position:
-    - 7
-    - 0
-    - 5
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 4
-    Position:
-    - 5
-    - 0
-    - 4
-    InteractableID: 1
-    Direction:
-    - 0
-    - 0
-    Distance: 0
+    StartsActivated: 0
   - Type: 7
     Position:
-    - 4
+    - 3
     - 0
-    - 5
+    - 6
     InteractableID: 0
     Direction:
     - 1
     - 0
     Distance: 2
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 5
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 3
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 7
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 8
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 8
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 6
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 5
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 4
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
+    StartsActivated: 1
+  - Type: 7
     Position:
     - 3
     - 0
     - 3
     InteractableID: 0
     Direction:
+    - 1
     - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 2
-    - 0
-    - 3
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
-  - Type: 0
-    Position:
-    - 2
-    - 0
-    - 4
-    InteractableID: 0
-    Direction:
-    - 0
-    - 0
-    Distance: 0
+    Distance: 2
+    StartsActivated: 1
   - Type: 3
     Position:
-    - 2
+    - 3
     - 0
-    - 5
+    - 4
     InteractableID: 0
     Direction:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   Name: Nautilus
   MoveOne: 1
   MoveTwo: 0
