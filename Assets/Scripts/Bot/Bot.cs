@@ -210,8 +210,8 @@ public class Bot : MonoBehaviour
                 {
                     _canBePushed = true;
                     _grounded = true;
-                    _parentGameObject.transform.position += direction;
-
+                    //_parentGameObject.transform.position += direction;
+                    _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
                 }
             }
             else if (pushableBot != null)
@@ -228,7 +228,9 @@ public class Bot : MonoBehaviour
                     if (IsFocused)
                         print("bot can be pushed");
                     _canBePushed = true;
-                    _parentGameObject.transform.position += direction;
+                    //_parentGameObject.transform.position += direction;
+                    _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
+
                 }
 
             }
@@ -272,7 +274,11 @@ public class Bot : MonoBehaviour
             _platformCached = false;
         }
         _isMoving = false;
-        transform.position -= new Vector3(0, 0.2f, 0);
+        //transform.position -= new Vector3(0, 0.2f, 0);
+
+        //Expose HeighleightHeight
+        transform.DOMoveY(-0.2f, 0.3f, false);
+
         onFinishedMove();
         
     }
@@ -291,7 +297,8 @@ public class Bot : MonoBehaviour
     public void SetDistance(int distance)
     {
         _stepCount = distance;
-        transform.position += new Vector3(0, 0.2f, 0);
+        //transform.position += new Vector3(0, 0.2f, 0);
+        transform.DOMoveY(0.2f, 0.3f,false);
         _isFocused = true;
         _isMoving = true;
     }

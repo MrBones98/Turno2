@@ -9,12 +9,16 @@ public class Tweener : MonoBehaviour
     [FoldoutGroup("Bot Variables")] [SerializeField] private float _collisionCheckDelay;
     [FoldoutGroup("Bot Variables")] [SerializeField] [Range(0.1f,0.5f)] private float _rotationSpeed;
     [FoldoutGroup("Bot Variables")] [SerializeField] private float _rotaionDuration;
+    [FoldoutGroup("Bot Variables")] [SerializeField] private float _botFallSpeed;
 
 
     [FoldoutGroup("Card Variables")] [SerializeField] private float _cardInstantiationSpeed;
     [FoldoutGroup("Card Variables")] [SerializeField] private float _cardFanningOutSpeed;
     [FoldoutGroup("Card Variables")] [SerializeField] private float _cardFanningInSpeed;
 
+    [SerializeField] private float _pushableBoxStepSpeed;
+    [SerializeField] private float _pushableBoxFallSpeed;
+    
     [FoldoutGroup("MovingPlatform")] [SerializeField] private float _movingPlatformSpeed;
 
     [FoldoutGroup("RainingAnimationVariables")] [SerializeField] private float _rainInAnimation;
@@ -29,6 +33,8 @@ public class Tweener : MonoBehaviour
     public float CardFanningInSpeed { get { return _cardFanningInSpeed;} }
     public float BotRotationSpeed { get { return _rotationSpeed; } }
     public float BotRotationDuration {  get { return _rotaionDuration; }  }
+    public float PushableBoxStepSpeed { get { return _pushableBoxStepSpeed; } }
+    public float BotFallSpeed { get { return _botFallSpeed; } }
     #endregion
 
     public static  Tweener Instance;

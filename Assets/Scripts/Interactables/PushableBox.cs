@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using DG.Tweening;
 
 public class PushableBox : MonoBehaviour
 {
@@ -14,18 +15,16 @@ public class PushableBox : MonoBehaviour
     private bool _isPushable = true;
     public bool IsPushable { get { return _isPushable; } set { } }
 
-
-    private Vector3 _debugDirection;
     private Vector3 _direction;
     private bool _willBePlatform = false;
+    private bool _platformCached = false;
     private WallTile _wallTile = null;
     private PushableBox _pushableBox = null;
-    private bool _platformCached = false;
-   
+    private float _stepSpeed;   
     private void Awake()
     {
         _collidableLayers = LayerMask.GetMask(_layersToCheck);
-        
+        _stepSpeed = Tweener.Instance.PushableBoxStepSpeed;
     }
     public async Task SolveTurnAsync(Vector3 direction)
     {
@@ -98,16 +97,16 @@ public class PushableBox : MonoBehaviour
                 }
                 else
                 {
-                    
-                    transform.position += direction;
 
+                    //transform.position += direction;
+                    transform.DOMove(transform.position + direction, _stepSpeed);
                 }
             }
             else
             {
                 //Move Bot with direction
-                transform.position += direction;
-
+                //transform.position += direction;
+                transform.DOMove(transform.position + direction, _stepSpeed);
             }
             if (_willBePlatform == true)
             {
