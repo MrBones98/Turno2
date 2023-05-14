@@ -84,5 +84,6 @@ MonoBehaviour:
   Direction: {x: 0, y: 0}
   Distance: 0
   StartsActivated: 0
-  _box: {fileID: 5746839918106236395, guid: 86b99714815d49b42b3171ddcaa16e85, type: 3}
+  IsHighlighted: 0
+  _box: {fileID: 6158010914137223927, guid: cebd7e1a75e2b4614931e7e19267fc15, type: 3}
   _offset: 0.5
