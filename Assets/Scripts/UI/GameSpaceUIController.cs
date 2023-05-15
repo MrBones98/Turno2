@@ -65,9 +65,10 @@ public class GameSpaceUIController : MonoBehaviour
         print("Reset Clicked");
     }
 
-    private void OnUndoClicked()
+    private async void OnUndoClicked()
     {
         print("Undo Clicked");
+        await GameManager.Instance.UndoPressed();
     }
 
     private void OnPauseMenuClicked()

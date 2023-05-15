@@ -18,9 +18,9 @@ public class Bot : MonoBehaviour
 
     public bool IsPushableBot { get { return _isPushable; }}
     public bool CanBePushed { get { return _canBePushed; }}
-    public bool IsFocused{ get { return _isFocused; }}
+    public bool IsFocused{ get { return _isFocused; }set { _isFocused = value; } }
     public GameObject ParentGameObject { get { return _parentGameObject; }}
-    public int StepCount { get { return _stepCount; }}
+    public int StepCount { get { return _stepCount; } set { _stepCount = value; } }
     public bool IsMoving { get { return _isMoving; }}
 
     private string[] _layersToCheck = { "Platform", "Pushable", "Wall", "Player"};

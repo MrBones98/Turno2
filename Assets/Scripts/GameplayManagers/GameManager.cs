@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     public static event OnGameStart onGameStarted;
     public delegate void OnBotMove();
     public static event OnBotMove onBotMove;
+    public delegate void OnUndoButtonPressed();
+    public static event OnUndoButtonPressed onUndoButtonPressed;
     private void OnEnable()
     {
         ScriptableObjectLoader.onLevelLoaded += LoadLevel;
@@ -141,9 +143,21 @@ public class GameManager : MonoBehaviour
         print("Reset level");
         await Task.Yield();
     }
-    public void UndoMove()
+    public async Task UndoPressed()
     {
+        onUndoButtonPressed?.Invoke();
+        await Task.Yield();
+        int countReference = _bot.GetComponent<Bot>().StepCount;
+        if (_bot != null && countReference>0)
+        {
+            //remove focused
+            _bot.GetComponent<Bot>().IsFocused = false;
+            //Check based ond StepCount or reference to given Card (Set !active when given Distance to player, it destroys itself after the movement?)
+            CardHandManager.Instance.DebugGiveMoveCard(countReference);
+            //set step count to 0
+            _bot.GetComponent<Bot>().StepCount = 0;
 
+        }
     }
     private void FinishLevel()
     {
