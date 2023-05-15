@@ -283,6 +283,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 5257521330701829672, guid: cd6f22fea87454b1ebbb81f92238d9ef, type: 3}
+    - target: {fileID: 5454961864315988589, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7848142740219980394, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608369162356368378, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608369162356368378, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608369162356368378, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_Size.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8973112858036087981, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: _showObjects
       value: 1
@@ -327,6 +347,8 @@ MonoBehaviour:
   InteractableID: 0
   Direction: {x: 0, y: 0}
   Distance: 0
+  StartsActivated: 0
+  IsHighlighted: 0
 --- !u!114 &6035073945642698142
 MonoBehaviour:
   m_ObjectHideFlags: 0

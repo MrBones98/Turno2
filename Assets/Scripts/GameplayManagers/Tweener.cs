@@ -22,6 +22,7 @@ public class Tweener : MonoBehaviour
     [SerializeField] private float _pushableBoxFallSpeed;
     
     [FoldoutGroup("MovingPlatform")] [SerializeField] private float _movingPlatformSpeed;
+    [FoldoutGroup("MovingPlatform")] [SerializeField] private float _movingPlatformMoveDuration;
 
     [FoldoutGroup("RainingAnimationVariables")] [SerializeField] private float _rainInAnimation;
 
@@ -39,6 +40,8 @@ public class Tweener : MonoBehaviour
     public float BotFallSpeed { get { return _botFallSpeed; } }
     public float BotHighlightHeight { get { return _botHighlightHeight; } }
     public float CardOnHoverHeight { get {return _cardPopOutHeight; } }
+    public float MovingPlatformSpeed { get { return _movingPlatformSpeed; } }
+    public float MovinPlatformMoveDuration { get { return _movingPlatformMoveDuration; } }
     #endregion
 
     public static  Tweener Instance;

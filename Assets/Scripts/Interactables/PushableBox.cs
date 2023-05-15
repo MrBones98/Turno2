@@ -110,7 +110,7 @@ public class PushableBox : MonoBehaviour
             }
             if (_willBePlatform == true)
             {
-                SpawnPlatform();  
+                Invoke(nameof(SpawnPlatform),0.3f);  
 
                 
             }
@@ -124,8 +124,10 @@ public class PushableBox : MonoBehaviour
     private void SpawnPlatform()
     {
         gameObject.transform.GetComponent<BoxCollider>().enabled = false;
-        Instantiate(_platform, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
-        Destroy(gameObject, 1f);
+        GameObject tile = Instantiate(_platform, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
+        print(tile.transform.position);
+        GameManager.TileGameObjects.Add(tile);
+        Destroy(this.gameObject, 0.5f);
     }
 
     public void TransformIntoPlatform()

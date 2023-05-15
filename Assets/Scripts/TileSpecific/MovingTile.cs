@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
+
 
 public class MovingTile : Tile,ISwitchActivatable
 {
@@ -10,23 +12,15 @@ public class MovingTile : Tile,ISwitchActivatable
     private MovingTileAnimation _animation;
     private GameObject _carriedObject;
     private bool _active;
+    private float _moveDuration;
+    private float _speed;
     private void Awake()
     {
         //TODO
         //Take into consideration the Direction x or y to rotate model correctly (might need a container to not mess up
         //the transform+ direction
         _animation = GetComponent<MovingTileAnimation>();
-        //if (!StartsActivated)
-        //{
-        //_animation.LightsOff();
-        //    Deactivate();
-        //    _active = false;
-        //}
-        //else
-        //{
-        //    Activate();
-        //    _active = true;
-        //}
+        _moveDuration = Tweener.Instance.MovinPlatformMoveDuration;
     }
     private void OnEnable()
     {
@@ -66,19 +60,24 @@ public class MovingTile : Tile,ISwitchActivatable
     //change to async
     private IEnumerator MovingDelay()
     {
-        print("Platform went into Move Function!");
+        //print("Platform went into Move Function!");
         yield return new WaitForSeconds(0.5f);
         int distance = Distance;
+        Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;
         while (distance>0)
         {
             if (_count % 2 == 0)
             {
-                transform.position = transform.position + new Vector3(Direction.x, 0, Direction.y);
+                //transform.position = transform.position + new Vector3(Direction.x, 0, Direction.y);
+                transform.DOMove(transform.position + endPos, _moveDuration);
+                //print("moveMove");
                 _animation.LightBack(); 
             }
             else
             {
-                transform.position = transform.position + new Vector3(-Direction.x, 0, -Direction.y);
+                //transform.position = transform.position + new Vector3(-Direction.x, 0, -Direction.y);
+                transform.DOMove(transform.position -endPos, _moveDuration);
+                //print("moveMove");
                 _animation.LightForward();
             }
             distance--;
