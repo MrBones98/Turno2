@@ -236,7 +236,8 @@ MonoBehaviour:
   _cardInstantiationSpeed: 0
   _cardFanningOutSpeed: 0
   _cardFanningInSpeed: 0
-  _cardPopOutHeight: 0
+  _cardPopOutHeight: 40
+  _cardHoverDuration: 0.2
   _pushableBoxStepSpeed: 0.3
   _pushableBoxFallSpeed: 0
   _movingPlatformSpeed: 0

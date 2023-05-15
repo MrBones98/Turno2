@@ -17,6 +17,7 @@ public class Tweener : MonoBehaviour
     [FoldoutGroup("Card Variables")] [SerializeField] private float _cardFanningOutSpeed;
     [FoldoutGroup("Card Variables")] [SerializeField] private float _cardFanningInSpeed;
     [FoldoutGroup("Card Variables")] [SerializeField] private float _cardPopOutHeight;
+    [FoldoutGroup("Card Variables")] [SerializeField] private float _cardHoverDuration;
 
     [SerializeField] private float _pushableBoxStepSpeed;
     [SerializeField] private float _pushableBoxFallSpeed;
@@ -42,6 +43,7 @@ public class Tweener : MonoBehaviour
     public float CardOnHoverHeight { get {return _cardPopOutHeight; } }
     public float MovingPlatformSpeed { get { return _movingPlatformSpeed; } }
     public float MovinPlatformMoveDuration { get { return _movingPlatformMoveDuration; } }
+    public float CardHoverDuration { get { return _cardHoverDuration; } }
     #endregion
 
     public static  Tweener Instance;

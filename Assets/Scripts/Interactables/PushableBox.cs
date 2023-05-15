@@ -20,11 +20,13 @@ public class PushableBox : MonoBehaviour
     private bool _platformCached = false;
     private WallTile _wallTile = null;
     private PushableBox _pushableBox = null;
+    private float _originalHeight;
     private float _stepSpeed;   
     private void Awake()
     {
         _collidableLayers = LayerMask.GetMask(_layersToCheck);
         _stepSpeed = Tweener.Instance.PushableBoxStepSpeed;
+        _originalHeight = transform.position.y;
     }
     public async Task SolveTurnAsync(Vector3 direction)
     {
@@ -129,15 +131,12 @@ public class PushableBox : MonoBehaviour
         GameManager.TileGameObjects.Add(tile);
         Destroy(this.gameObject, 0.5f);
     }
-
-    public void TransformIntoPlatform()
+    private void Update()
     {
-        _willBePlatform = true;
-        print($"Box will be platform: {_willBePlatform}");
-    }
-    private IEnumerator SphereCastDelay()
-    {
-        yield return new WaitForSeconds(0.5f);
+        if(transform.position.y <0 && !_willBePlatform)
+        {
+            //transform.position = new Vector3(transform.position.x,_originalHeight, transform.position.z);
+        }
     }
     private void OnDrawGizmos()
     {

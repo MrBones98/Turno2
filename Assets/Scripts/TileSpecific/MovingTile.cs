@@ -123,10 +123,6 @@ public class MovingTile : Tile,ISwitchActivatable
     {
         GameManager.onBotMove -= UpdateTurn;
     }
-    private void OnValidate()
-    {
-       //Check and set orientation for the platform's direction 
-    }
 
     public void Activate()
     {

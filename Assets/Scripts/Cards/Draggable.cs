@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,IPointerEnterHandler,IPointerExitHandler
 {
@@ -13,18 +14,23 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private DirectionalInputBot _directionalInputBot;
     private GameManager _gameManager;
     private Vector3 _scaleAdditionVector;
-
+    private float _hoverHeight;
+    private float _originalHeight;
+    private float _hoverDuration;
     private void Awake()
     {
         _cardValueText.text = _moveCount.ToString();
         _gameManager = GameManager.Instance;
+        _hoverHeight = Tweener.Instance.CardOnHoverHeight;
+        _hoverDuration = Tweener.Instance.CardHoverDuration;
+        _originalHeight = transform.position.y;
     }
     private void Start()
     {
         _originalHandParent = transform.parent;
         //print(_originalHandParent.name);
         _scaleAdditionVector = new Vector3(transform.localScale.x, transform.localScale.y, 0) * 0.15f;
-
+        transform.DOMoveY(0, _hoverDuration);
 
     }
     public void OnBeginDrag(PointerEventData eventData)
@@ -84,15 +90,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //throw new System.NotImplementedException();
-        //Dotween hover down
+        transform.DOMoveY(0, _hoverDuration);
         print("hover card down");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //throw new System.NotImplementedException();
-        //Dotween hover up
+        transform.DOMoveY(_hoverHeight, _hoverDuration);
         print("hover card up");
     }
 }
