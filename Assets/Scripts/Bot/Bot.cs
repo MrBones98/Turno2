@@ -28,6 +28,7 @@ public class Bot : MonoBehaviour
     private float _botStepDelay;
     private float _botStepSpeed;
     private float _rotationSpeed;
+    private float _fallSpeed;
     int _collidableLayers;
     private int _stepCount;
     private bool _isFocused;
@@ -58,6 +59,7 @@ public class Bot : MonoBehaviour
         _botStepSpeed = Tweener.Instance.BotStepSpeed;
         _originalHeightBotHighlight = transform.position.y;
         _highlightHeight = Tweener.Instance.BotHighlightHeight;
+        _fallSpeed = Tweener.Instance.BotFallSpeed;
         //_directionalInputBot = GetComponent<DirectionalInputBot>();
     }
     //Could make this async and wait for it on Game Manager
@@ -253,6 +255,8 @@ public class Bot : MonoBehaviour
                 //Dead Anim
                 if (IsFocused) //Debug purposes, delete
                     print("No platform underneath Bot => Death after movement");
+                _parentGameObject.transform.DOMoveY(-10f, _fallSpeed).SetEase(Ease.InBack);
+                
             }
         }
         else

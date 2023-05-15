@@ -281,7 +281,8 @@ public class GameManager : MonoBehaviour
                 _highlightedPath.Add(platformToShow);
                 //}
 
-                platformToShow.position += new Vector3(0, _highlightHeight, 0);
+                //platformToShow.position += new Vector3(0, _highlightHeight, 0);
+                platformToShow.DOMoveY(_highlightHeight, 0.3f);
             }
 
         }
@@ -296,6 +297,7 @@ public class GameManager : MonoBehaviour
             foreach (Transform transform in _highlightedPath)
             {
                 transform.position -= new Vector3(0, _highlightHeight, 0);
+                transform.DOMoveY(0, 0.3f);
             }
             _highlightedPath.Clear();
         }

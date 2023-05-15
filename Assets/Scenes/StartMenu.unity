@@ -231,7 +231,7 @@ MonoBehaviour:
   _collisionCheckDelay: 0
   _rotationSpeed: 0.5
   _rotaionDuration: 0
-  _botFallSpeed: 0
+  _botFallSpeed: 2
   _botHighlightHeight: 0.6
   _cardInstantiationSpeed: 0
   _cardFanningOutSpeed: 0
