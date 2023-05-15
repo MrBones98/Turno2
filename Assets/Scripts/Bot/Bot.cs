@@ -24,6 +24,7 @@ public class Bot : MonoBehaviour
     public bool IsMoving { get { return _isMoving; }}
 
     private string[] _layersToCheck = { "Platform", "Pushable", "Wall", "Player"};
+    private float _originalHeightBotHighlight;
     private float _botStepDelay;
     private float _botStepSpeed;
     private float _rotationSpeed;
@@ -55,6 +56,8 @@ public class Bot : MonoBehaviour
         _botStepDelay = Tweener.Instance.BotStepDelay;
         _rotationSpeed = Tweener.Instance.BotRotationSpeed;
         _botStepSpeed = Tweener.Instance.BotStepSpeed;
+        _originalHeightBotHighlight = transform.position.y;
+        _highlightHeight = Tweener.Instance.BotHighlightHeight;
         //_directionalInputBot = GetComponent<DirectionalInputBot>();
     }
     //Could make this async and wait for it on Game Manager
@@ -277,7 +280,7 @@ public class Bot : MonoBehaviour
         //transform.position -= new Vector3(0, 0.2f, 0);
 
         //Expose HeighleightHeight
-        transform.DOMoveY(-0.2f, 0.3f, false);
+        transform.DOMoveY(_originalHeightBotHighlight, 0.3f, false);
 
         onFinishedMove();
         
@@ -298,7 +301,7 @@ public class Bot : MonoBehaviour
     {
         _stepCount = distance;
         //transform.position += new Vector3(0, 0.2f, 0);
-        transform.DOMoveY(0.2f, 0.3f,false);
+        transform.DOMoveY(_highlightHeight, 0.3f,false);
         _isFocused = true;
         _isMoving = true;
     }

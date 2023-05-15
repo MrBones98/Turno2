@@ -200,9 +200,13 @@ public class GameManager : MonoBehaviour
         }
 
         //Just Raise Event and subscribe from Intwractables
-        if(_bot != null)
+        //if(_bot != null)
+        //{
+        //    if(!_bot.GetComponent<Bot>().IsMoving)
+        //    HighlightInteractables();
+        //}
+        if (_bot == null ||(_bot!= null && ! _bot.GetComponent<Bot>().IsMoving))
         {
-            if(!_bot.GetComponent<Bot>().IsMoving)
             HighlightInteractables();
         }
     }
