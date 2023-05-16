@@ -185,6 +185,7 @@ public class Bot : MonoBehaviour
         await Task.Delay((int)_botStepDelay * 1000);
         if (walltile == null || (walltile != null && !walltile.HasColision)|| pushableBot.IsPushableBot)
         {
+            //do null check for pushable bot and then for is pushable INSIDE of the wall tile chek for blocking movement
             if(platformCached)
             {
                 _grounded = true;

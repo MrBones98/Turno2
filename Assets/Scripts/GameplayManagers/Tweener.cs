@@ -4,8 +4,8 @@ using UnityEngine;
 public class Tweener : MonoBehaviour
 {
     //Bot
-    [FoldoutGroup("Bot Variables")] [SerializeField] [Range(0.5f,2f)] private float _botStepDelay;
-    [FoldoutGroup("Bot Variables")] [SerializeField] private float _botStepSpeed; // will have to change movement async function call on GameManager (could also just call from bot tbh(
+    [FoldoutGroup("Bot Variables")] [SerializeField] [Range(0.2f, 1f)] private float _botStepDelay;
+    [FoldoutGroup("Bot Variables")] [SerializeField] [Range(0.1f, 0.5f] private float _botStepSpeed; // will have to change movement async function call on GameManager (could also just call from bot tbh(
     [FoldoutGroup("Bot Variables")] [SerializeField] private float _collisionCheckDelay;
     [FoldoutGroup("Bot Variables")] [SerializeField] [Range(0.1f,0.5f)] private float _rotationSpeed;
     [FoldoutGroup("Bot Variables")] [SerializeField] private float _rotaionDuration;
