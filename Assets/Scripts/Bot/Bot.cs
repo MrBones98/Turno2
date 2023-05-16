@@ -37,9 +37,7 @@ public class Bot : MonoBehaviour
     private bool _grounded = true;
     private bool _isActive = true;
     private bool _platformCached = false;
-    private Vector3 _lookDirection;
     private Vector3 _movementDirection;
-    private Vector3 _gizmoPosition;
     private WallTile _wallTile= null;
     private PushableBox _pushableBox = null;
     private Bot _pushableBot = null;
@@ -63,25 +61,27 @@ public class Bot : MonoBehaviour
         //_directionalInputBot = GetComponent<DirectionalInputBot>();
     }
     //Could make this async and wait for it on Game Manager
-    public void CheckMove(Vector3 direction)
+    public async void CheckMove(Vector3 direction)
     {
         //Change Direction into EnumDirection is here, change parameter for SolveCollision/SolveMovement *vector3 direction*
         if (_isActive)
         {
             _movementDirection = direction;
-            Vector3 correctedDirection = direction.normalized;
-            _gizmoPosition = correctedDirection;
-            _lookDirection = (_parentGameObject.transform.position + direction) - _parentGameObject.transform.position;
             //_parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
-            
-            Quaternion targetRotation = Quaternion.LookRotation((_parentGameObject.transform.position + direction) - _parentGameObject.transform.position);
-            _parentGameObject.transform.DORotateQuaternion(targetRotation, _rotationSpeed);
+            var solveRotationTask = SolveRotationOrientation(direction);
             //_parentGameObject.transform.DOLookAt(_lookDirection, _rotationSpeed, AxisConstraint.None);
-
-            SolveTurnAsync(direction);  
+            await solveRotationTask;
+            SolveTurnAsync(direction);
         }
     }
-    
+
+    private async Task SolveRotationOrientation(Vector3 direction)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation((_parentGameObject.transform.position + direction) - _parentGameObject.transform.position);
+        _parentGameObject.transform.DORotateQuaternion(targetRotation, _rotationSpeed);
+        await Task.Delay(500);
+    }
+
     public RaycastHit[] PlatformsToRaise(Vector3 orientation)
     {
         return Physics.RaycastAll(_parentGameObject.transform.position, orientation, _stepCount, _highlightPathLayer);
@@ -134,11 +134,10 @@ public class Bot : MonoBehaviour
     }
     async Task SolveCollisionsAsync(Vector3 direction)
     {
-        await Task.Delay((int)(_botStepDelay) * 1000);
+        await Task.Delay((int)(_botStepDelay * 1000));
+        print((int)(_botStepDelay * 1000));
         
         RaycastHit[] facingHit = Physics.SphereCastAll(_raycastOrigin.position, 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
-        //RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,-_raycastOrigin.transform.up, 2f,_collidableLayers);
-        //Collider[] facingHit = Physics.OverlapSphere(_raycastOrigin.position, 0.51f, _collidableLayers);
         for (int i = 0; i < facingHit.Length; i++)
         {
             if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
@@ -171,7 +170,7 @@ public class Bot : MonoBehaviour
                     _pushableBot = null;
                 }
             }
-            print(facingHit[i].collider.gameObject.name);
+            print($"Collisions on Step #{_stepCount} , collider of: {facingHit[i].collider.gameObject.name}, at Pos: {facingHit[i].collider.gameObject.transform.position}");
         }
 
         if (facingHit.Length == 0)
@@ -216,7 +215,7 @@ public class Bot : MonoBehaviour
                     _canBePushed = true;
                     _grounded = true;
                     //_parentGameObject.transform.position += direction;
-                    _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
+                    Move(direction);
                 }
             }
             else if (pushableBot != null)
@@ -234,7 +233,7 @@ public class Bot : MonoBehaviour
                         print("bot can be pushed");
                     _canBePushed = true;
                     //_parentGameObject.transform.position += direction;
-                    _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
+                    Move(direction);
 
                 }
 
@@ -245,8 +244,7 @@ public class Bot : MonoBehaviour
                 if (IsFocused)
                     print("box and bot are null");
                 _canBePushed = true;
-                //_parentGameObject.transform.position += direction;
-                _parentGameObject.transform.DOMove(_parentGameObject.transform.position+ direction, _botStepSpeed);
+                Move(direction);
             }
             
             if (_grounded == false)
@@ -264,6 +262,12 @@ public class Bot : MonoBehaviour
             _canBePushed = false;
             print($"No movement in {direction}, a wall blocks the path!");
         }
+        await Task.Yield();
+    }
+    private void Move(Vector3 direction)
+    {
+        _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
+        print("Bot Moved!");
     }
     async void SolveTurnAsync(Vector3 direction)
     {

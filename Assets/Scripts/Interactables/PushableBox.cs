@@ -126,7 +126,7 @@ public class PushableBox : MonoBehaviour
     private void SpawnPlatform()
     {
         gameObject.transform.GetComponent<BoxCollider>().enabled = false;
-        GameObject tile = Instantiate(_platform, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
+        GameObject tile = Instantiate(_platform, new Vector3((int)transform.position.x, 0, (int)transform.position.z), Quaternion.identity);
         print(tile.transform.position);
         GameManager.TileGameObjects.Add(tile);
         Destroy(this.gameObject, 0.5f);

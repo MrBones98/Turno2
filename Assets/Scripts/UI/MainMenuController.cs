@@ -29,7 +29,7 @@ public class MainMenuController : MonoBehaviour
     #region Debug Methods
     public void DebugButtonPress(string name)
     {
-        print($"{name} button pressed");
+        //print($"{name} button pressed");
     }
 
     public void DebugSliderValue(string name, float val)

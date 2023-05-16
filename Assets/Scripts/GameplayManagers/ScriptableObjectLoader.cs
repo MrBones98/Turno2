@@ -48,7 +48,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     }
     public async void LoadNextLevel(bool increaseIndex)
     {
-        print(Index);
+        //print(Index);
         if (!increaseIndex)
         {
             _index--;
@@ -69,7 +69,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     }
     public async void LoadLevelWithIndex(int index)
     {
-        print(Index);
+        //print(Index);
         if (index >= 0 && index <_levels.Count)
         {
             _levelToLoad = _levels[index];

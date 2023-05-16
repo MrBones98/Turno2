@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public  void GiveChosenBotDirection(DirectionIs directionIs)
+    public  async void GiveChosenBotDirection(DirectionIs directionIs)
     {
         Vector3 moveVector;
 
@@ -194,8 +194,9 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+        var clearPathTask = ClearPath();
+        await clearPathTask;
         _bot.GetComponent<Bot>().CheckMove(moveVector);
-        ClearPath();
     }
 
     void Update()
@@ -219,6 +220,7 @@ public class GameManager : MonoBehaviour
         //    if(!_bot.GetComponent<Bot>().IsMoving)
         //    HighlightInteractables();
         //}
+        //TODO Check for Scene
         if (_bot == null ||(_bot!= null && ! _bot.GetComponent<Bot>().IsMoving))
         {
             HighlightInteractables();
@@ -259,6 +261,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //async
     public void ShowDirection(DirectionIs direction)
     {
         Vector3 rayOrientation;
@@ -269,7 +272,7 @@ public class GameManager : MonoBehaviour
         {
             //RaycastHit[] platformsToRaise = Physics.RaycastAll(_botParentGameObject.transform.position, rayOrientation, _currentBotStepCount, _highlightPathLayer);
             RaycastHit[] platformsToRaise = _bot.GetComponent<Bot>().PlatformsToRaise(rayOrientation);
-            print($"platforms on the path {platformsToRaise.Length} ");
+            //print($"platforms on the path {platformsToRaise.Length} ");
             ClearPath();
             foreach (var item in platformsToRaise)
             {
@@ -289,8 +292,9 @@ public class GameManager : MonoBehaviour
 
         _raisingPathDirection = direction;
     }
+    //async
 
-    private void ClearPath()
+    private async Task ClearPath()
     {
         if (_highlightedPath.Count > 0)
         {
@@ -302,6 +306,7 @@ public class GameManager : MonoBehaviour
             }
             _highlightedPath.Clear();
         }
+        await Task.Yield();
     }
 
     public void AssignPlayer(GameObject selectedBot)

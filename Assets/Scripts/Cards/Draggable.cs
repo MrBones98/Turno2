@@ -51,14 +51,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             
             if (hitInfo.collider.GetComponent<Bot>())
             {
-                //print(hitInfo.collider.gameObject.name);
                 _bot= hitInfo.collider.gameObject;
                 //transform.localScale-= _scaleAdditionVector;
-
-                
-                //_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate());
-
-                
             }
             else
             {
@@ -67,11 +61,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
         }
     }
-    //separate raycasting function, returns hitinfo
-    //private RaycastHit TryToGetPlayer()
-    //{
-
-    //}
     public void OnEndDrag(PointerEventData eventData)
     {
         //print("end");
@@ -91,12 +80,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnPointerExit(PointerEventData eventData)
     {
         transform.DOMoveY(0, _hoverDuration);
-        print("hover card down");
+        //print("hover card down");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.DOMoveY(_hoverHeight, _hoverDuration);
-        print("hover card up");
+        //print("hover card up");
     }
 }
