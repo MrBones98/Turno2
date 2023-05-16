@@ -183,10 +183,10 @@ public class Bot : MonoBehaviour
     {
         print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}, PushableBot = {pushableBot}");
         await Task.Delay((int)_botStepDelay * 1000);
-        if (walltile == null || (walltile != null && !walltile.HasColision)|| pushableBot.IsPushableBot)
+        if (walltile == null || (walltile != null && !walltile.HasColision))
         {
             //do null check for pushable bot and then for is pushable INSIDE of the wall tile chek for blocking movement
-            if(platformCached)
+            if (platformCached)
             {
                 _grounded = true;
             }
@@ -238,6 +238,11 @@ public class Bot : MonoBehaviour
                     }
 
                 }
+                else
+                {
+                    print("can't push not pushable bot");
+                    return;
+                }
 
             }
             else
@@ -255,6 +260,8 @@ public class Bot : MonoBehaviour
                 //Dead Anim
                 print("No platform underneath Bot => Death after movement");
                 _parentGameObject.transform.DOMoveY(-10f, _fallSpeed).SetEase(Ease.InBack);
+                transform.gameObject.GetComponent<BoxCollider>().enabled = false;
+                //Destroy?
                 _stepCount = 0;
                 
             }
