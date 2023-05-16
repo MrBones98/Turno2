@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour
     }
     private void FinishLevel()
     {
+        //event for the gamespaceuicontroller to load WinScreen
         //_winScreen.SetActive(true);
         //_gameplayUI.SetActive(false);
     }

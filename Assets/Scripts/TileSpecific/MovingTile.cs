@@ -8,10 +8,12 @@ using DG.Tweening;
 
 public class MovingTile : Tile,ISwitchActivatable
 {
+    [SerializeField] private GameObject _ghostTile;
     private int _count=0;
     private MovingTileAnimation _animation;
     private GameObject _carriedObject;
     private bool _active;
+    private bool _ghostDrawn = false;
     private float _moveDuration;
     private float _speed;
     private void Awake()
@@ -21,6 +23,7 @@ public class MovingTile : Tile,ISwitchActivatable
         //the transform+ direction
         _animation = GetComponent<MovingTileAnimation>();
         _moveDuration = Tweener.Instance.MovinPlatformMoveDuration;
+        _ghostTile.SetActive(false);
     }
     private void OnEnable()
     {
@@ -91,6 +94,29 @@ public class MovingTile : Tile,ISwitchActivatable
             //_carriedObject.transform.parent.parent.position += new Vector3(0, 0.45f, 0);
 
 
+    }
+    private void Update()
+    {
+        print(IsHighlighted);
+        if (IsHighlighted && _active && !_ghostDrawn) //perhaps not with _active?
+        {
+            _ghostTile.SetActive(true);
+            _ghostDrawn = true;
+            Vector3 endPos = new Vector3(Direction.x, 0, Direction.y) * Distance;
+            if (_count % 2 == 0)
+            {
+                _ghostTile.transform.position += endPos;
+            }
+            else
+            {
+                _ghostTile.transform.position -= endPos;
+            }
+        }
+        else if (!IsHighlighted)
+        {
+            _ghostDrawn=false;
+            _ghostTile.SetActive(false);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
