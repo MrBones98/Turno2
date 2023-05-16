@@ -17,22 +17,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _gameplayUI;
     [SerializeField] private float _highlightHeight;
     [SerializeField] private LayerMask _highlightPathLayer;
+    [SerializeField] private GameObject _botParentGameObject;
 
 
     //[OnValueChanged("AssignPlayer")]
     private GameObject _bot;
-    [SerializeField] private GameObject _botParentGameObject;
+    private Camera _camera;
     private DirectionalInputBot _directionalInputBot;
-    private DirectionIs _raisingPathDirection;
     private List<Transform> _highlightedPath = new();
     private List<Transform> _higlightedInteractables = new();
+    private RaycastHit _hit;
+    private Ray _interactableRay;
+    private DirectionIs _raisingPathDirection;
     private int _currentBotStepCount;
+    private int _idReference;
     private bool _selectCheck = false;
     private bool _raycastCheck =false;
-    private Camera _camera;
-    private Ray _interactableRay;
-    private RaycastHit _hit;
-    private int _idReference;
     //public WinTile WinTile;
 
     //ON THE LEVEL SO ADD COUNT OF BUTTONS FOR WINNING FOR DIFFERENT NEEED AMOUNTS
@@ -237,36 +237,40 @@ public class GameManager : MonoBehaviour
 
     private void HighlightInteractables()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!_raycastCheck)
+        if(SceneLoader.Instance.GetCurrentSceneIndex() == 1) //Gameplay Scene 
+        { 
+            if (Input.GetMouseButtonDown(0))
             {
-                _raycastCheck = true;
-                UpdateInteractableRayCast();
-                if (Physics.Raycast(_interactableRay, out _hit, 100, _highlightPathLayer))
+                if (!_raycastCheck)
                 {
-                    _idReference = _hit.collider.transform.parent.GetComponent<Tile>().InteractableID;
-                    print(_idReference);
-                    if (_idReference != 0)
+                    _raycastCheck = true;
+                    UpdateInteractableRayCast();
+                    if (Physics.Raycast(_interactableRay, out _hit, 100, _highlightPathLayer))
                     {
-                        HighlightInteractable(_idReference);
+                        _idReference = _hit.collider.transform.parent.GetComponent<Tile>().InteractableID;
+                        print(_idReference);
+                        if (_idReference != 0)
+                        {
+                            HighlightInteractable(_idReference);
+                        }
                     }
                 }
             }
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            _raycastCheck = false;
-            if (_idReference != 0)
+            else if (Input.GetMouseButtonUp(0))
             {
-                foreach (Transform interactable in _higlightedInteractables)
+                _raycastCheck = false;
+                if (_idReference != 0)
                 {
-                    interactable.transform.DOMoveY(0, 0.3f, false);
-                    interactable.GetComponent<Tile>().IsHighlighted = false;
+                    foreach (Transform interactable in _higlightedInteractables)
+                    {
+                        interactable.transform.DOMoveY(0, 0.3f, false);
+                        interactable.GetComponent<Tile>().IsHighlighted = false;
+                    }
+                    _higlightedInteractables.Clear();
                 }
-                _higlightedInteractables.Clear();
             }
-        }
+
+        } 
     }
 
     //async

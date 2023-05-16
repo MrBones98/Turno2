@@ -140,8 +140,8 @@ public class PushableBox : MonoBehaviour
     private async Task SpawnPlatform()
     {
         await Task.Yield();
-        //GameObject tile = Instantiate(_platform, new Vector3((int)transform.position.x, 0, (int)transform.position.z), Quaternion.identity);
-        GameObject tile = Instantiate(_platform, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
+        GameObject tile = Instantiate(_platform, new Vector3(Mathf.RoundToInt(transform.position.x), 0, Mathf.RoundToInt(transform.position.z)), Quaternion.identity);
+        //GameObject tile = Instantiate(_platform, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
         print(tile.transform.position);
         GameManager.TileGameObjects.Add(tile);
         await Task.Yield();
@@ -158,8 +158,6 @@ public class PushableBox : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        //Gizmos.DrawSphere(transform.position + new Vector3(_debugDirection.x, -0.3f, _debugDirection.z), 0.3f);
-        //Gizmos.DrawRay(transform.position, _debugDirection);
         Gizmos.DrawSphere(transform.position + _direction, 0.44f);
     }
 
