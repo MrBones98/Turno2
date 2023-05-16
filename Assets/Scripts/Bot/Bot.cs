@@ -251,8 +251,7 @@ public class Bot : MonoBehaviour
             {
                 //do another await for if (box=> will be platform/became platform)
                 //Dead Anim
-                if (IsFocused) //Debug purposes, delete
-                    print("No platform underneath Bot => Death after movement");
+                print("No platform underneath Bot => Death after movement");
                 _parentGameObject.transform.DOMoveY(-10f, _fallSpeed).SetEase(Ease.InBack);
                 
             }

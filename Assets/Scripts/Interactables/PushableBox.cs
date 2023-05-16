@@ -112,9 +112,7 @@ public class PushableBox : MonoBehaviour
             }
             if (_willBePlatform == true)
             {
-                Invoke(nameof(SpawnPlatform),0.3f);  
-
-                
+                Invoke(nameof(SpawnPlatform),0.3f);
             }
         }
         else
@@ -125,11 +123,11 @@ public class PushableBox : MonoBehaviour
     }
     private void SpawnPlatform()
     {
-        gameObject.transform.GetComponent<BoxCollider>().enabled = false;
-        GameObject tile = Instantiate(_platform, new Vector3((int)transform.position.x, 0, (int)transform.position.z), Quaternion.identity);
+        //gameObject.transform.GetComponent<BoxCollider>().enabled = false;
+        GameObject tile = Instantiate(_platform, new Vector3(transform.position.x, 0,transform.position.z), Quaternion.identity);
         print(tile.transform.position);
         GameManager.TileGameObjects.Add(tile);
-        Destroy(this.gameObject, 0.5f);
+        Destroy(gameObject, 0.5f);
     }
     private void Update()
     {
