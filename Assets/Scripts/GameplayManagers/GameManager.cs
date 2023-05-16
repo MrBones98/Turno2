@@ -55,9 +55,9 @@ public class GameManager : MonoBehaviour
         Bot.onStartedMove += CleanVisualOnBotMove;
     }
 
-    private void CleanVisualOnBotMove()
+    private async void CleanVisualOnBotMove()
     {
-        ClearPath();
+        await ClearPath();
     }
 
     private void HighlightInteractable(int id)
@@ -270,7 +270,7 @@ public class GameManager : MonoBehaviour
     }
 
     //async
-    public void ShowDirection(DirectionIs direction)
+    public async void ShowDirection(DirectionIs direction)
     {
         Vector3 rayOrientation;
 
@@ -281,7 +281,7 @@ public class GameManager : MonoBehaviour
             //RaycastHit[] platformsToRaise = Physics.RaycastAll(_botParentGameObject.transform.position, rayOrientation, _currentBotStepCount, _highlightPathLayer);
             RaycastHit[] platformsToRaise = _bot.GetComponent<Bot>().PlatformsToRaise(rayOrientation);
             //print($"platforms on the path {platformsToRaise.Length} ");
-            ClearPath();
+            await ClearPath();
             foreach (var item in platformsToRaise)
             {
                 //await Task.Delay(100);

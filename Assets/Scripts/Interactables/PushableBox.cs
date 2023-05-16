@@ -18,27 +18,33 @@ public class PushableBox : MonoBehaviour
     private Vector3 _direction;
     private bool _willBePlatform = false;
     private bool _platformCached = false;
+    private bool _spawned = false;
     private WallTile _wallTile = null;
     private PushableBox _pushableBox = null;
     private float _originalHeight;
-    private float _stepSpeed;   
+    private float _stepSpeed;
+    private GameObject _mesh;
     private void Awake()
     {
         _collidableLayers = LayerMask.GetMask(_layersToCheck);
         _stepSpeed = Tweener.Instance.PushableBoxStepSpeed;
         _originalHeight = transform.position.y;
+        _mesh = transform.gameObject.GetComponentInChildren<MeshFilter>().gameObject;
     }
     public async Task SolveTurnAsync(Vector3 direction)
     {
-        _direction = direction;
-        var solveCollisionsTask = SolveCollisionAsync(_direction);
-        await solveCollisionsTask;
-        var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, _direction);
-        await solveMovementTask;
+        if (!_spawned)
+        {
+            _direction = direction;
+            var solveCollisionsTask = SolveCollisionAsync(_direction);
+            await solveCollisionsTask;
+            var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, _direction);
+            await solveMovementTask;
 
-        _wallTile = null;
-        _pushableBox = null;
-        _platformCached = false;
+            _wallTile = null;
+            _pushableBox = null;
+            _platformCached = false;
+        }
 
     }
     async Task SolveCollisionAsync(Vector3 direction)
@@ -96,12 +102,14 @@ public class PushableBox : MonoBehaviour
                 if (!pushableBox.IsPushable)
                 {
                     _isPushable = false;
+                    _willBePlatform = false;
                 }
                 else
                 {
 
                     //transform.position += direction;
                     transform.DOMove(transform.position + direction, _stepSpeed);
+                    _willBePlatform = false;
                 }
             }
             else
@@ -110,24 +118,26 @@ public class PushableBox : MonoBehaviour
                 //transform.position += direction;
                 transform.DOMove(transform.position + direction, _stepSpeed);
             }
-            if (_willBePlatform == true)
-            {
-                Invoke(nameof(SpawnPlatform),0.3f);
-            }
         }
         else
         {
             _isPushable = false;
             print("wall in front");
         }
+        if (_willBePlatform == true)
+        {
+            Invoke(nameof(SpawnPlatform),0.3f);
+        }
     }
     private void SpawnPlatform()
     {
-        //gameObject.transform.GetComponent<BoxCollider>().enabled = false;
-        GameObject tile = Instantiate(_platform, new Vector3(transform.position.x, 0,transform.position.z), Quaternion.identity);
+        _spawned = true;
+        gameObject.transform.GetComponent<BoxCollider>().enabled = false;
+        _mesh.transform.DOScale(1, 0.2f);
+        GameObject tile = Instantiate(_platform, new Vector3((int)transform.position.x, 0,(int)transform.position.z), Quaternion.identity);
         print(tile.transform.position);
         GameManager.TileGameObjects.Add(tile);
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 0.4f);
     }
     private void Update()
     {
