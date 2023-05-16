@@ -8,6 +8,7 @@ public class CardHandManager : MonoBehaviour
     public static CardHandManager Instance;
 
     [SerializeField] private GameObject[] _slots;
+    [SerializeField] private GameObject _cardContainer;
     [SerializeField] private List<GameObject> _cardPrefabs = new();
     [SerializeField] private bool _isActive = false;
 
@@ -46,32 +47,34 @@ public class CardHandManager : MonoBehaviour
     }
     private void LoadCards()
     {
-            _slots = GameObject.FindGameObjectsWithTag("CardSlot");
+            //_slots = GameObject.FindGameObjectsWithTag("CardSlot");
+        _cardContainer = GameObject.FindGameObjectWithTag("CardContainer");
+
         _level = ScriptableObjectLoader.Instance.LevelToLoad;
         if (_isActive)
         {
             for (int i = 0; i < _level.MoveOne; i++)
             {
-                GameObject card = Instantiate(_cardPrefabs[0], _slots[0].transform.position, Quaternion.identity);
-                card.transform.SetParent(_slots[0].transform, true);
+                GameObject card = Instantiate(_cardPrefabs[0], _cardContainer.transform.position, Quaternion.identity);
+                card.transform.SetParent(_cardContainer.transform, true);
                 GameManager.Cards.Add(card);
             }
             for (int i = 0; i < _level.MoveTwo; i++)
             {
-                GameObject card = Instantiate(_cardPrefabs[1], _slots[1].transform.position, Quaternion.identity);
-                card.transform.SetParent(_slots[1].transform, true);
+                GameObject card = Instantiate(_cardPrefabs[1], _cardContainer.transform.position, Quaternion.identity);
+                card.transform.SetParent(_cardContainer.transform, true);
                 GameManager.Cards.Add(card);
             }
             for (int i = 0; i < _level.MoveThree; i++)
             {
-                GameObject card = Instantiate(_cardPrefabs[2], _slots[2].transform.position, Quaternion.identity);
-                card.transform.SetParent(_slots[2].transform, true);
+                GameObject card = Instantiate(_cardPrefabs[2], _cardContainer.transform.position, Quaternion.identity);
+                card.transform.SetParent(_cardContainer.transform, true);
                 GameManager.Cards.Add(card);
             }
             for (int i = 0; i < _level.MoveFour; i++)
             {
-                GameObject card = Instantiate(_cardPrefabs[3], _slots[3].transform.position, Quaternion.identity);
-                card.transform.SetParent(_slots[3].transform, true);
+                GameObject card = Instantiate(_cardPrefabs[3], _cardContainer.transform.position, Quaternion.identity);
+                card.transform.SetParent(_cardContainer.transform, true);
                 GameManager.Cards.Add(card);
             }
         }
