@@ -4,6 +4,8 @@ using UnityEngine;
 using Utils;
 using System.Threading.Tasks;
 using DG.Tweening;
+using System;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -50,6 +52,12 @@ public class GameManager : MonoBehaviour
         Bot.onFinishedMove += UpdateTurn;
         SwitchTile.onSwitchHighlighted += HighlightInteractable;
         WallTile.onWallHighlighted += HighlightInteractable;
+        Bot.onStartedMove += CleanVisualOnBotMove;
+    }
+
+    private void CleanVisualOnBotMove()
+    {
+        ClearPath();
     }
 
     private void HighlightInteractable(int id)
@@ -325,6 +333,7 @@ public class GameManager : MonoBehaviour
         Bot.onFinishedMove -= UpdateTurn;
         SwitchTile.onSwitchHighlighted -= HighlightInteractable;
         WallTile.onWallHighlighted -= HighlightInteractable;
+        Bot.onStartedMove -= CleanVisualOnBotMove;
     }
 
     private void LoadLevel()

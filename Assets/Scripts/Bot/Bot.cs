@@ -43,7 +43,9 @@ public class Bot : MonoBehaviour
     private Bot _pushableBot = null;
 
     public delegate void OnFinishedMove();
-    public static OnFinishedMove onFinishedMove;
+    public static event OnFinishedMove onFinishedMove;
+    public delegate void OnStartedMove();
+    public static event OnStartedMove onStartedMove;
     private void OnEnable()
     {
         WinTile.onButtonPressed += SwitchState;
@@ -66,6 +68,7 @@ public class Bot : MonoBehaviour
         //Change Direction into EnumDirection is here, change parameter for SolveCollision/SolveMovement *vector3 direction*
         if (_isActive)
         {
+           onStartedMove?.Invoke();
             _movementDirection = direction;
             //_parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
             var solveRotationTask = SolveRotationOrientation(direction);
