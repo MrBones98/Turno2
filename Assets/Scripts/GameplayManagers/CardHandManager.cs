@@ -41,8 +41,8 @@ public class CardHandManager : MonoBehaviour
     }
     public void DebugGiveMoveCard(int amount)
     {
-        GameObject card = Instantiate(_cardPrefabs[amount - 1], _slots[amount - 1].transform.position, Quaternion.identity);
-        card.transform.SetParent(_slots[amount-1].transform, true);
+        GameObject card = Instantiate(_cardPrefabs[amount - 1], _cardContainer.transform.position, Quaternion.identity);
+        card.transform.SetParent(_cardContainer.transform, true);
         GameManager.Cards.Add(card);
     }
     private void LoadCards()

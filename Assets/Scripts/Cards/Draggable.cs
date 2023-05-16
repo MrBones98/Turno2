@@ -38,7 +38,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //keep track of mouse position vs anchor point to have card movement relative to the grabbing point
         //AKA click on a corner and move it, without it jumping back to it
         //print("begin");
-        transform.SetParent(transform.parent.parent.parent);
+        transform.SetParent(transform.parent.parent);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -86,6 +86,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.DOMoveY(_hoverHeight, _hoverDuration);
-        print($"{this.gameObject.name} hover card up");
+        //print($"{this.gameObject.name} hover card up");
     }
 }
