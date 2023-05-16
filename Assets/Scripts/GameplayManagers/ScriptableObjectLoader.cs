@@ -59,7 +59,7 @@ public class ScriptableObjectLoader : MonoBehaviour
         }
         await ClearLevelAsync();
         await GameManager.Instance.ClearLevel();
-        LoadLevelWithIndex(_index);
+        await LoadLevelWithIndex(_index);
     }
     public async Task ClearLevelAsync()
     {
@@ -67,7 +67,11 @@ public class ScriptableObjectLoader : MonoBehaviour
         onLevelQeued?.Invoke();
         
     }
-    public async void LoadLevelWithIndex(int index)
+    public async Task ReloadLevel()
+    {
+        await LoadLevelWithIndex(_index);
+    }
+    public async Task LoadLevelWithIndex(int index)
     {
         //print(Index);
         if (index >= 0 && index <_levels.Count)
@@ -111,6 +115,7 @@ public class ScriptableObjectLoader : MonoBehaviour
                     GameManager.TileGameObjects.Add(child.gameObject);
                 }
             }
+            _index = index;
             Invoke(nameof(LevelLoadedCall), 0.5f);
         }
         else if(index>= _levels.Count-1)

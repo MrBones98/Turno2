@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
     }
     public async Task Resetlevel()
     {
-        print("Reset level");
+        await ClearLevel();
         await Task.Yield();
     }
     public async Task UndoPressed()

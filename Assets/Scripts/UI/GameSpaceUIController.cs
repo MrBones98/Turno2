@@ -62,6 +62,7 @@ public class GameSpaceUIController : MonoBehaviour
     {
         _handler.ClearMenus();
         await GameManager.Instance.Resetlevel();
+        await _instance.ReloadLevel();
         print("Reset Clicked");
     }
 
