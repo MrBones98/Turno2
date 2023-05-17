@@ -60,10 +60,13 @@ public class GameSpaceUIController : MonoBehaviour
 
     private async void OnResetClicked()
     {
-        _handler.ClearMenus();
-        await GameManager.Instance.Resetlevel();
-        await _instance.ReloadLevel();
-        print("Reset Clicked");
+        if (_instance.IsLoaded)
+        {
+            _handler.ClearMenus();
+            await GameManager.Instance.Resetlevel();
+            await _instance.ReloadLevel();
+            print("Reset Clicked");
+        }
     }
 
     private async void OnUndoClicked()
@@ -82,8 +85,11 @@ public class GameSpaceUIController : MonoBehaviour
     // win menu
     private void LoadNextLevel(bool isNext)
     {
-        _handler.ClearMenus();
-       _instance.LoadNextLevel(isNext);
+        if (_instance.IsLoaded)
+        {
+            _handler.ClearMenus();
+           _instance.LoadNextLevel(isNext);
+        }
     }
 
     // pause menu

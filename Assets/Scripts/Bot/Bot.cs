@@ -105,7 +105,7 @@ public class Bot : MonoBehaviour
             {
                 _platformCached = true;
             }
-            else
+            else if(!_platformCached)
             {
                 _platformCached = false;
             }
@@ -259,8 +259,8 @@ public class Bot : MonoBehaviour
                 //do another await for if (box=> will be platform/became platform)
                 //Dead Anim
                 print("No platform underneath Bot => Death after movement");
-                _parentGameObject.transform.DOMoveY(-10f, _fallSpeed).SetEase(Ease.InBack);
                 transform.gameObject.GetComponent<BoxCollider>().enabled = false;
+                _parentGameObject.transform.DOMoveY(-10f, _fallSpeed).SetEase(Ease.InBack);
                 //Destroy?
                 _stepCount = 0;
                 
@@ -293,11 +293,11 @@ public class Bot : MonoBehaviour
             _pushableBot = null;
             _platformCached = false;
         }
-        _isMoving = false;
         //transform.position -= new Vector3(0, 0.2f, 0);
 
         //Expose HeighleightHeight
         transform.DOMoveY(_originalHeightBotHighlight, 0.3f, false);
+        _isMoving = false;
 
         onFinishedMove();
         
@@ -305,10 +305,16 @@ public class Bot : MonoBehaviour
    
     public async Task SolvePushAsync(Vector3 direction)
     {
+        _isMoving = true;
         var solvePushCollisionsTask = SolvePushCollisionsAsync(direction);
         await solvePushCollisionsTask;
         var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, direction, _pushableBot);
         await solveMovementTask;
+        _wallTile = null;
+        _pushableBot=null;
+        _pushableBox=null;
+        _platformCached=false;
+        _isMoving = false;
     }
     public void SwitchState()
     {

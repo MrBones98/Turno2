@@ -14,14 +14,16 @@ public class ScriptableObjectLoader : MonoBehaviour
     [SerializeField] private List<GameObject> _cardPrefabs = new();
     [SerializeField] private List<Level> _levels = new();
 
-    private int _index = 0;
     public int Index { get { return _index; }set { _index = value; } }
+    public bool IsLoaded { get { return _isLoaded; } }
     public Level LevelToLoad { get { return _levelToLoad; }}
     public List<Level> Levels { get { return _levels; }}
     public delegate void LevelLoaded();
     public static event LevelLoaded onLevelLoaded;
     public delegate void OnLevelQeued();
     public static event OnLevelQeued onLevelQeued;
+    private int _index = 0;
+    private bool _isLoaded;
     private void OnEnable()
     {
         SceneLoader.onSceneLoaded+=()=> LoadNextLevel(true);
@@ -49,17 +51,23 @@ public class ScriptableObjectLoader : MonoBehaviour
     public async void LoadNextLevel(bool increaseIndex)
     {
         //print(Index);
-        if (!increaseIndex)
-        {
-            _index--;
-        }
-        else
-        {
-            _index++;
-        }
-        await ClearLevelAsync();
-        await GameManager.Instance.ClearLevel();
-        await LoadLevelWithIndex(_index);
+        //if(_isLoaded == true)
+        //{
+            if (!increaseIndex)
+            {
+                _index--;
+            }
+            else
+            {
+                _index++;
+            }
+            await ClearLevelAsync();
+            await GameManager.Instance.ClearLevel();
+            await LoadLevelWithIndex(_index);            
+        //}
+        //else
+        //{
+        //}
     }
     public async Task ClearLevelAsync()
     {
@@ -69,11 +77,19 @@ public class ScriptableObjectLoader : MonoBehaviour
     }
     public async Task ReloadLevel()
     {
+        //if(_isLoaded == true)
+        //{
         await LoadLevelWithIndex(_index);
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("Wait Until Level Loads!");
+        //}
     }
     public async Task LoadLevelWithIndex(int index)
     {
         //print(Index);
+        _isLoaded = false;
         if (index >= 0 && index <_levels.Count)
         {
             _levelToLoad = _levels[index];
@@ -128,6 +144,7 @@ public class ScriptableObjectLoader : MonoBehaviour
             Debug.LogError($"Accessing collection at {index}. It must be positive: resetting to 0");
             _index = 0;
         }
+        _isLoaded = true;
     }
     private void LevelLoadedCall()
     {

@@ -13,6 +13,7 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
     public static event OnSwitchReleased onSwitchReleased;
     public delegate void OnSwitchHighlighted(int id);
     public static event OnSwitchHighlighted onSwitchHighlighted;
+    bool _engaged = false;
 
 
 
@@ -29,12 +30,16 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
         print(other.name);
         if (other.GetComponent<Bot>())
         {
-            onSwitchPressed(InteractableID);
+            if (!other.GetComponent<Bot>().IsMoving)
+            {
+                _engaged = true;
+                onSwitchPressed(InteractableID);
+            }
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (!_isLatchSwitch)
+        if (!_isLatchSwitch && _engaged==true)
         {
             onSwitchReleased(InteractableID);
         }

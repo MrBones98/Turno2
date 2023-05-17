@@ -19,8 +19,11 @@ public class WinTile : Tile, ISwitchActivatable
     {
         if (other.GetComponent<Bot>())
         {
-            onButtonPressed();
-            print("Wiiiiiiiiiiiiiii");
+            if (!other.GetComponent<Bot>().IsMoving)
+            {
+                onButtonPressed();
+                print("Wiiiiiiiiiiiiiii");
+            }
         }
     }
 

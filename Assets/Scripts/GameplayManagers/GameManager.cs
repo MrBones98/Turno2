@@ -314,7 +314,7 @@ public class GameManager : MonoBehaviour
             foreach (Transform transform in _highlightedPath)
             {
                 //transform.position -= new Vector3(0, _highlightHeight, 0);
-
+                //Check here for bot man
                 transform.DOMoveY(0, 0.3f);
             }
             _highlightedPath.Clear();

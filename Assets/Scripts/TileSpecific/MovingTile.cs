@@ -65,8 +65,12 @@ public class MovingTile : Tile,ISwitchActivatable
     {
         //print("Platform went into Move Function!");
         yield return new WaitForSeconds(0.5f);
-        int distance = Distance;
         Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;
+        if(Physics.Raycast(transform.position,endPos,Distance, 7))
+        {
+            Distance--;
+        }
+        int distance = Distance;
         while (distance>0)
         {
             if (_count % 2 == 0)
@@ -97,7 +101,12 @@ public class MovingTile : Tile,ISwitchActivatable
     }
     private void Update()
     {
-        print(IsHighlighted);
+        //print(IsHighlighted);
+        GhostDisplay();
+    }
+
+    private void GhostDisplay()
+    {
         if (IsHighlighted && _active && !_ghostDrawn) //perhaps not with _active?
         {
             _ghostTile.SetActive(true);
@@ -114,10 +123,11 @@ public class MovingTile : Tile,ISwitchActivatable
         }
         else if (!IsHighlighted)
         {
-            _ghostDrawn=false;
+            _ghostDrawn = false;
             _ghostTile.SetActive(false);
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (IsMovable(other))
