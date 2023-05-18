@@ -66,10 +66,10 @@ public class MovingTile : Tile,ISwitchActivatable
         //print("Platform went into Move Function!");
         yield return new WaitForSeconds(0.5f);
         Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;
-        if(Physics.Raycast(transform.position,endPos,Distance, 7))
-        {
-            Distance--;
-        }
+        //if(Physics.Raycast(transform.position,endPos,Distance, 7))
+        //{
+        //    Distance--;
+        //}
         int distance = Distance;
         while (distance>0)
         {

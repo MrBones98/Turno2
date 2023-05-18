@@ -222,7 +222,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
         //Just Raise Event and subscribe from Intwractables
         //if(_bot != null)
         //{

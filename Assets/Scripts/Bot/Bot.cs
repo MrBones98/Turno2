@@ -62,6 +62,10 @@ public class Bot : MonoBehaviour
         _fallSpeed = Tweener.Instance.BotFallSpeed;
         //_directionalInputBot = GetComponent<DirectionalInputBot>();
     }
+    private void Update()
+    {
+        //print(IsMoving);
+    }
     //Could make this async and wait for it on Game Manager
     public async void CheckMove(Vector3 direction)
     {
@@ -281,7 +285,8 @@ public class Bot : MonoBehaviour
     async void SolveTurnAsync(Vector3 direction)
     {
         _isFocused = false;
-        while(_stepCount > 0)
+        _isMoving = true;
+        while (_stepCount > 0)
         {
             var solveCollisionsTask = SolveCollisionsAsync(direction);
             await solveCollisionsTask;
@@ -297,9 +302,9 @@ public class Bot : MonoBehaviour
 
         //Expose HeighleightHeight
         transform.DOMoveY(_originalHeightBotHighlight, 0.3f, false);
-        _isMoving = false;
 
         onFinishedMove();
+        _isMoving = false;
         
     }
    
@@ -318,6 +323,7 @@ public class Bot : MonoBehaviour
     }
     public void SwitchState()
     {
+        //bruh
         _isActive = !_isActive;
     }
     public void SetDistance(int distance)
@@ -326,7 +332,6 @@ public class Bot : MonoBehaviour
         //transform.position += new Vector3(0, 0.2f, 0);
         transform.DOMoveY(_highlightHeight, 0.3f,false);
         _isFocused = true;
-        _isMoving = true;
     }
     private void OnDisable()
     {

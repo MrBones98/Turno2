@@ -20,7 +20,8 @@ public class PushableBox : MonoBehaviour
     private bool _platformCached = false;
     private bool _spawned = false;
     private WallTile _wallTile = null;
-    private PushableBox _pushableBox = null;
+    private PushableBox _pushableBox = null; 
+    private Bot _pushableBot = null;
     private float _originalHeight;
     private float _stepSpeed;
     private GameObject _mesh;
@@ -38,11 +39,12 @@ public class PushableBox : MonoBehaviour
             _direction = direction;
             var solveCollisionsTask = SolveCollisionAsync(_direction);
             await solveCollisionsTask;
-            var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, _direction);
+            var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, _direction, _pushableBot);
             await solveMovementTask;
 
             _wallTile = null;
             _pushableBox = null;
+            _pushableBot = null;
             _platformCached = false;
         }
 
@@ -59,6 +61,10 @@ public class PushableBox : MonoBehaviour
             {
                 _platformCached = true;
             }
+            else if (!_platformCached)
+            {
+                _platformCached = false;
+            }
             if (hits[i].gameObject.GetComponent<WallTile>())
             {
                 _wallTile = hits[i].gameObject.GetComponent<WallTile>();
@@ -71,12 +77,20 @@ public class PushableBox : MonoBehaviour
             {
                 _pushableBox = hits[i].GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
             }
+            if (hits[i].GetComponent<Bot>())
+            {
+                _pushableBot = hits[i].GetComponent<Bot>();
+                print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
+            }
             print(hits[i].GetComponent<Collider>().gameObject.name);
         }
-        
+        if (hits.Length == 0)
+        {
+            _platformCached = false;
+        }
         print($"There are {hits.Length} colliders on this step");
     }
-    async Task SolveMovementAsync(WallTile wallTile, bool platformCached, PushableBox pushableBox, Vector3 direction)
+    async Task SolveMovementAsync(WallTile wallTile, bool platformCached, PushableBox pushableBox, Vector3 direction, Bot bot)
     {
         print($"In the {direction} direction there are: WallTile = {wallTile}, Box = {pushableBox}, Platform in front = {platformCached}");
         await Task.Yield();
@@ -107,9 +121,33 @@ public class PushableBox : MonoBehaviour
                 {
 
                     //transform.position += direction;
+                    _isPushable = true;
                     transform.DOMove(transform.position + direction, _stepSpeed);
-                    _willBePlatform = false;
+                    //_willBePlatform = false;
                 }
+                _willBePlatform = false;
+            }
+            else if (bot!= null)
+            {
+                if (bot.IsPushableBot)
+                {
+                    await bot.SolvePushAsync(direction);
+                    if (!bot.CanBePushed)
+                    {
+                        _isPushable = false;
+                    }
+                    else
+                    {
+                        _isPushable = true;
+                        transform.DOMove(transform.position + direction, _stepSpeed);
+                    }
+                }
+                else
+                {
+                    _isPushable = false;
+                    return;
+                }
+                    _willBePlatform = false;
             }
             else
             {

@@ -11,6 +11,7 @@ public class WinTile : Tile, ISwitchActivatable
     public static event OnButtonPressed onButtonPressed;
 
     private BigRedButtonAnimation _buttonAnimation;
+    private bool _buttonPressed=false;
     private void Awake()
     {
       _buttonAnimation = gameObject.GetComponent<BigRedButtonAnimation>();
@@ -19,8 +20,11 @@ public class WinTile : Tile, ISwitchActivatable
     {
         if (other.GetComponent<Bot>())
         {
-            if (!other.GetComponent<Bot>().IsMoving)
+            bool isMoving = other.GetComponent<Bot>().IsMoving;
+
+            if (!other.GetComponent<Bot>().IsMoving && !_buttonPressed)
             {
+                _buttonPressed = true;
                 onButtonPressed();
                 print("Wiiiiiiiiiiiiiii");
             }
