@@ -23,6 +23,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 3
     Position:
     - 4
@@ -33,6 +34,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 5
@@ -43,8 +45,10 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   Name: First Steps
   MoveOne: 0
   MoveTwo: 1
   MoveThree: 0
   MoveFour: 0
+  JumpCardTwo: 1

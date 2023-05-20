@@ -75,6 +75,10 @@ public class CardHandManager : MonoBehaviour
             {
                 SpawnCard(_cardPrefabs[3], _cardContainer.transform);
             }
+            for (int i = 0; i < _level.JumpCardTwo; i++)
+            {
+                SpawnCard(_cardPrefabs[4], _cardContainer.transform);
+            }
         }
         
         _cardContainer.transform.DOMove(_cardContainerPos, 2).SetEase(Ease.OutQuint);
