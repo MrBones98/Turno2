@@ -308,9 +308,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8994880230763643521, guid: 0275fc6d9ac78524d88a084e92c82549, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8994880230763643523, guid: 0275fc6d9ac78524d88a084e92c82549, type: 3}
       propertyPath: m_Spacing
-      value: -50
+      value: -35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994880230763643523, guid: 0275fc6d9ac78524d88a084e92c82549, type: 3}
+      propertyPath: m_ChildScaleWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994880230763643523, guid: 0275fc6d9ac78524d88a084e92c82549, type: 3}
+      propertyPath: m_ChildScaleHeight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8994880230763643551, guid: 0275fc6d9ac78524d88a084e92c82549, type: 3}
       propertyPath: m_TagString

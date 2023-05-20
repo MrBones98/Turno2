@@ -19,18 +19,22 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private float _hoverDuration;
     private void Awake()
     {
+        
         _cardValueText.text = _moveCount.ToString();
         _gameManager = GameManager.Instance;
         _hoverHeight = Tweener.Instance.CardOnHoverHeight;
         _hoverDuration = Tweener.Instance.CardHoverDuration;
         _originalHeight = transform.position.y;
+        
+        //transform.DOMoveY(_originalHeight, 3);
+
     }
     private void Start()
     {
         _originalHandParent = transform.parent;
         //print(_originalHandParent.name);
         _scaleAdditionVector = new Vector3(transform.localScale.x, transform.localScale.y, 0) * 0.15f;
-        transform.DOMoveY(0, _hoverDuration);
+        //transform.DOMoveY(_originalHeight, _hoverDuration);
 
     }
     public void OnBeginDrag(PointerEventData eventData)
@@ -61,12 +65,16 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
         }
     }
+    public void PopDown()
+    {
+        this.transform.position = new Vector3(_originalHandParent.position.x, _originalHandParent.position.y, _originalHandParent.position.z); 
+    }
+
     public void OnEndDrag(PointerEventData eventData)
     {
         //print("end");
         transform.SetParent(_originalHandParent,false);
-        transform.position = new Vector3(_originalHandParent.position.x, _originalHandParent.position.y, _originalHandParent.position.z);
-
+        PopDown();
         if (_bot != null)
         {
             //TODO
