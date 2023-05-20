@@ -31,6 +31,7 @@ public class Bot : MonoBehaviour
     private float _fallSpeed;
     int _collidableLayers;
     private int _stepCount;
+    private bool _jumpInput;
     private bool _isFocused;
     private bool _canBePushed;
     private bool _isMoving;
@@ -83,7 +84,17 @@ public class Bot : MonoBehaviour
             SolveTurnAsync(direction);
         }
     }
+    public async void CheckJump(Vector3 direction)
+    {
+        if (_isActive)
+        {
+            onStartedMove?.Invoke();
+            _movementDirection = direction * _stepCount;
+            var solveRotationTask = SolveRotationOrientation(direction);
 
+            await solveRotationTask;
+        }
+    }
     private async Task SolveRotationOrientation(Vector3 direction)
     {
         Quaternion targetRotation = Quaternion.LookRotation((_parentGameObject.transform.position + direction) - _parentGameObject.transform.position);
@@ -140,12 +151,19 @@ public class Bot : MonoBehaviour
         if (IsFocused) //Debug purposes, delete
             print($"There are {facingHit.Length} colliders on this step");
     }
-    async Task SolveCollisionsAsync(Vector3 direction)
+    async Task SolveCollisionsAsync(Vector3 direction, bool jump)
     {
         await Task.Delay((int)(_botStepDelay * 1000));
         print((int)(_botStepDelay * 1000));
-
-        RaycastHit[] facingHit = Physics.SphereCastAll(_raycastOrigin.position, 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
+        RaycastHit[] facingHit;
+        if (jump == false)
+        {
+             facingHit= Physics.SphereCastAll(_raycastOrigin.position, 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
+        }
+        else
+        {
+            facingHit = Physics.SphereCastAll(_raycastOrigin.position + new Vector3(0, 0, 1), 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
+        }
         for (int i = 0; i < facingHit.Length; i++)
         {
             if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
@@ -221,7 +239,14 @@ public class Bot : MonoBehaviour
                     _canBePushed = true;
                     _grounded = true;
                     //_parentGameObject.transform.position += direction;
-                    Move(direction);
+                    if (_jumpInput == false)
+                    {
+                        Move(direction);
+                    }
+                    else
+                    {
+                        Jump(direction);
+                    }
                 }
             }
             else if (pushableBot != null)
@@ -239,7 +264,14 @@ public class Bot : MonoBehaviour
                         print("bot can be pushed");
                         _canBePushed = true;
                         //_parentGameObject.transform.position += direction;
-                        Move(direction);
+                        if(_jumpInput == false)
+                        {
+                            Move(direction);
+                        }
+                        else
+                        {
+                            Jump(direction);
+                        }
                     }
 
                 }
@@ -256,7 +288,14 @@ public class Bot : MonoBehaviour
                 if (IsFocused)
                     print("box and bot are null");
                 _canBePushed = true;
-                Move(direction);
+                if(_jumpInput == false)
+                {
+                    Move(direction);   
+                }
+                else
+                {
+                    Jump(direction);
+                }
             }
             
             if (_grounded == false)
@@ -280,20 +319,43 @@ public class Bot : MonoBehaviour
     }
     private void Move(Vector3 direction)
     {
+        
         _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
         print("Bot Moved!");
+    }
+    private void Jump(Vector3 direction)
+    {
+        //HOW PARABLE
+        //_parentGameObject.transform.DOMove()
+        _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction * _stepCount, _botStepSpeed);
+        print("Bot Jumped");
     }
     async void SolveTurnAsync(Vector3 direction)
     {
         _isFocused = false;
         _isMoving = true;
-        while (_stepCount > 0)
+        if(_jumpInput== false)
         {
-            var solveCollisionsTask = SolveCollisionsAsync(direction);
+            while (_stepCount > 0)
+            {
+                var solveCollisionsTask = SolveCollisionsAsync(direction,_jumpInput);
+                await solveCollisionsTask;
+                var solveMovementTask = SolveMovementAsync(_wallTile,_platformCached, _pushableBox, direction, _pushableBot);
+                await solveMovementTask;
+                _stepCount--;
+                _wallTile = null;
+                _pushableBox = null;
+                _pushableBot = null;
+                _platformCached = false;
+            }
+        }
+        else
+        {
+            var solveCollisionsTask = SolveCollisionsAsync(direction, _jumpInput);
             await solveCollisionsTask;
-            var solveMovementTask = SolveMovementAsync(_wallTile,_platformCached, _pushableBox, direction, _pushableBot);
+            var solveMovementTask = SolveMovementAsync(_wallTile,_platformCached,_pushableBox,direction, _pushableBot);
             await solveMovementTask;
-            _stepCount--;
+            _stepCount = 0;
             _wallTile = null;
             _pushableBox = null;
             _pushableBot = null;
@@ -340,7 +402,16 @@ public class Bot : MonoBehaviour
         _stepCount = distance;
         //transform.position += new Vector3(0, 0.2f, 0);
         transform.DOMoveY(_highlightHeight, 0.3f,false);
+        _jumpInput = false;
         _isFocused = true;
+    }
+    public void SetJumpDistance(int distance)
+    {
+        _stepCount = distance;
+        transform.DOMoveY(_highlightHeight, 0.3f,false);
+        _jumpInput = true;
+        _isFocused = true;
+
     }
     private void OnDisable()
     {

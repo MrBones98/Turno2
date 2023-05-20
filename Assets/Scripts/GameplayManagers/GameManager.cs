@@ -219,6 +219,34 @@ public class GameManager : MonoBehaviour
         await clearPathTask;
         _bot.GetComponent<Bot>().CheckMove(moveVector);
     }
+    public  async void GiveChosenBotJumpDirection(DirectionIs directionIs)
+    {
+        Vector3 moveVector;
+
+        if(directionIs == DirectionIs.PosX)
+        {
+            moveVector = Vector3.right;
+        }
+        else if(directionIs==DirectionIs.NegZ)
+        {
+            moveVector = -Vector3.forward;
+        }
+        else if(directionIs ==DirectionIs.NegX)
+        {
+            moveVector = -Vector3.right;
+        }
+        else if (directionIs == DirectionIs.PosZ)
+        {
+            moveVector = Vector3.forward;
+        }
+        else
+        {
+            return;
+        }
+        var clearPathTask = ClearPath();
+        await clearPathTask;
+        _bot.GetComponent<Bot>().CheckMove(moveVector);
+    }
 
     void Update()
     {
