@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         ScriptableObjectLoader.onLevelLoaded += LoadLevel;
+        ScriptableObjectLoader.onLevelQeued +=async ()=>await  ClearLevel();
         WinTile.onButtonPressed += FinishLevel;
         SwitchTile.onSwitchPressed += Activate;
         SwitchTile.onSwitchReleased += DeActivate;
@@ -100,21 +101,28 @@ public class GameManager : MonoBehaviour
     }
     public async Task ClearLevel()
     {
-        for (int i = TileGameObjects.Count-1; i >= 0; i--)
+        if (TileGameObjects.Count >0)
         {
-            Destroy(TileGameObjects[i]);
+            await RainOutAnimation();
         }
-        for (int i = Cards.Count-1; i >= 0; i--)
+        if(TileGameObjects.Count != 0)
         {
-            Destroy(Cards[i]);
+            for (int i = TileGameObjects.Count-1; i >= 0; i--)
+            {
+                Destroy(TileGameObjects[i]);
+            }
+            for (int i = Cards.Count-1; i >= 0; i--)
+            {
+                Destroy(Cards[i]);
+            }
+            for (int i = SpawnedObjects.Count -1; i >= 0; i--)
+            {
+                Destroy(SpawnedObjects[i]);
+            }
+            TileGameObjects.Clear();
+            Cards.Clear();
+            SpawnedObjects.Clear();
         }
-        for (int i = SpawnedObjects.Count -1; i >= 0; i--)
-        {
-            Destroy(SpawnedObjects[i]);
-        }
-        TileGameObjects.Clear();
-        Cards.Clear();
-        SpawnedObjects.Clear();
         await Task.Yield();
     }
 
@@ -335,6 +343,7 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         ScriptableObjectLoader.onLevelLoaded -= LoadLevel;
+        ScriptableObjectLoader.onLevelQeued -= async () => await ClearLevel();
         WinTile.onButtonPressed -= FinishLevel;
         SwitchTile.onSwitchPressed -= Activate;
         SwitchTile.onSwitchReleased += DeActivate;
@@ -346,6 +355,10 @@ public class GameManager : MonoBehaviour
 
     private async void LoadLevel()
     {
+        //if (TileGameObjects.Count > 0)
+        //{
+        //    await ClearLevel();
+        //}
         onObjectsInstantiated?.Invoke();
         await RainInAnimation();
         //This after the raining in animation
@@ -361,9 +374,8 @@ public class GameManager : MonoBehaviour
         foreach (GameObject tile in TileGameObjects)
         {
            
-            await Task.Delay(50);
 
-            RainInTween(tile.transform);
+             RainInTween(tile.transform);
             
             //await tile.transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBack).AsyncWaitForPosition(7f);
             //tile.transform.DOMoveY(0, randomSpeed, false).SetEase(Ease.InOutQuad);
@@ -373,11 +385,15 @@ public class GameManager : MonoBehaviour
         {
             //0.45~0.5
             //float randomSpeed = Random.Range(14f, 16f);
-            float randomSpeed = 2.3f;
+            float randomSpeed = 1f;
             //await Task.Delay(150);
 
             //interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InQuad);
             interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InQuint);
+            if (interactable.GetComponentInChildren<Bot>())
+            {
+                await interactable.GetComponentInChildren<Bot>().CheckForLanding();
+            }
             //interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InCubic);
 
         }
@@ -385,15 +401,37 @@ public class GameManager : MonoBehaviour
         onGameStarted?.Invoke();
 
     }
-    private void RainInTween(Transform transform) 
+    private async Task RainOutAnimation()
+    {
+        foreach (GameObject tile in TileGameObjects)
+        {
+              RainOutTween(tile.transform);
+        }
+        foreach (GameObject interactable in SpawnedObjects)
+        {
+            //0.45~0.5
+            //float randomSpeed = Random.Range(14f, 16f);
+             RainOutTween(interactable.transform);
+
+        }
+        await Task.Delay(300);
+    }
+    private async void RainOutTween(Transform transform)
+    {
+        //transform.DOMoveY(-6f,_rainInDuration,false).SetEase(Ease.InQuad);
+        //transform.DOMoveY(-6f,_rainInDuration*1.25f,false).SetEase(Ease.OutBack);
+        transform.DOMoveY(-6f,_rainInDuration*0.25f,false).SetEase(Ease.InQuart);
+        //await Task.Yield();
+        await Task.Delay(100);
+    }
+    private async void RainInTween(Transform transform) 
     {
         //transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.InOutElastic);
         //transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBounce);
+        //await Task.Delay(300);
         transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBack);
-    }
-    private void ShuffleList(List<GameObject> tileGameObjects)
-    {
-        
+        await Task.Delay(100);
+        //await Task.Yield();
     }
 
     private void OnDrawGizmos()

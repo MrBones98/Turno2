@@ -16,6 +16,14 @@ public class GameSpaceUIController : MonoBehaviour
         InitWinMenu();
         _handler.ClearMenus();
     }
+    private void OnEnable()
+    {
+        WinTile.onButtonPressed += ShowWinScreen;
+    }
+    private void OnDisable()
+    {
+        WinTile.onButtonPressed -= ShowWinScreen;
+    }
     private void Start()
     {
         _instance = ScriptableObjectLoader.Instance;

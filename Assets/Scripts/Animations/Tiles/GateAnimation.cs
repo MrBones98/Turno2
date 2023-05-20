@@ -86,7 +86,7 @@ public class GateAnimation : MonoBehaviour
     }
     private void OnEnable()
     {
-        ScriptableObjectLoader.onLevelLoaded += OnLevelLoaded;
+        GameManager.onGameStarted += OnLevelLoaded;
     }
 
     private void OnLevelLoaded()
@@ -96,6 +96,6 @@ public class GateAnimation : MonoBehaviour
 
     private void OnDisable()
     {
-        ScriptableObjectLoader.onLevelLoaded -= OnLevelLoaded;
+        GameManager.onGameStarted += OnLevelLoaded;
     }
 }
