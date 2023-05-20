@@ -162,7 +162,8 @@ public class Bot : MonoBehaviour
         }
         else
         {
-            facingHit = Physics.SphereCastAll(_raycastOrigin.position + new Vector3(0, 0, 1), 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
+            Vector3 jumpRayPosition = _parentGameObject.transform.position+ (direction*_stepCount);
+            facingHit = Physics.SphereCastAll(jumpRayPosition,0.44f,Vector3.up, 1.5f, _collidableLayers);
         }
         for (int i = 0; i < facingHit.Length; i++)
         {
@@ -426,6 +427,7 @@ public class Bot : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
+        //Gizmos.DrawRay(_raycastOrigin.position + new Vector3(0, 0, 1),_raycastOrigin.position + new Vector3(0, 5, 1));
         //Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
         //Gizmos.DrawRay(_raycastOrigin.position, -_raycastOrigin.transform.up);
         //Gizmos.DrawRay(_parentGameObject.transform.position, MoveUtils.SetDirection(_raisingPathDirection));

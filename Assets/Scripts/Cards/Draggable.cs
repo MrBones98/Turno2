@@ -8,6 +8,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] [Range(1,4)]private int _moveCount;
     [SerializeField] private TextMeshProUGUI _cardValueText;
     [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private bool _isJumpCard;
 
     private Transform _originalHandParent = null;
     private GameObject _bot;
@@ -78,7 +79,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (_bot != null)
         {
             //TODO
-            _bot.GetComponent<Bot>().SetDistance(_moveCount);
+            if(_isJumpCard == false)
+            {
+                _bot.GetComponent<Bot>().SetDistance(_moveCount);
+            }
+            else
+            {
+                _bot.GetComponent<Bot>().SetJumpDistance(_moveCount);
+            }
             GameManager.Instance.AssignPlayer(_bot);
             //Don' Destroy, pass object to gamanager list as well as previous bot position c:
             Destroy(gameObject,0.3f);
