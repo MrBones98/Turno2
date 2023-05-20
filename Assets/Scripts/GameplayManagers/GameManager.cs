@@ -5,6 +5,7 @@ using Utils;
 using System.Threading.Tasks;
 using DG.Tweening;
 using System;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
 
     public delegate void OnGameStart();
     public static event OnGameStart onGameStarted;
+    public delegate void OnObjectsInstantiated();
+    public static event OnObjectsInstantiated onObjectsIntantiated;
     public delegate void OnBotMove();
     public static event OnBotMove onBotMove;
     public delegate void OnUndoButtonPressed();
@@ -340,13 +343,31 @@ public class GameManager : MonoBehaviour
         Bot.onStartedMove -= CleanVisualOnBotMove;
     }
 
-    private void LoadLevel()
+    private async void LoadLevel()
     {
+        await RainInAnimation();
+        //This after the raining in animation
         if (_camera == null)
         {
             _camera = Camera.main;
         }
+        await Task.Yield();
         onGameStarted?.Invoke();
+    }
+    private async Task RainInAnimation()
+    {
+        foreach (GameObject tile in TileGameObjects)
+        {
+            await Task.Delay(150);
+            Vector3 endPos = tile.transform.position;
+            tile.transform.position = new Vector3(endPos.x, 6.5f, endPos.z);
+            float randomSpeed = Random.Range(3f, 6f);
+
+            tile.transform.DOMoveY(0, randomSpeed, false).SetEase(Ease.OutQuart);
+            //tile.transform.DOMoveY(0, randomSpeed, false).SetEase(Ease.InOutQuad);
+            //tile.transform.DOMoveY(0, randomSpeed, false).SetEase(Ease.InOutSine);
+        }
+
     }
     private void OnDrawGizmos()
     {
