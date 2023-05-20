@@ -16,8 +16,8 @@ public class CardHandManager : MonoBehaviour
     private Level _level;
     private void OnEnable()
     {
-        ScriptableObjectLoader.onLevelLoaded += LoadCards;
-        
+        //ScriptableObjectLoader.onLevelLoaded += LoadCards;
+        GameManager.onGameStarted += LoadCards;
     }
     private void Awake()
     {
@@ -83,7 +83,8 @@ public class CardHandManager : MonoBehaviour
 
     private void OnDisable()
     {
-        ScriptableObjectLoader.onLevelLoaded -= LoadCards;
+        //ScriptableObjectLoader.onLevelLoaded -= LoadCards;
+        GameManager.onGameStarted -= LoadCards;
     }
     private void OrganizeSlots()
     {

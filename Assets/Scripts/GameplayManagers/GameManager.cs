@@ -5,6 +5,7 @@ using Utils;
 using System.Threading.Tasks;
 using DG.Tweening;
 using System;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;
     [SerializeField] private float _highlightHeight;
+    [SerializeField] [Range (0.5f, 3.0f)] private float _rainInDuration;
     [SerializeField] private LayerMask _highlightPathLayer;
     [SerializeField] private GameObject _botParentGameObject;
 
@@ -37,6 +39,8 @@ public class GameManager : MonoBehaviour
 
     //ON THE LEVEL SO ADD COUNT OF BUTTONS FOR WINNING FOR DIFFERENT NEEED AMOUNTS
 
+    public delegate void OnObjectsInstantiated();
+    public static event OnObjectsInstantiated onObjectsInstantiated;
     public delegate void OnGameStart();
     public static event OnGameStart onGameStarted;
     public delegate void OnBotMove();
@@ -340,14 +344,58 @@ public class GameManager : MonoBehaviour
         Bot.onStartedMove -= CleanVisualOnBotMove;
     }
 
-    private void LoadLevel()
+    private async void LoadLevel()
     {
+        onObjectsInstantiated?.Invoke();
+        await RainInAnimation();
+        //This after the raining in animation
         if (_camera == null)
         {
             _camera = Camera.main;
         }
-        onGameStarted?.Invoke();
+        await Task.Yield();
     }
+    private async Task RainInAnimation()
+    {
+        //ShuffleList(TileGameObjects)
+        foreach (GameObject tile in TileGameObjects)
+        {
+           
+            await Task.Delay(50);
+
+            RainInTween(tile.transform);
+            
+            //await tile.transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBack).AsyncWaitForPosition(7f);
+            //tile.transform.DOMoveY(0, randomSpeed, false).SetEase(Ease.InOutQuad);
+            //tile.transform.DOMoveY(0, randomSpeed, false).SetEase(Ease.InOutSine);
+        }
+        foreach (GameObject interactable in SpawnedObjects)
+        {
+            //0.45~0.5
+            //float randomSpeed = Random.Range(14f, 16f);
+            float randomSpeed = 2.3f;
+            //await Task.Delay(150);
+
+            //interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InQuad);
+            interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InQuint);
+            //interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InCubic);
+
+        }
+        await Task.Yield();
+        onGameStarted?.Invoke();
+
+    }
+    private void RainInTween(Transform transform) 
+    {
+        //transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.InOutElastic);
+        //transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBounce);
+        transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBack);
+    }
+    private void ShuffleList(List<GameObject> tileGameObjects)
+    {
+        
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;

@@ -119,7 +119,8 @@ public class ScriptableObjectLoader : MonoBehaviour
 
                 GameObject newTileInstance = Instantiate(prefab, _levelContainer.transform);
 
-                newTileInstance.transform.position = new Vector3(tileObject.Position[0], tileObject.Position[1], tileObject.Position[2]);
+                //newTileInstance.transform.position = new Vector3(tileObject.Position[0], tileObject.Position[1], tileObject.Position[2]);
+                newTileInstance.transform.position = new Vector3(tileObject.Position[0], 8f, tileObject.Position[2]);
                 newTileInstance.name = $"X: {newTileInstance.transform.position.x} | Z: {newTileInstance.transform.position.z}";
                 newTileInstance.GetComponent<Tile>().StartsActivated = tileObject.StartsActivated;
                 newTileInstance.GetComponent<Tile>().InteractableID = tileObject.InteractableID;

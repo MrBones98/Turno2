@@ -10,7 +10,7 @@ public class SpawnTile : Tile
 
     private void OnEnable()
     {
-        GameManager.onGameStarted += SpawnBot;   
+        GameManager.onObjectsInstantiated += SpawnBot;   
     }
     private void SpawnBot()
     {
@@ -20,6 +20,6 @@ public class SpawnTile : Tile
 
     private void OnDisable()
     {
-        GameManager.onGameStarted -= SpawnBot;
+        GameManager.onObjectsInstantiated -= SpawnBot;
     }
 }

@@ -9,7 +9,7 @@ public class PushableBoxSpawnTile : Tile
     [SerializeField] private float _offset;
     private void OnEnable()
     {
-        GameManager.onGameStarted += SpawnBox;
+        GameManager.onObjectsInstantiated += SpawnBox;
     }
 
     private void SpawnBox()
@@ -26,6 +26,6 @@ public class PushableBoxSpawnTile : Tile
     }
     private void OnDisable()
     {
-        GameManager.onGameStarted -= SpawnBox;
+        GameManager.onObjectsInstantiated -= SpawnBox;
     }
 }
