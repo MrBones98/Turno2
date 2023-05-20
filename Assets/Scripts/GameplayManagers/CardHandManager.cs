@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CardHandManager : MonoBehaviour
@@ -11,6 +12,8 @@ public class CardHandManager : MonoBehaviour
     [SerializeField] private GameObject _cardContainer;
     [SerializeField] private List<GameObject> _cardPrefabs = new();
     [SerializeField] private bool _isActive = false;
+
+    private Vector3 _cardContainerPos;
 
     private int _slotsCount;
     private Level _level;
@@ -38,6 +41,7 @@ public class CardHandManager : MonoBehaviour
         {
             _slotsCount = _slots.Length;
         }
+        
     }
     public void DebugGiveMoveCard(int amount)
     {
@@ -47,38 +51,41 @@ public class CardHandManager : MonoBehaviour
     }
     private void LoadCards()
     {
-            //_slots = GameObject.FindGameObjectsWithTag("CardSlot");
         _cardContainer = GameObject.FindGameObjectWithTag("CardContainer");
+        _cardContainerPos = _cardContainer.transform.position;
+        _cardContainer.transform.position += new Vector3(0, -1000, 0);
+            //_slots = GameObject.FindGameObjectsWithTag("CardSlot");
 
         _level = ScriptableObjectLoader.Instance.LevelToLoad;
         if (_isActive)
         {
             for (int i = 0; i < _level.MoveOne; i++)
             {
-                GameObject card = Instantiate(_cardPrefabs[0], _cardContainer.transform.position, Quaternion.identity);
-                card.transform.SetParent(_cardContainer.transform, true);
-                GameManager.Cards.Add(card);
+                SpawnCard(_cardPrefabs[0], _cardContainer.transform);
             }
             for (int i = 0; i < _level.MoveTwo; i++)
             {
-                GameObject card = Instantiate(_cardPrefabs[1], _cardContainer.transform.position, Quaternion.identity);
-                card.transform.SetParent(_cardContainer.transform, true);
-                GameManager.Cards.Add(card);
+                SpawnCard(_cardPrefabs[1], _cardContainer.transform);
             }
             for (int i = 0; i < _level.MoveThree; i++)
             {
-                GameObject card = Instantiate(_cardPrefabs[2], _cardContainer.transform.position, Quaternion.identity);
-                card.transform.SetParent(_cardContainer.transform, true);
-                GameManager.Cards.Add(card);
+                SpawnCard(_cardPrefabs[2], _cardContainer.transform);
             }
             for (int i = 0; i < _level.MoveFour; i++)
             {
-                GameObject card = Instantiate(_cardPrefabs[3], _cardContainer.transform.position, Quaternion.identity);
-                card.transform.SetParent(_cardContainer.transform, true);
-                GameManager.Cards.Add(card);
+                SpawnCard(_cardPrefabs[3], _cardContainer.transform);
             }
         }
+        
+        _cardContainer.transform.DOMove(_cardContainerPos, 2).SetEase(Ease.OutQuint);
+    }
 
+
+    private void SpawnCard(GameObject prefab, Transform containerTransform)
+    {
+        GameObject card = Instantiate(prefab, containerTransform.position, Quaternion.identity);
+        card.transform.SetParent(containerTransform.transform, true);
+        GameManager.Cards.Add(card);
     }
 
     private void OnDisable()
