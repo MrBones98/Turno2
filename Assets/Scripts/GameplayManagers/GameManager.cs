@@ -82,10 +82,22 @@ public class GameManager : MonoBehaviour
         foreach (Transform interactable in _higlightedInteractables)
         {
 
+            //await PrettyHighlightAsync(interactable,true,_highlightHeight);
             interactable.transform.DOMoveY(_highlightHeight, 0.3f, false);
-            
+
         }
         //_selectCheck = !_selectCheck;
+    }
+    private async Task PrettyHighlightAsync(Transform interactableTransform,bool up,float offset)
+    {
+        float height = offset;
+        if (up==false)
+        {
+            height = 0;
+        }
+
+        interactableTransform.DOMoveY(height, 0.3f, false);
+        await Task.Delay(100);
     }
 
     private void Awake()
@@ -334,10 +346,12 @@ public class GameManager : MonoBehaviour
                 //if (!(Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) > 1.40f && (Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) < 1.5f)))
                 //{
                 _highlightedPath.Add(platformToShow);
+                //await PrettyHighlightAsync(platformToShow, true, _highlightHeight);
+                platformToShow.transform.DOMoveY(_highlightHeight,0.3f, false);
                 //}
 
                 //platformToShow.position += new Vector3(0, _highlightHeight, 0);
-                platformToShow.DOMoveY(_highlightHeight, 0.3f);
+                //platformToShow.DOMoveY(_highlightHeight, 0.3f);
             }
 
         }
@@ -354,10 +368,11 @@ public class GameManager : MonoBehaviour
             {
                 //transform.position -= new Vector3(0, _highlightHeight, 0);
                 //Check here for bot man
-                transform.DOMoveY(0, 0.3f);
+                await PrettyHighlightAsync(transform, false, 0);
+                
             }
-            _highlightedPath.Clear();
         }
+            _highlightedPath.Clear();
         await Task.Yield();
     }
 
