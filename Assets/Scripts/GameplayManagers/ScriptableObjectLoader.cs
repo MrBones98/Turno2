@@ -61,7 +61,7 @@ public class ScriptableObjectLoader : MonoBehaviour
             {
                 _index++;
             }
-            await ClearLevelAsync();
+            //await ClearLevelAsync();
             await GameManager.Instance.ClearLevel();
             await LoadLevelWithIndex(_index);            
         //}
@@ -89,6 +89,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     public async Task LoadLevelWithIndex(int index)
     {
         //print(Index);
+        await ClearLevelAsync();
         _isLoaded = false;
         if (index >= 0 && index <_levels.Count)
         {
@@ -120,6 +121,8 @@ public class ScriptableObjectLoader : MonoBehaviour
                 GameObject newTileInstance = Instantiate(prefab, _levelContainer.transform);
 
                 //newTileInstance.transform.position = new Vector3(tileObject.Position[0], tileObject.Position[1], tileObject.Position[2]);
+                float height = 8;
+                height += Random.Range(1, 4);
                 newTileInstance.transform.position = new Vector3(tileObject.Position[0], 8f, tileObject.Position[2]);
                 newTileInstance.name = $"X: {newTileInstance.transform.position.x} | Z: {newTileInstance.transform.position.z}";
                 newTileInstance.GetComponent<Tile>().StartsActivated = tileObject.StartsActivated;
@@ -137,7 +140,7 @@ public class ScriptableObjectLoader : MonoBehaviour
         }
         else if(index>= _levels.Count-1)
         {
-            await GameManager.Instance.ClearLevel();
+            //await GameManager.Instance.ClearLevel();
             SceneLoader.Instance.GoToMainMenu();
         }
         else
@@ -149,7 +152,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     }
     private void LevelLoadedCall()
     {
-        onLevelLoaded();
+        onLevelLoaded?.Invoke();
 
     }
     private void OnDisable()

@@ -26,11 +26,11 @@ public class LatchSwitchAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        ScriptableObjectLoader.onLevelLoaded += OnLevelLoaded;
+        GameManager.onGameStarted += OnLevelLoaded;
     }
     private void OnDisable()
     {
-        ScriptableObjectLoader.onLevelLoaded -= OnLevelLoaded;
+        GameManager.onGameStarted -= OnLevelLoaded;
     }
 
     private void OnLevelLoaded()
