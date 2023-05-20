@@ -301,7 +301,7 @@ public class Bot : MonoBehaviour
         //transform.position -= new Vector3(0, 0.2f, 0);
 
         //Expose HeighleightHeight
-        transform.DOMoveY(_originalHeightBotHighlight, 0.3f, false);
+        transform.DOMoveY(0.45f, 0.3f, false);
 
         onFinishedMove();
         _isMoving = false;
