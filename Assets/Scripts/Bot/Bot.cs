@@ -46,6 +46,8 @@ public class Bot : MonoBehaviour
     public static event OnFinishedMove onFinishedMove;
     public delegate void OnStartedMove();
     public static event OnStartedMove onStartedMove;
+    public delegate void OnBotLanded();
+    public static event OnBotLanded onBotLanded;
     private void OnEnable()
     {
         WinTile.onButtonPressed += SwitchState;
@@ -93,7 +95,6 @@ public class Bot : MonoBehaviour
     {
         return Physics.RaycastAll(_parentGameObject.transform.position, orientation, _stepCount, _highlightPathLayer);
     }
-
     async Task SolvePushCollisionsAsync(Vector3 direction)
     {
         Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x, -1, _parentGameObject.transform.position.z) + direction;
@@ -306,6 +307,14 @@ public class Bot : MonoBehaviour
         onFinishedMove();
         _isMoving = false;
         
+    }
+    public async Task CheckForLanding()
+    {
+        while(_parentGameObject.transform.position.y> 0.5f)
+        {
+            await Task.Yield();
+        }
+        onBotLanded?.Invoke();
     }
    
     public async Task SolvePushAsync(Vector3 direction)

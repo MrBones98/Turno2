@@ -122,8 +122,8 @@ public class ScriptableObjectLoader : MonoBehaviour
 
                 //newTileInstance.transform.position = new Vector3(tileObject.Position[0], tileObject.Position[1], tileObject.Position[2]);
                 float height = 8;
-                height += Random.Range(1, 4);
-                newTileInstance.transform.position = new Vector3(tileObject.Position[0], 8f, tileObject.Position[2]);
+                height += Random.Range(1, 7);
+                newTileInstance.transform.position = new Vector3(tileObject.Position[0], height, tileObject.Position[2]);
                 newTileInstance.name = $"X: {newTileInstance.transform.position.x} | Z: {newTileInstance.transform.position.z}";
                 newTileInstance.GetComponent<Tile>().StartsActivated = tileObject.StartsActivated;
                 newTileInstance.GetComponent<Tile>().InteractableID = tileObject.InteractableID;
@@ -137,6 +137,7 @@ public class ScriptableObjectLoader : MonoBehaviour
             }
             _index = index;
             Invoke(nameof(LevelLoadedCall), 0.5f);
+            //LevelLoadedCall();
         }
         else if(index>= _levels.Count-1)
         {

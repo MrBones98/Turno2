@@ -390,6 +390,10 @@ public class GameManager : MonoBehaviour
 
             //interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InQuad);
             interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InQuint);
+            if (interactable.GetComponentInChildren<Bot>())
+            {
+                await interactable.GetComponentInChildren<Bot>().CheckForLanding();
+            }
             //interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InCubic);
 
         }
@@ -410,7 +414,7 @@ public class GameManager : MonoBehaviour
              RainOutTween(interactable.transform);
 
         }
-        await Task.Delay(1000);
+        await Task.Delay(300);
     }
     private async void RainOutTween(Transform transform)
     {
