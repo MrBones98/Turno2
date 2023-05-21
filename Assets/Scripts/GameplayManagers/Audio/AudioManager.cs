@@ -39,17 +39,17 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < sounds.Count; i++)
         {
-            GameObject _go = new GameObject("Sound_" + i + "_" + sounds[i].name);
-            _go.transform.SetParent(this.transform);
-            sounds[i].SetSource(_go.AddComponent<AudioSource>());
+            GameObject go = new GameObject("Sound_" + i + "_" + sounds[i].name);
+            go.transform.SetParent(this.transform);
+            sounds[i].SetSource(go.AddComponent<AudioSource>());
         }
 
     }
-    public void PlaySound(string name)
+    public void PlaySound(SoundEffectNameIs name)
     {
         for (int i = 0; i < sounds.Count; i++)
         {
-            if (sounds[i].name == name)
+            if (sounds[i].name == name.ToString())
             {
                 sounds[i].Play();
                 sounds[i].isPLaying = true;
@@ -107,9 +107,9 @@ public class AudioManager : MonoBehaviour
     }
 
     [Button, DisableInEditorMode]
-    private void DebugPlayFirstSoundInList()
+    private void DebugPlaySFX(SoundEffectNameIs name)
     {
-        PlaySound(sounds[0].name);
+        PlaySound(name);
     }
 }
 

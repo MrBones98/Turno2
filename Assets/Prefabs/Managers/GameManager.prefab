@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 3032943940377846804}
   - component: {fileID: 3032943940377846794}
   - component: {fileID: 3254117320277237652}
+  - component: {fileID: 6707464720642433139}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -82,6 +83,7 @@ MonoBehaviour:
   _winScreen: {fileID: 0}
   _gameplayUI: {fileID: 0}
   _highlightHeight: 0.3
+  _rainInDuration: 0
   _highlightPathLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -177,6 +179,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _cardContainer: {fileID: 0}
   _cardPrefabs:
   - {fileID: 7803988124549132850, guid: 0cc5c627362312a47ac68daddf3b8f15, type: 3}
   - {fileID: 1591430563561157666, guid: 991f7fffc2660454dbfb1a52ef7e050d, type: 3}
@@ -195,3 +198,148 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29606432df9cda4c81c5d582f921063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6707464720642433139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032943940377846806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 429ff1484f4e94ccdaba241bc8836fe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultClipIndex: 0
+  _mixer: {fileID: 24100000, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  sounds:
+  - name: 
+    clip: {fileID: 8300000, guid: b03c9a4931541d642b96c3e1099fca0c, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 1
+    isSFX: 0
+    isPLaying: 0
+    _mixer: {fileID: -2030469017748340696, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 6bea97038a13c45c18cbe38ea47a8f80, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: e02b284d6ac760340a09588d84003402, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 13cdf651b14c8aa4d883dcfdd94d1f28, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 635a8f692df4b8c4b86b78ab7901efab, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 65e1149a97d0f7b4abe36d30831827aa, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: f15f05f9316d94b4a939fb4acc7ed161, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 30b1ef5050562794db043ef4fddfa0a3, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 9593814718139b94cbc1c4f868581e82, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 37a3c44b724a99b4c9601b6507203eac, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 55ff35fe740a9d149bb801d7d0edeb65, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 43b9427aeb87f404a8bbff22ca6810bd, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
+  - name: 
+    clip: {fileID: 8300000, guid: 5b8007ed20c9eb141a3df6ef86031c28, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loopSound: 0
+    isSFX: 1
+    isPLaying: 0
+    _mixer: {fileID: 1048707572699379511, guid: 60a386c3ea58c41949a9ffc86d4371fe, type: 2}
