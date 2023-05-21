@@ -80,7 +80,7 @@ public class PushableBox : MonoBehaviour
             if (hits[i].GetComponent<Bot>())
             {
                 _pushableBot = hits[i].GetComponent<Bot>();
-                print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
+                //print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
             }
             print(hits[i].GetComponent<Collider>().gameObject.name);
         }
@@ -88,11 +88,11 @@ public class PushableBox : MonoBehaviour
         {
             _platformCached = false;
         }
-        print($"There are {hits.Length} colliders on this step");
+        //print($"There are {hits.Length} colliders on this step");
     }
     async Task SolveMovementAsync(WallTile wallTile, bool platformCached, PushableBox pushableBox, Vector3 direction, Bot bot)
     {
-        print($"In the {direction} direction there are: WallTile = {wallTile}, Box = {pushableBox}, Platform in front = {platformCached}");
+        //print($"In the {direction} direction there are: WallTile = {wallTile}, Box = {pushableBox}, Platform in front = {platformCached}");
         await Task.Yield();
         if (wallTile == null || (wallTile != null && !wallTile.HasColision))
         {
@@ -180,7 +180,7 @@ public class PushableBox : MonoBehaviour
         await Task.Yield();
         GameObject tile = Instantiate(_platform, new Vector3(Mathf.RoundToInt(transform.position.x), 0, Mathf.RoundToInt(transform.position.z)), Quaternion.identity);
         //GameObject tile = Instantiate(_platform, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
-        print(tile.transform.position);
+        //print(tile.transform.position);
         GameManager.TileGameObjects.Add(tile);
         await Task.Yield();
         Destroy(gameObject, 0.4f);

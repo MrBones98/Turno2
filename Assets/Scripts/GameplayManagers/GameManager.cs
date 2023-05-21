@@ -375,7 +375,8 @@ public class GameManager : MonoBehaviour
             {
                 //transform.position -= new Vector3(0, _highlightHeight, 0);
                 //Check here for bot man
-                await PrettyHighlightAsync(transform, false, 0);
+                transform.DOMoveY(0,0.3f, false);
+                //await PrettyHighlightAsync(transform, false, 0);
                 
             }
         }

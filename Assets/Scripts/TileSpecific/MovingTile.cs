@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 public class MovingTile : Tile,ISwitchActivatable
 {
     [SerializeField] private GameObject _ghostTile;
+
+    private Vector3 _moveDireciton;
     private int _count=0;
     private MovingTileAnimation _animation;
     private GameObject _carriedObject;
     private bool _active;
     private bool _ghostDrawn = false;
+    private bool _adjustedDistance = false;
     private float _moveDuration;
     private float _speed;
     private void Awake()
@@ -63,31 +66,37 @@ public class MovingTile : Tile,ISwitchActivatable
     //change to async
     private async Task MovingDelay()
     {
-        Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;
         //Collider[] hits = Physics.OverlapSphere(transform.position + endPos, 0.44f, 7);
-        RaycastHit[] raycastHits = Physics.RaycastAll(transform.position, endPos, Distance, 7);
+        Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;
+        //_moveDireciton = new Vector3(Direction.x, 0, Direction.y) * Distance;
+        RaycastHit[] raycastHits = Physics.RaycastAll(transform.position,endPos);
         int distance = Distance;
         float hitDistance = 0;
-        if(raycastHits.Length > 0)
+        if(raycastHits.Length>0 && !_adjustedDistance)
         {
+            _adjustedDistance = true;
+           print(raycastHits[0].collider.name);
+           print(raycastHits[0].collider.transform.position);
            hitDistance = Vector3.Distance(transform.position, raycastHits[0].collider.transform.position);
-            distance = (int)hitDistance;
+            distance = (int)hitDistance -1;
             Distance = distance;
+            print(Distance);
            await Task.Yield();
         }
+        _moveDireciton = new Vector3(Direction.x, 0, Direction.y) * distance; 
         for (int i = 0; i <= distance; i++)
         {
             if (_count % 2 == 0)
             {
                 //transform.position = transform.position + new Vector3(Direction.x, 0, Direction.y);
-                transform.DOMove(transform.position + endPos, _moveDuration);
+                transform.DOMove(transform.position + _moveDireciton, _moveDuration);
                 //print("moveMove");
                 _animation.LightBack(); 
             }
             else
             {
                 //transform.position = transform.position + new Vector3(-Direction.x, 0, -Direction.y);
-                transform.DOMove(transform.position -endPos, _moveDuration);
+                transform.DOMove(transform.position -_moveDireciton, _moveDuration);
                 //print("moveMove");
                 _animation.LightForward();
             }

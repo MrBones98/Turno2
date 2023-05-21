@@ -192,10 +192,10 @@ public class Bot : MonoBehaviour
             if (facingHit[i].collider.GetComponent<Bot>())
             {
                 _pushableBot = facingHit[i].collider.GetComponent<Bot>();
-                print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
+                //print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
                 
             }
-            print($"Collisions on Step #{_stepCount} , collider of: {facingHit[i].collider.gameObject.name}, at Pos: {facingHit[i].collider.gameObject.transform.position}");
+            //print($"Collisions on Step #{_stepCount} , collider of: {facingHit[i].collider.gameObject.name}, at Pos: {facingHit[i].collider.gameObject.transform.position}");
         }
 
         if (facingHit.Length == 0)
@@ -205,7 +205,7 @@ public class Bot : MonoBehaviour
     }
     async Task SolveMovementAsync(WallTile walltile, bool platformCached, PushableBox pushablebox, Vector3 direction, Bot pushableBot)
     {
-        print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}, PushableBot = {pushableBot}");
+        //print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}, PushableBot = {pushableBot}");
         await Task.Delay((int)_botStepDelay * 1000);
         if (walltile == null || (walltile != null && !walltile.HasColision))
         {
@@ -232,8 +232,7 @@ public class Bot : MonoBehaviour
                 if (!pushablebox.IsPushable)
                 {
                     _canBePushed = false;
-                    if (IsFocused)
-                        print("can't move or push box");
+                        //print("can't move or push box");
                 }
                 else
                 {
@@ -258,11 +257,11 @@ public class Bot : MonoBehaviour
                     if (!pushableBot.CanBePushed)
                     {
                         _canBePushed = false;
-                            print("Can't push Bot");
+                            //print("Can't push Bot");
                     }
                     else
                     {
-                        print("bot can be pushed");
+                        //print("bot can be pushed");
                         _canBePushed = true;
                         //_parentGameObject.transform.position += direction;
                         if(_jumpInput == false)
@@ -278,7 +277,7 @@ public class Bot : MonoBehaviour
                 }
                 else
                 {
-                    print("can't push not pushable bot");
+                    //print("can't push not pushable bot");
                     return;
                 }
 
@@ -287,7 +286,7 @@ public class Bot : MonoBehaviour
             {
                 //Move Bot with direction
                 if (IsFocused)
-                    print("box and bot are null");
+                    //print("box and bot are null");
                 _canBePushed = true;
                 if(_jumpInput == false)
                 {
@@ -303,7 +302,7 @@ public class Bot : MonoBehaviour
             {
                 //do another await for if (box=> will be platform/became platform)
                 //Dead Anim
-                print("No platform underneath Bot => Death after movement");
+                //print("No platform underneath Bot => Death after movement");
                 transform.gameObject.GetComponent<BoxCollider>().enabled = false;
                 _parentGameObject.transform.DOMoveY(-10f, _fallSpeed).SetEase(Ease.InBack);
                 //Destroy?
@@ -314,7 +313,7 @@ public class Bot : MonoBehaviour
         else
         {
             _canBePushed = false;
-            print($"No movement in {direction}, a wall blocks the path!");
+            //print($"No movement in {direction}, a wall blocks the path!");
         }
         await Task.Yield();
     }
@@ -322,14 +321,14 @@ public class Bot : MonoBehaviour
     {
         
         _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
-        print("Bot Moved!");
+        //print("Bot Moved!");
     }
     private void Jump(Vector3 direction)
     {
         //HOW PARABLE
         //_parentGameObject.transform.DOMove()
         _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction * _stepCount, _botStepSpeed);
-        print("Bot Jumped");
+        //print("Bot Jumped");
     }
     async void SolveTurnAsync(Vector3 direction)
     {
