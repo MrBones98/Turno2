@@ -14,6 +14,7 @@ public class GameSpaceUIController : MonoBehaviour
         InitGameUI();
         InitPauseMenu();
         InitWinMenu();
+        SetLevelNameText(" ");
         _handler.ClearMenus();
     }
     private void OnEnable()
@@ -90,6 +91,11 @@ public class GameSpaceUIController : MonoBehaviour
         _handler.DrawPauseMenu();
     }
 
+    public void SetLevelNameText(string target)
+    {
+        _handler.LvlNameDisplay.text = target;
+    }
+
     // win menu
     private void LoadNextLevel(bool isNext)
     {
@@ -135,6 +141,8 @@ public class GameSpaceUIController : MonoBehaviour
         //_handler.WinMenu = _handler.WinMenuDoc.CloneTree();
 
         _handler.CentralPanel = _handler._root.Q<VisualElement>(GameSpaceUIHandler.k_CentralPanel);
+
+        _handler.LvlNameDisplay = _handler._root.Q<Label>(GameSpaceUIHandler.k_LvlNameDisplay);
 
         _handler.UndoButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_UndoButtonName);
         _handler.UndoButton.clicked += () => OnUndoClicked();

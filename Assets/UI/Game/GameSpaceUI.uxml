@@ -2,11 +2,14 @@
     <Style src="project://database/Assets/UI/MenuStyles.uss?fileID=7433441132597879392&amp;guid=0fca17f0ae99945f2bc779d4c1796174&amp;type=3#MenuStyles" />
     <ui:VisualElement name="Root" style="flex-grow: 1; margin-left: 3%; margin-right: 3%; margin-top: 3%; margin-bottom: 3%;">
         <ui:VisualElement name="TopPanel" style="flex-direction: row-reverse; height: 10%;">
-            <ui:VisualElement name="Right" style="flex-grow: 1; flex-direction: row-reverse;">
+            <ui:VisualElement name="Right" style="flex-grow: 1; flex-direction: row-reverse; width: 30%;">
                 <ui:Button text="UNDO" display-tooltip-when-elided="true" name="UndoButton" enable-rich-text="true" focusable="false" class="GameSpaceButton" style="min-width: 200px; align-items: flex-start; justify-content: flex-start; flex-direction: row;" />
                 <ui:Button text="RESET" display-tooltip-when-elided="true" name="ResetButton" focusable="false" class="GameSpaceButton" style="min-width: 200px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="Left" style="flex-grow: 1;">
+            <ui:VisualElement name="CenterPanel" style="flex-grow: 1; width: 60%;">
+                <ui:Label display-tooltip-when-elided="true" name="LevelNameDisplay" class="GameMenuText" style="flex-grow: 1; height: 100%; width: 100%; -unity-font-definition: url(&apos;project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&amp;guid=fc1d487999cd947a3b9a69750f855049&amp;type=2#telegren SDF&apos;); -unity-text-align: middle-center; -unity-font-style: bold; font-size: 47px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Left" style="flex-grow: 1; width: 30%;">
                 <ui:Button text="PAUSE" display-tooltip-when-elided="true" name="PauseButton" enable-rich-text="true" focusable="false" class="GameSpaceButton" style="min-width: 200px;" />
             </ui:VisualElement>
         </ui:VisualElement>
