@@ -59,11 +59,11 @@ public class AudioManager : MonoBehaviour
         // no sounds with name found
         Debug.LogError("AudioManager: No sound with name /" + name + "/ found in list");
     }
-    public void StopSound(string name)
+    public void StopSound(SoundEffectNameIs name)
     {
         for (int i = 0; i < sounds.Count; i++)
         {
-            if (sounds[i].name == name)
+            if (sounds[i].name == name.ToString())
             {
                 sounds[i].Stop();
                 return;
