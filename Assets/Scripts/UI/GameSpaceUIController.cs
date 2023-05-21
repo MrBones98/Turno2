@@ -93,6 +93,11 @@ public class GameSpaceUIController : MonoBehaviour
 
     public void SetLevelNameText(string target)
     {
+        if (_handler.LvlNameDisplay == null)
+        {
+            print("No Lvl Display Panel Found");
+            return;
+        }
         _handler.LvlNameDisplay.text = target;
     }
 

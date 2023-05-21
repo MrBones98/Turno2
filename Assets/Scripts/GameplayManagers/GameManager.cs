@@ -403,6 +403,12 @@ public class GameManager : MonoBehaviour
         //    await ClearLevel();
         //}
         onObjectsInstantiated?.Invoke();
+        Level levelToLoad = ScriptableObjectLoader.Instance.LevelToLoad;
+        if (levelToLoad != null)
+        {
+            GameSpaceUIController uIController = FindObjectOfType<GameSpaceUIController>();
+            uIController.SetLevelNameText(levelToLoad.Name);
+        }
         await RainInAnimation();
         //This after the raining in animation
         if (_camera == null)

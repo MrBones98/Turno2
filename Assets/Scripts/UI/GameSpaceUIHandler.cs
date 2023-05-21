@@ -21,6 +21,8 @@ public class GameSpaceUIHandler : MonoBehaviour
 
     public const string k_CentralPanel = "CentralPanel";
 
+    public const string k_LvlNameDisplay = "LevelNameDisplay";
+
     // debug menu
     public const string k_Give1MoveButtonName = "GiveMove1";
     public const string k_Give2MoveButtonName = "GiveMove2";
@@ -53,6 +55,9 @@ public class GameSpaceUIHandler : MonoBehaviour
     [HideInInspector] public VisualElement PauseMenu;
     [HideInInspector] public VisualElement WinMenu;
     //[HideInInspector] public VisualElement LossMenu;
+
+
+    [HideInInspector] public Label LvlNameDisplay;
 
 
     [HideInInspector] public Button ResetButton;
