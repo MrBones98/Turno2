@@ -49,6 +49,8 @@ public class Bot : MonoBehaviour
     public static event OnStartedMove onStartedMove;
     public delegate void OnBotLanded();
     public static event OnBotLanded onBotLanded;
+    public delegate void OnBotDeath();
+    public static event OnBotDeath onBotDeath;
     private void OnEnable()
     {
         WinTile.onButtonPressed += SwitchState;
@@ -304,6 +306,7 @@ public class Bot : MonoBehaviour
                 //Dead Anim
                 //print("No platform underneath Bot => Death after movement");
                 transform.gameObject.GetComponent<BoxCollider>().enabled = false;
+                onBotDeath?.Invoke();
                 _parentGameObject.transform.DOMoveY(-10f, _fallSpeed).SetEase(Ease.InBack);
                 //Destroy?
                 _stepCount = 0;

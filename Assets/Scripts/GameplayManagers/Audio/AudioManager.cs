@@ -18,7 +18,10 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
-
+    private void OnEnable()
+    {
+        Bot.onBotDeath += () => PlaySound(SoundEffectNameIs.BotDeath);        
+    }
 
     private void Awake()
     {
@@ -31,7 +34,7 @@ public class AudioManager : MonoBehaviour
         {
             DestroyImmediate(gameObject);
         }
-
+        //PlaySound(SoundEffectNameIs.TurnoBGM);
         //_mixer 
     }
     
@@ -43,6 +46,7 @@ public class AudioManager : MonoBehaviour
             go.transform.SetParent(this.transform);
             sounds[i].SetSource(go.AddComponent<AudioSource>());
         }
+        PlaySound(SoundEffectNameIs.TurnoBGM);
 
     }
     public void PlaySound(SoundEffectNameIs name)
@@ -110,6 +114,10 @@ public class AudioManager : MonoBehaviour
     private void DebugPlaySFX(SoundEffectNameIs name)
     {
         PlaySound(name);
+    }
+    private void OnDisable()
+    {
+        Bot.onBotDeath -= () => PlaySound(SoundEffectNameIs.BotDeath);
     }
 }
 
