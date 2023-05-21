@@ -249,7 +249,7 @@ public class Bot : MonoBehaviour
                     }
                     else
                     {
-                        Jump(direction);
+                        await Jump(direction);
                     }
                 }
             }
@@ -274,7 +274,7 @@ public class Bot : MonoBehaviour
                         }
                         else
                         {
-                            Jump(direction);
+                            await Jump(direction);
                         }
                     }
 
@@ -298,7 +298,7 @@ public class Bot : MonoBehaviour
                 }
                 else
                 {
-                    Jump(direction);
+                    await Jump(direction);
                 }
             }
             
@@ -328,10 +328,12 @@ public class Bot : MonoBehaviour
         _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
         //print("Bot Moved!");
     }
-    private void Jump(Vector3 direction)
+    private async Task Jump(Vector3 direction)
     {
         //HOW PARABLE
         //_parentGameObject.transform.DOMove()
+        transform.DOMoveY(_highlightHeight * 2.8f, 0.3f, false);
+        await Task.Delay(100);
         _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction * _stepCount, _botStepSpeed);
         //print("Bot Jumped");
     }
