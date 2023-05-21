@@ -32,7 +32,7 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
         print(other.name);
         if (other.GetComponent<Bot>())
         {
-            if (!other.GetComponent<Bot>().IsMoving)
+            if (!other.GetComponent<Bot>().IsMoving && !_engaged)
             {
                 _engaged = true;
                 onSwitchPressed(InteractableID);

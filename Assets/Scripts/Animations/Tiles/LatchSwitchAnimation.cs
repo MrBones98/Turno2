@@ -47,7 +47,7 @@ public class LatchSwitchAnimation : MonoBehaviour
     [Button, DisableInEditorMode]
     public void PressButton()
     {
-        _buttonObject.transform.DOMove(_buttonStartPosition + new Vector3(0,_pressDistance,0), _pressSpeed);
+        _buttonObject.transform.DOMove(new Vector3(_buttonStartPosition.x,0,_buttonStartPosition.z) + new Vector3(0,_pressDistance,0), _pressSpeed);
         SetPilonLightState(true);
     }
 

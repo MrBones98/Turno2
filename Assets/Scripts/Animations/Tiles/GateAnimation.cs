@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using DG.Tweening;
 using System;
+using System.Threading.Tasks;
 
 public class GateAnimation : MonoBehaviour
 {
@@ -37,11 +38,11 @@ public class GateAnimation : MonoBehaviour
     [Button,DisableInEditorMode]
     public void OpenGate()
     {
-        _gateCentre.transform.DOMove(_gateClosedPos_C + new Vector3(0, OpenDistance - .11f, 0), _gateSpeed, false); 
-        _gateN.transform.DOMove(_gateClosedPos_N + new Vector3(0, OpenDistance, 0), _gateSpeed); 
-        _gateS.transform.DOMove(_gateClosedPos_S + new Vector3(0, OpenDistance, 0), _gateSpeed); 
-        _gateE.transform.DOMove(_gateClosedPos_E + new Vector3(0, OpenDistance, 0), _gateSpeed); 
-        _gateW.transform.DOMove(_gateClosedPos_W + new Vector3(0, OpenDistance, 0), _gateSpeed);
+        _gateCentre.transform.DOMove(new Vector3(_gateClosedPos_C.x, 0, _gateClosedPos_C.z) + new Vector3(0, OpenDistance - .11f, 0), _gateSpeed, false); 
+        _gateN.transform.DOMove(new Vector3(_gateClosedPos_N.x,0, _gateClosedPos_N.z) + new Vector3(0, OpenDistance, 0), _gateSpeed); 
+        _gateS.transform.DOMove(new Vector3(_gateClosedPos_S.x, 0, _gateClosedPos_S.z) + new Vector3(0, OpenDistance, 0), _gateSpeed); 
+        _gateE.transform.DOMove(new Vector3(_gateClosedPos_E.x, 0, _gateClosedPos_E.z) + new Vector3(0, OpenDistance, 0), _gateSpeed); 
+        _gateW.transform.DOMove(new Vector3(_gateClosedPos_W.x, 0, _gateClosedPos_W.z) + new Vector3(0, OpenDistance, 0), _gateSpeed);
   
     }
 
@@ -89,8 +90,9 @@ public class GateAnimation : MonoBehaviour
         GameManager.onGameStarted += OnLevelLoaded;
     }
 
-    private void OnLevelLoaded()
+    private async void OnLevelLoaded()
     {
+        await Task.Delay(300);
         CacheGatePosition();
     }
 

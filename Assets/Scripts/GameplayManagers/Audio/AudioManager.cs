@@ -21,6 +21,15 @@ public class AudioManager : MonoBehaviour
     private void OnEnable()
     {
         Bot.onBotDeath += () => PlaySound(SoundEffectNameIs.BotDeath);
+        Bot.onBotLanded+=() => PlaySound(SoundEffectNameIs.BotLand);
+        Bot.onBotStep+=() => PlaySound(SoundEffectNameIs.BotMove);
+        PushableBox.onBoxPushed+=() => PlaySound(SoundEffectNameIs.BoxPush);
+        Draggable.onCardPickedUp+=() => PlaySound(SoundEffectNameIs.CardPickup);
+        Draggable.onCardDropped += () => PlaySound(SoundEffectNameIs.CardDrop);
+        GameManager.onBotDirectionSelected+=() => PlaySound(SoundEffectNameIs.DirectionSelect);
+        GameManager.onObjectsInstantiated+=() => PlaySound(SoundEffectNameIs.LevelStart);
+        WinTile.onButtonPressed+=() => PlaySound(SoundEffectNameIs.RedButtonPressed);
+        SwitchTile.onSwitchSound+=() => PlaySound(SoundEffectNameIs.SwitchPressed);
         MainMenuController.OnAnyButtonClickedEvent += () => PlaySound(SoundEffectNameIs.ButtonClick);
         GameSpaceUIController.OnAnyGameSpaceButtonClickedEvent += () => PlaySound(SoundEffectNameIs.ButtonClick);
     }
@@ -120,6 +129,17 @@ public class AudioManager : MonoBehaviour
     private void OnDisable()
     {
         Bot.onBotDeath -= () => PlaySound(SoundEffectNameIs.BotDeath);
+        Bot.onBotLanded-=() => PlaySound(SoundEffectNameIs.BotLand);
+        Bot.onBotStep -= () => PlaySound(SoundEffectNameIs.BotMove);
+        PushableBox.onBoxPushed -= () => PlaySound(SoundEffectNameIs.BoxPush);
+        Draggable.onCardPickedUp -= () => PlaySound(SoundEffectNameIs.CardPickup);
+        Draggable.onCardDropped -= () => PlaySound(SoundEffectNameIs.CardDrop);
+        GameManager.onBotDirectionSelected -= () => PlaySound(SoundEffectNameIs.DirectionSelect);
+        GameManager.onObjectsInstantiated -= () => PlaySound(SoundEffectNameIs.LevelStart);
+        WinTile.onButtonPressed -= () => PlaySound(SoundEffectNameIs.RedButtonPressed);
+        SwitchTile.onSwitchSound -= () => PlaySound(SoundEffectNameIs.SwitchPressed);
+        MainMenuController.OnAnyButtonClickedEvent -= () => PlaySound(SoundEffectNameIs.ButtonClick);
+        GameSpaceUIController.OnAnyGameSpaceButtonClickedEvent -= () => PlaySound(SoundEffectNameIs.ButtonClick);
     }
 }
 
