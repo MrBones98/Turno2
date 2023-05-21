@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 public class WinTile : Tile, ISwitchActivatable
 {
     [SerializeField] private Collider _buttonCollider;
+    [SerializeField] private Transform[] _particleEmitterPositions;
+    [SerializeField] private GameObject _winParticle;
 
     public delegate void OnButtonPressed();
     public static event OnButtonPressed onButtonPressed;
@@ -26,6 +28,10 @@ public class WinTile : Tile, ISwitchActivatable
             {
                 _buttonPressed = true;
                 onButtonPressed();
+                foreach (Transform transform in _particleEmitterPositions)
+                {
+                    Instantiate(_winParticle, transform);
+                }
                 print("Wiiiiiiiiiiiiiii");
             }
         }
