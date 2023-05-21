@@ -18,6 +18,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private float _hoverHeight;
     private float _originalHeight;
     private float _hoverDuration;
+
+    public delegate void OnCardPickedUp();
+    public static event OnCardPickedUp onCardPickedUp;
+    public delegate void OnCardDropped();
+    public static event OnCardDropped onCardDropped;
     private void Awake()
     {
         
@@ -43,6 +48,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //keep track of mouse position vs anchor point to have card movement relative to the grabbing point
         //AKA click on a corner and move it, without it jumping back to it
         //print("begin");
+        onCardPickedUp?.Invoke();
         transform.SetParent(transform.parent.parent);
     }
 
@@ -74,6 +80,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         //print("end");
+        onCardDropped?.Invoke();
         transform.SetParent(_originalHandParent,false);
         PopDown();
         if (_bot != null)

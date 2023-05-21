@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
     public static event OnBotMove onBotMove;
     public delegate void OnUndoButtonPressed();
     public static event OnUndoButtonPressed onUndoButtonPressed;
+    public delegate void OnBotDirectionSelected();
+    public static event OnBotDirectionSelected onBotDirectionSelected;
+
     private void OnEnable()
     {
         ScriptableObjectLoader.onLevelLoaded += LoadLevel;
@@ -234,6 +237,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
         var clearPathTask = ClearPath();
         await clearPathTask;
         _bot.GetComponent<Bot>().CheckMove(moveVector);
@@ -262,6 +266,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+        onBotDirectionSelected?.Invoke();
         var clearPathTask = ClearPath();
         await clearPathTask;
         _bot.GetComponent<Bot>().CheckMove(moveVector);

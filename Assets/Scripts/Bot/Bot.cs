@@ -47,6 +47,8 @@ public class Bot : MonoBehaviour
     public static event OnFinishedMove onFinishedMove;
     public delegate void OnStartedMove();
     public static event OnStartedMove onStartedMove;
+    public delegate void OnBotStep();
+    public static event OnBotStep onBotStep;
     public delegate void OnBotLanded();
     public static event OnBotLanded onBotLanded;
     public delegate void OnBotDeath();
@@ -322,7 +324,7 @@ public class Bot : MonoBehaviour
     }
     private void Move(Vector3 direction)
     {
-        
+        onBotStep?.Invoke();
         _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
         //print("Bot Moved!");
     }

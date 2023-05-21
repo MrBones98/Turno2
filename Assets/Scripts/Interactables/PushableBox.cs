@@ -25,6 +25,9 @@ public class PushableBox : MonoBehaviour
     private float _originalHeight;
     private float _stepSpeed;
     private GameObject _mesh;
+
+    public delegate void OnBoxPushed();
+    public static event OnBoxPushed onBoxPushed;
     private void Awake()
     {
         _collidableLayers = LayerMask.GetMask(_layersToCheck);
@@ -122,7 +125,7 @@ public class PushableBox : MonoBehaviour
 
                     //transform.position += direction;
                     _isPushable = true;
-                    transform.DOMove(transform.position + direction, _stepSpeed);
+                    Move(direction);
                     //_willBePlatform = false;
                 }
                 _willBePlatform = false;
@@ -139,7 +142,7 @@ public class PushableBox : MonoBehaviour
                     else
                     {
                         _isPushable = true;
-                        transform.DOMove(transform.position + direction, _stepSpeed);
+                        Move(direction);
                     }
                 }
                 else
@@ -151,9 +154,7 @@ public class PushableBox : MonoBehaviour
             }
             else
             {
-                //Move Bot with direction
-                //transform.position += direction;
-                transform.DOMove(transform.position + direction, _stepSpeed);
+                Move(direction);
             }
         }
         else
@@ -167,6 +168,13 @@ public class PushableBox : MonoBehaviour
             await SpawnPlatform();
         }
     }
+
+    private void Move(Vector3 direction)
+    {
+        transform.DOMove(transform.position + direction, _stepSpeed);
+        onBoxPushed?.Invoke();
+    }
+
     private async Task PlatformSetupAsync()
     {
         transform.GetComponent<BoxCollider>().enabled = false;

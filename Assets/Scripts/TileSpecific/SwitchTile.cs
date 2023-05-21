@@ -13,6 +13,8 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
     public static event OnSwitchReleased onSwitchReleased;
     public delegate void OnSwitchHighlighted(int id);
     public static event OnSwitchHighlighted onSwitchHighlighted;
+    public delegate void OnSwitchSound();
+    public static event OnSwitchSound onSwitchSound;
     bool _engaged = false;
 
 
@@ -34,6 +36,7 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
             {
                 _engaged = true;
                 onSwitchPressed(InteractableID);
+                onSwitchSound?.Invoke();
             }
         }
     }
