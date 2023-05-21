@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
-
+using System.Threading.Tasks;
 
 public class MovingTile : Tile,ISwitchActivatable
 {
@@ -54,24 +54,28 @@ public class MovingTile : Tile,ISwitchActivatable
     }
 
     //change to async
-    private void UpdateTurn()
+    private async void UpdateTurn()
     {
         print($"Is mving platf active: {_active}");
         if(_active)
-        StartCoroutine(nameof(MovingDelay));
+        await MovingDelay();
     }
     //change to async
-    private IEnumerator MovingDelay()
+    private async Task MovingDelay()
     {
-        //print("Platform went into Move Function!");
-        yield return new WaitForSeconds(0.5f);
         Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;
-        //if(Physics.Raycast(transform.position,endPos,Distance, 7))
-        //{
-        //    Distance--;
-        //}
+        //Collider[] hits = Physics.OverlapSphere(transform.position + endPos, 0.44f, 7);
+        RaycastHit[] raycastHits = Physics.RaycastAll(transform.position, endPos, Distance, 7);
         int distance = Distance;
-        while (distance>0)
+        float hitDistance = 0;
+        if(raycastHits.Length > 0)
+        {
+           hitDistance = Vector3.Distance(transform.position, raycastHits[0].collider.transform.position);
+            distance = (int)hitDistance;
+            Distance = distance;
+           await Task.Yield();
+        }
+        for (int i = 0; i <= distance; i++)
         {
             if (_count % 2 == 0)
             {
@@ -89,6 +93,7 @@ public class MovingTile : Tile,ISwitchActivatable
             }
             distance--;
         }
+        
         _count++;
     }
     private void OnTriggerEnter(Collider other)

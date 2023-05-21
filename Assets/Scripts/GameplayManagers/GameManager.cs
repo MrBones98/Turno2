@@ -113,21 +113,21 @@ public class GameManager : MonoBehaviour
     }
     public async Task ClearLevel()
     {
-        if (TileGameObjects.Count >0)
+        if(SceneLoader.Instance.GetCurrentSceneIndex() == 1)
         {
-            await RainOutAnimation();
+            await UnloadLevel();
         }
-        if(TileGameObjects.Count != 0)
+        if (TileGameObjects.Count != 0)
         {
-            for (int i = TileGameObjects.Count-1; i >= 0; i--)
+            for (int i = TileGameObjects.Count - 1; i >= 0; i--)
             {
                 Destroy(TileGameObjects[i]);
             }
-            for (int i = Cards.Count-1; i >= 0; i--)
+            for (int i = Cards.Count - 1; i >= 0; i--)
             {
                 Destroy(Cards[i]);
             }
-            for (int i = SpawnedObjects.Count -1; i >= 0; i--)
+            for (int i = SpawnedObjects.Count - 1; i >= 0; i--)
             {
                 Destroy(SpawnedObjects[i]);
             }
@@ -138,6 +138,13 @@ public class GameManager : MonoBehaviour
         await Task.Yield();
     }
 
+    private async Task UnloadLevel()
+    {
+        if (TileGameObjects.Count > 0)
+        {
+            await RainOutAnimation();
+        }
+    }
 
     private void UpdateTurn()
     {
