@@ -12,6 +12,9 @@ public class MainMenuController : MonoBehaviour
     private SceneLoader _sceneLoader;
     private ScriptableObjectLoader _objectLoader;
 
+    public delegate void OnAnyButtonClicked();
+    public static event OnAnyButtonClicked OnAnyButtonClickedEvent;
+
     private void Awake()
     {
         InitContainerPanels();
@@ -92,6 +95,11 @@ public class MainMenuController : MonoBehaviour
         SceneLoader.Instance.GoToGameSceneWithLevelIndex(index-1);
     }
 
+    private void RaiseAnyButtonClickedEvent()
+    {
+        OnAnyButtonClickedEvent?.Invoke();
+    }
+
     #endregion
 
     #region Init Panel Methods
@@ -110,19 +118,25 @@ public class MainMenuController : MonoBehaviour
 
         _menuHandler._startButton = _menuHandler._startPanel.Q<Button>(MainMenuUIHandler.k_StartButtonName);
         _menuHandler._startButton.clicked += () => DebugButtonPress(MainMenuUIHandler.k_StartButtonName);
+        _menuHandler._startButton.clicked += () => RaiseAnyButtonClickedEvent();
         _menuHandler._startButton.clicked += () => StartGame();
+
+
 
         _menuHandler._levelSelectButton = _menuHandler._startPanel.Q<Button>(MainMenuUIHandler.k_LevelSelectButtonName);
         //_menuHandler._levelSelectButton.clicked += () => DebugButtonPress(MainMenuUIHandler.k_LevelSelectButtonName);
+        _menuHandler._levelSelectButton.clicked += () => RaiseAnyButtonClickedEvent();
         _menuHandler._levelSelectButton.clicked += () => ShowLevelSelect();
 
 
         _menuHandler._optionsButton = _menuHandler._startPanel.Q<Button>(MainMenuUIHandler.k_OptionsButtonName);
         //_menuHandler._optionsButton.clicked += () => DebugButtonPress(MainMenuUIHandler.k_OptionsButtonName);
+        _menuHandler._optionsButton.clicked += () => RaiseAnyButtonClickedEvent();
         _menuHandler._optionsButton.clicked += () => ShowOptionsMenu();
 
         _menuHandler._quitButton = _menuHandler._startPanel.Q<Button>(MainMenuUIHandler.k_QuitButtonName);
         _menuHandler._quitButton.clicked += () => DebugButtonPress(MainMenuUIHandler.k_QuitButtonName);
+        _menuHandler._quitButton.clicked += () => RaiseAnyButtonClickedEvent();
         _menuHandler._quitButton.clicked += () => QuitGame();
     }
 
@@ -147,6 +161,7 @@ public class MainMenuController : MonoBehaviour
 
         _menuHandler._OptionsBackButton = _menuHandler._optionsPanel.Q<Button>(MainMenuUIHandler.k_OptionsBackButtonName);
         //_menuHandler._OptionsBackButton.clicked += () => DebugButtonPress(MainMenuUIHandler.k_OptionsBackButtonName);
+        _menuHandler._OptionsBackButton.clicked += () => RaiseAnyButtonClickedEvent();
         _menuHandler._OptionsBackButton.clicked += () => ShowStartMenu();
 
     }
@@ -158,6 +173,7 @@ public class MainMenuController : MonoBehaviour
 
         _menuHandler._lvlSelectBackButton = _menuHandler._lvlSelectLeftPanel.Q<Button>(MainMenuUIHandler.k_LvlSelectBackButtonName);
         //_menuHandler._lvlSelectBackButton.clicked += () => DebugButtonPress(MainMenuUIHandler.k_LvlSelectBackButtonName);
+        _menuHandler._lvlSelectBackButton.clicked += () => RaiseAnyButtonClickedEvent();
         _menuHandler._lvlSelectBackButton.clicked += () => ShowStartMenu();
 
 
@@ -183,7 +199,7 @@ public class MainMenuController : MonoBehaviour
             LevelSelectButton newButton = new LevelSelectButton(lvl, index, _menuHandler.LevelSelectButtonTemplate);
 
             _menuHandler._lvlSelectScroll.Add(newButton.Button);
-            //newButton.Button.clicked += () => OnLvlSelectButtonClicked(index);
+            newButton.Button.clicked += () => RaiseAnyButtonClickedEvent();
 
             index++;           
         }      

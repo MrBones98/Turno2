@@ -20,7 +20,9 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Bot.onBotDeath += () => PlaySound(SoundEffectNameIs.BotDeath);        
+        Bot.onBotDeath += () => PlaySound(SoundEffectNameIs.BotDeath);
+        MainMenuController.OnAnyButtonClickedEvent += () => PlaySound(SoundEffectNameIs.ButtonClick);
+        GameSpaceUIController.OnAnyGameSpaceButtonClickedEvent += () => PlaySound(SoundEffectNameIs.ButtonClick);
     }
 
     private void Awake()
