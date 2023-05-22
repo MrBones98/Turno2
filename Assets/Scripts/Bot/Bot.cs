@@ -117,8 +117,6 @@ public class Bot : MonoBehaviour
         await Task.Delay((int)(_botStepDelay) * 1000);
 
         RaycastHit[] facingHit = Physics.SphereCastAll(correctedPushDirection, 0.44f, Vector3.up, 1.5f, _collidableLayers);
-        //RaycastHit[] facingHit = Physics.RaycastAll(_raycastOrigin.position,-_raycastOrigin.transform.up, 2f,_collidableLayers);
-        //Collider[] facingHit = Physics.OverlapSphere(_raycastOrigin.position, 0.51f, _collidableLayers);
         for (int i = 0; i < facingHit.Length; i++)
         {
             if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
@@ -145,10 +143,10 @@ public class Bot : MonoBehaviour
             if (facingHit[i].collider.GetComponent<Bot>())
             {
                 _pushableBot = facingHit[i].collider.GetComponent<Bot>();
-                if (!_pushableBot.IsPushableBot)
-                {
-                    _pushableBot = null;
-                }
+                //if (!_pushableBot.IsPushableBot)
+                //{
+                //    _pushableBot = null;
+                //}
             }
             print(facingHit[i].collider.gameObject.name);
         }

@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
     public static event OnUndoButtonPressed onUndoButtonPressed;
     public delegate void OnBotDirectionSelected();
     public static event OnBotDirectionSelected onBotDirectionSelected;
+    public delegate void OnClearHighlight();
+    public static event OnClearHighlight onClearHighlight;
 
     private void OnEnable()
     {
@@ -286,12 +288,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        //Just Raise Event and subscribe from Intwractables
-        //if(_bot != null)
-        //{
-        //    if(!_bot.GetComponent<Bot>().IsMoving)
-        //    HighlightInteractables();
-        //}
         //TODO Check for Scene
         if (_bot == null ||(_bot!= null && ! _bot.GetComponent<Bot>().IsMoving))
         {
@@ -355,11 +351,13 @@ public class GameManager : MonoBehaviour
                 //await Task.Delay(100);
                 //item.collider.transform.DOMoveY(0.3f, 2);
                 Transform platformToShow = item.collider.transform.parent.transform;
+                float yValue= platformToShow.position.y;
                 //if (!(Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) > 1.40f && (Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) < 1.5f)))
                 //{
                 _highlightedPath.Add(platformToShow);
                 //await PrettyHighlightAsync(platformToShow, true, _highlightHeight);
-                platformToShow.transform.DOMoveY(_highlightHeight,0.3f, false);
+                
+                    platformToShow.transform.DOMoveY(yValue+_highlightHeight,0.3f, false);
                 //}
 
                 //platformToShow.position += new Vector3(0, _highlightHeight, 0);
@@ -374,15 +372,13 @@ public class GameManager : MonoBehaviour
 
     private async Task ClearPath()
     {
+        onClearHighlight?.Invoke();
         if (_highlightedPath.Count > 0)
         {
             foreach (Transform transform in _highlightedPath)
             {
-                //transform.position -= new Vector3(0, _highlightHeight, 0);
-                //Check here for bot man
-                transform.DOMoveY(0,0.3f, false);
-                //await PrettyHighlightAsync(transform, false, 0);
                 
+                    transform.DOMoveY(transform.position.y - _highlightHeight, 0.3f, false);
             }
         }
             _highlightedPath.Clear();
@@ -411,10 +407,6 @@ public class GameManager : MonoBehaviour
 
     private async void LoadLevel()
     {
-        //if (TileGameObjects.Count > 0)
-        //{
-        //    await ClearLevel();
-        //}
         onObjectsInstantiated?.Invoke();
         Level levelToLoad = ScriptableObjectLoader.Instance.LevelToLoad;
         if (levelToLoad != null)
@@ -432,31 +424,18 @@ public class GameManager : MonoBehaviour
     }
     private async Task RainInAnimation()
     {
-        //ShuffleList(TileGameObjects)
         foreach (GameObject tile in TileGameObjects)
         {
-           
-
              RainInTween(tile.transform);
-            
-            //await tile.transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBack).AsyncWaitForPosition(7f);
-            //tile.transform.DOMoveY(0, randomSpeed, false).SetEase(Ease.InOutQuad);
-            //tile.transform.DOMoveY(0, randomSpeed, false).SetEase(Ease.InOutSine);
         }
         foreach (GameObject interactable in SpawnedObjects)
         {
-            //0.45~0.5
-            //float randomSpeed = Random.Range(14f, 16f);
             float randomSpeed = 1f;
-            //await Task.Delay(150);
-
-            //interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InQuad);
             interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InQuint);
             if (interactable.GetComponentInChildren<Bot>())
             {
                 await interactable.GetComponentInChildren<Bot>().CheckForLanding();
             }
-            //interactable.transform.DOMoveY(0.45f, randomSpeed, false).SetEase(Ease.InCubic);
 
         }
         await Task.Yield();
@@ -471,8 +450,6 @@ public class GameManager : MonoBehaviour
         }
         foreach (GameObject interactable in SpawnedObjects)
         {
-            //0.45~0.5
-            //float randomSpeed = Random.Range(14f, 16f);
              RainOutTween(interactable.transform);
 
         }
@@ -480,26 +457,17 @@ public class GameManager : MonoBehaviour
     }
     private async void RainOutTween(Transform transform)
     {
-        //transform.DOMoveY(-6f,_rainInDuration,false).SetEase(Ease.InQuad);
-        //transform.DOMoveY(-6f,_rainInDuration*1.25f,false).SetEase(Ease.OutBack);
         transform.DOMoveY(-6f,_rainInDuration*0.25f,false).SetEase(Ease.InQuart);
-        //await Task.Yield();
         await Task.Delay(100);
     }
     private async void RainInTween(Transform transform) 
     {
-        //transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.InOutElastic);
-        //transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBounce);
-        //await Task.Delay(300);
         transform.DOMoveY(0, _rainInDuration, false).SetEase(Ease.OutBack);
         await Task.Delay(100);
-        //await Task.Yield();
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        //Gizmos.DrawSphere(_raycastOrigin.position, 0.40f);
-        //Gizmos.DrawRay(_raycastOrigin.position, -_raycastOrigin.transform.up);
     }
 }
