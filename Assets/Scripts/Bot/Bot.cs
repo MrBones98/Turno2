@@ -112,14 +112,15 @@ public class Bot : MonoBehaviour
     }
     async Task SolvePushCollisionsAsync(Vector3 direction)
     {
-        Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x, -1, _parentGameObject.transform.position.z) + direction;
+        Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x, -1, _parentGameObject.transform.position.z) + direction*1.35f;
         //if (IsFocused) //Debug purposes, delete
         await Task.Delay((int)(_botStepDelay) * 1000);
 
-        RaycastHit[] facingHit = Physics.SphereCastAll(correctedPushDirection, 0.44f, Vector3.up, 1.5f, _collidableLayers);
-        for (int i = 0; i < facingHit.Length; i++)
+        Collider[] hits = Physics.OverlapSphere(transform.position + direction, 0.44f, _collidableLayers);
+        //RaycastHit[] hits = Physics.SphereCastAll(correctedPushDirection, 0.44f, Vector3.up, 1.5f, _collidableLayers);
+        for (int i = 0; i < hits.Length; i++)
         {
-            if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
+            if (_platformCached == false && hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.layer == 7)
             {
                 _platformCached = true;
             }
@@ -127,30 +128,30 @@ public class Bot : MonoBehaviour
             {
                 _platformCached = false;
             }
-            if (facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>())
+            if (hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<WallTile>())
             {
-                _wallTile = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>();
+                _wallTile = hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<WallTile>();
             }
             else if (_wallTile == null)
             {
                 _wallTile = null;
             }
-            if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
+            if (_pushableBox == null || hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
             {
-                _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
+                _pushableBox = hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
             }
 
-            if (facingHit[i].collider.GetComponent<Bot>())
+            if (hits[i].GetComponent<Collider>().GetComponent<Bot>())
             {
-                _pushableBot = facingHit[i].collider.GetComponent<Bot>();
+                _pushableBot = hits[i].GetComponent<Collider>().GetComponent<Bot>();
                 //if (!_pushableBot.IsPushableBot)
                 //{
                 //    _pushableBot = null;
                 //}
             }
-            print(facingHit[i].collider.gameObject.name);
+            print(hits[i].GetComponent<Collider>().gameObject.name);
         }
-            print($"There are {facingHit.Length} colliders on this step");
+            print($"There are {hits.Length} colliders on this step");
     }
     async Task SolveCollisionsAsync(Vector3 direction, bool jump)
     {
