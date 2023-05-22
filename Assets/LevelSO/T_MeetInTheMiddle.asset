@@ -101,8 +101,9 @@ MonoBehaviour:
     - 1
     Distance: 2
     StartsActivated: 1
-  Name: Meet In The Middle
+  Name: Push A Robot!
   MoveOne: 3
   MoveTwo: 1
   MoveThree: 1
   MoveFour: 0
+  JumpCardTwo: 0

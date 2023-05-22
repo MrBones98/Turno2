@@ -178,8 +178,9 @@ MonoBehaviour:
     - 0
     Distance: 0
     StartsActivated: 0
-  Name: Cannon Jump
+  Name: Distractions Abound
   MoveOne: 1
   MoveTwo: 2
   MoveThree: 3
   MoveFour: 0
+  JumpCardTwo: 0

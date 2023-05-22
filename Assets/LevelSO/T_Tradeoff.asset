@@ -112,8 +112,9 @@ MonoBehaviour:
     - 1
     Distance: 5
     StartsActivated: 1
-  Name: Tradeoff
+  Name: Push a Box!
   MoveOne: 2
   MoveTwo: 1
   MoveThree: 2
   MoveFour: 0
+  JumpCardTwo: 0

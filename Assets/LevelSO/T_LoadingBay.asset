@@ -167,8 +167,9 @@ MonoBehaviour:
     - 0
     Distance: 0
     StartsActivated: 0
-  Name: Loading Bay
+  Name: Friend is a Rock
   MoveOne: 1
   MoveTwo: 3
   MoveThree: 0
   MoveFour: 0
+  JumpCardTwo: 0
