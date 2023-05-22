@@ -15,11 +15,7 @@ public class GameSpaceUIController : MonoBehaviour
 
     private void Awake()
     {
-        InitGameUI();
-        InitPauseMenu();
-        InitWinMenu();
-        SetLevelNameText(" ");
-        _handler.ClearMenus();
+
     }
     private void OnEnable()
     {
@@ -31,6 +27,11 @@ public class GameSpaceUIController : MonoBehaviour
     }
     private void Start()
     {
+        InitGameUI();
+        InitPauseMenu();
+        InitWinMenu();
+        SetLevelNameText(" ");
+        _handler.ClearMenus();
         _instance = ScriptableObjectLoader.Instance;
     }
     #region public methods
