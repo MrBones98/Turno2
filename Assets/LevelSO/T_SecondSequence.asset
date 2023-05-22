@@ -23,6 +23,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 6
@@ -33,6 +34,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 5
@@ -43,6 +45,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 4
@@ -53,6 +56,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 3
     Position:
     - 3
@@ -63,8 +67,10 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
-  Name: Second Sequence
+    StartsActivated: 0
+  Name: Cards Move Robots
   MoveOne: 1
   MoveTwo: 1
   MoveThree: 0
   MoveFour: 0
+  JumpCardTwo: 0

@@ -112,8 +112,9 @@ MonoBehaviour:
     - 0
     Distance: 0
     StartsActivated: 0
-  Name: Nautilus
+  Name: Platfoms Might Move You
   MoveOne: 1
   MoveTwo: 0
   MoveThree: 1
   MoveFour: 1
+  JumpCardTwo: 0

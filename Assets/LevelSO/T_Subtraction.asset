@@ -23,6 +23,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 2
     Position:
     - 5
@@ -33,6 +34,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 4
     Position:
     - 3
@@ -43,6 +45,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 3
     Position:
     - 2
@@ -53,6 +56,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 3
@@ -63,6 +67,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 4
@@ -73,6 +78,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 4
@@ -83,6 +89,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 5
@@ -93,6 +100,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 4
@@ -103,6 +111,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 5
@@ -113,6 +122,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 5
@@ -123,6 +133,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 4
@@ -133,6 +144,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 3
@@ -143,6 +155,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 2
@@ -153,6 +166,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 2
@@ -163,6 +177,7 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
+    StartsActivated: 0
   - Type: 0
     Position:
     - 2
@@ -173,8 +188,10 @@ MonoBehaviour:
     - 0
     - 0
     Distance: 0
-  Name: Subtraction
+    StartsActivated: 0
+  Name: Three Steps Forward
   MoveOne: 0
   MoveTwo: 2
   MoveThree: 2
   MoveFour: 0
+  JumpCardTwo: 0
