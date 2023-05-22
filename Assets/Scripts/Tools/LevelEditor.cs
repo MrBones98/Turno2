@@ -2,9 +2,10 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace Editor
-{ 
+{
     public enum TileType
     {
         Platform,
@@ -65,11 +66,11 @@ namespace Editor
         [ButtonGroup("LevelButtons")]
         public void SaveLevel()
         {
-            if(_currentLevel == null)
+            if (_currentLevel == null)
             {
                 Debug.LogError("No Level Object");
             }
-            
+
             _currentLevel.ClearTileObjectList();
             //So we actually add on click for the Data needed to save (different than
             //current transforms)
@@ -78,15 +79,16 @@ namespace Editor
             {
                 _currentLevel.AddTileObjectType(tile);
             }
-
+#if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(_currentLevel);
-
+#endif
+//#if UNITY_EDITOR
         }
         [DisableInEditorMode]
         [ButtonGroup("LevelButtons")]
         public void LoadCurrentLevel()
         {
-            if(_currentLevel == null || !Application.isEditor)
+            if (_currentLevel == null || !Application.isEditor)
             {
                 Debug.LogError("No Level Object");
                 return;
@@ -113,7 +115,7 @@ namespace Editor
                     continue;
                 }
 
-                GameObject newTileInstance = Instantiate(prefab,_levelContainer.transform);
+                GameObject newTileInstance = Instantiate(prefab, _levelContainer.transform);
 
                 newTileInstance.transform.position = new Vector3(tileObject.Position[0], tileObject.Position[1], tileObject.Position[2]);
                 newTileInstance.name = $"X: {newTileInstance.transform.position.x} | Z: {newTileInstance.transform.position.z}";
@@ -154,10 +156,10 @@ namespace Editor
                     {
                         _runtimeTileObjects.Remove(tileObject.gameObject);
                         RuntimeTilePositions.Remove(tileObject.gameObject.transform.position);
-                    
+
                         Destroy(tileObject.gameObject);
                     }
-                    
+
                 }
 
             }
@@ -166,7 +168,7 @@ namespace Editor
         private void ReassignRuntimeTileValues()
         {
             _runtimeTileObjects.Clear();
-            RuntimeTilePositions.Clear();           
+            RuntimeTilePositions.Clear();
         }
 
         private void Update()
@@ -179,9 +181,9 @@ namespace Editor
                 {
                     RaycastHit hitInfo;
                     Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-                
-                    if(Physics.Raycast(ray, out hitInfo,40f,_layerMask))
-                    {   
+
+                    if (Physics.Raycast(ray, out hitInfo, 40f, _layerMask))
+                    {
                         PlaceTile(CheckCoordinates(hitInfo.point));
                     }
                 }
@@ -190,7 +192,7 @@ namespace Editor
                     RaycastHit hitInfo;
                     Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-                    if (Physics.Raycast(ray, out hitInfo,40f, _layerMask))
+                    if (Physics.Raycast(ray, out hitInfo, 40f, _layerMask))
                     {
                         RemoveTileAt(CheckCoordinates(hitInfo.point));
                     }
@@ -212,7 +214,7 @@ namespace Editor
         /// <returns></returns>
         private Vector3 CheckCoordinates(Vector3 ClickPosition)
         {
-            return new Vector3(Mathf.Round(ClickPosition.x),Mathf.Round(ClickPosition.y),Mathf.Round(ClickPosition.z));
+            return new Vector3(Mathf.Round(ClickPosition.x), Mathf.Round(ClickPosition.y), Mathf.Round(ClickPosition.z));
         }
         /// <summary>
         /// Instantiate, name, group and store a new Tile's information or return if the same coordinates are stored
@@ -221,13 +223,13 @@ namespace Editor
         private void PlaceTile(Vector3 closestPoint)
         {
             print($"This is where you clicked{closestPoint}");
-            
+
             if (RuntimeTilePositions.Contains(closestPoint))
             {
                 Debug.LogWarning($"A tile is already at X:{(int)closestPoint.x} | Z:{(int)closestPoint.z}");
                 return;
             }
-           
+
             Vector3 finalPosition = _grid.GetNearestPointOnGrid(closestPoint);
 
             GameObject tile = Instantiate(_tilePrefab[_tileIndex], finalPosition, Quaternion.identity);
@@ -237,14 +239,14 @@ namespace Editor
 
             RuntimeTilePositions.Add(finalPosition);
             _runtimeTileObjects.Add(tile);
-            
+
         }
-        
+
         public void RemoveTileAt(Vector3 tilePosition)
         {
             if (!RuntimeTilePositions.Contains(tilePosition))
             {
-                if(RuntimeTilePositions.Count== 0)
+                if (RuntimeTilePositions.Count == 0)
                 {
                     Debug.Log("Is the Tile not here? or are you not updating the RuntimeTiles from Saved Level");
                 }
@@ -257,8 +259,8 @@ namespace Editor
                 RuntimeTilePositions.Remove(tilePosition);
                 Destroy(_runtimeTileObjects[index].gameObject);
                 _runtimeTileObjects.RemoveAt(index);
-                
-                
+
+
             }
         }
         /// <summary>
@@ -276,3 +278,5 @@ namespace Editor
         }
     }
 }
+//#endif
+

@@ -19,6 +19,13 @@ public class SceneLoader : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GoToGameScene();
+        }
+    }
     public void GoToMainMenu()
     {
         SceneManager.LoadScene(0);
