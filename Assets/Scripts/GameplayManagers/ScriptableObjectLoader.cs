@@ -26,7 +26,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     private bool _isLoaded;
     private void OnEnable()
     {
-        SceneLoader.onSceneLoaded+=()=> LoadNextLevel(true);
+        SceneLoader.onSceneLoaded+=()=> LoadLevelWithIndex(Index);
         SceneLoader.onSceneLoadedWithIndex += () => LoadLevelWithIndex(Index);
     }
     private void Awake()

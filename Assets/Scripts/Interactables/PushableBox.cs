@@ -181,6 +181,7 @@ public class PushableBox : MonoBehaviour
         _spawned = true;
         _mesh.transform.DOScale(1, 0.2f);
         await Task.Delay(200);
+        GameManager.SpawnedObjects.Remove(gameObject);
     }
 
     private async Task SpawnPlatform()
