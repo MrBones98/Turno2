@@ -135,7 +135,7 @@ public class Bot : MonoBehaviour
             {
                 _wallTile = null;
             }
-            if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>()) //?????????????????????
+            if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
             {
                 _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
             }
@@ -150,13 +150,11 @@ public class Bot : MonoBehaviour
             }
             print(facingHit[i].collider.gameObject.name);
         }
-        if (IsFocused) //Debug purposes, delete
             print($"There are {facingHit.Length} colliders on this step");
     }
     async Task SolveCollisionsAsync(Vector3 direction, bool jump)
     {
         await Task.Delay((int)(_botStepDelay * 1000));
-        print((int)(_botStepDelay * 1000));
         RaycastHit[] facingHit;
         if (jump == false)
         {
@@ -347,6 +345,7 @@ public class Bot : MonoBehaviour
                 await solveCollisionsTask;
                 var solveMovementTask = SolveMovementAsync(_wallTile,_platformCached, _pushableBox, direction, _pushableBot);
                 await solveMovementTask;
+                print(_stepCount);
                 _stepCount--;
                 _wallTile = null;
                 _pushableBox = null;

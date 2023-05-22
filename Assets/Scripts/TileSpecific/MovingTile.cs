@@ -59,7 +59,7 @@ public class MovingTile : Tile,ISwitchActivatable
     //change to async
     private async void UpdateTurn()
     {
-        print($"Is mving platf active: {_active}");
+        //print($"Is mving platf active: {_active}");
         if(_active)
         await MovingDelay();
     }

@@ -49,9 +49,6 @@ public class GameManager : MonoBehaviour
     public static event OnUndoButtonPressed onUndoButtonPressed;
     public delegate void OnBotDirectionSelected();
     public static event OnBotDirectionSelected onBotDirectionSelected;
-    public delegate void OnClearHighlight();
-    public static event OnClearHighlight onClearHighlight;
-
     private void OnEnable()
     {
         ScriptableObjectLoader.onLevelLoaded += LoadLevel;
@@ -76,7 +73,7 @@ public class GameManager : MonoBehaviour
         {
             if (tiles.GetComponent<Tile>().InteractableID == id && tiles.GetComponent<Tile>().IsHighlighted == false)
             {
-                print(tiles.name);
+                //print(tiles.name);
                
                     //tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(_highlightHeight);
                     _higlightedInteractables.Add(tiles.transform);
@@ -308,7 +305,6 @@ public class GameManager : MonoBehaviour
                     if (Physics.Raycast(_interactableRay, out _hit, 100, _highlightPathLayer))
                     {
                         _idReference = _hit.collider.transform.parent.GetComponent<Tile>().InteractableID;
-                        print(_idReference);
                         if (_idReference != 0)
                         {
                             HighlightInteractable(_idReference);
@@ -372,7 +368,6 @@ public class GameManager : MonoBehaviour
 
     private async Task ClearPath()
     {
-        onClearHighlight?.Invoke();
         if (_highlightedPath.Count > 0)
         {
             foreach (Transform transform in _highlightedPath)

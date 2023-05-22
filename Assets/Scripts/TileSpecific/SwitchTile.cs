@@ -29,7 +29,7 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
     }
     private void OnTriggerEnter(Collider other)
     {
-        print(other.name);
+        //print(other.name);
         if (other.GetComponent<Bot>())
         {
             if (!other.GetComponent<Bot>().IsMoving && !_engaged)
@@ -44,6 +44,7 @@ public class SwitchTile : Tile, ISwitchActivatable, IPointerEnterHandler, IPoint
     {
         if (!_isLatchSwitch && _engaged==true)
         {
+            _engaged=false;
             onSwitchReleased(InteractableID);
         }
     }

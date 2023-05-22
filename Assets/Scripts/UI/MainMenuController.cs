@@ -86,12 +86,12 @@ public class MainMenuController : MonoBehaviour
 
     private void OnLvlSelectButtonClicked(int index)
     {
-        print($"Level {index} Selected");
+        //print($"Level {index} Selected");
     }
 
     public static void LoadSelectedLvl(int index)
     {
-        print($"Level {index} Selected");
+        //print($"Level {index} Selected");
         SceneLoader.Instance.GoToGameSceneWithLevelIndex(index-1);
     }
 
