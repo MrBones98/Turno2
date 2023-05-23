@@ -347,17 +347,21 @@ public class GameManager : MonoBehaviour
                 //await Task.Delay(100);
                 //item.collider.transform.DOMoveY(0.3f, 2);
                 Transform platformToShow = item.collider.transform.parent.transform;
-                float yValue= platformToShow.position.y;
+                float yValue = platformToShow.position.y;
                 //if (!(Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) > 1.40f && (Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) < 1.5f)))
                 //{
                 _highlightedPath.Add(platformToShow);
                 //await PrettyHighlightAsync(platformToShow, true, _highlightHeight);
-                
-                    platformToShow.transform.DOMoveY(yValue+_highlightHeight,0.3f, false);
+
+                //platformToShow.transform.DOMoveY(yValue + _highlightHeight, 0.3f, false);
                 //}
 
                 //platformToShow.position += new Vector3(0, _highlightHeight, 0);
                 //platformToShow.DOMoveY(_highlightHeight, 0.3f);
+            }
+            foreach (Transform transform in _highlightedPath)
+            {
+                transform.DOMoveY(transform.position.y + _highlightHeight, 0.3f, false);
             }
 
         }
@@ -372,8 +376,14 @@ public class GameManager : MonoBehaviour
         {
             foreach (Transform transform in _highlightedPath)
             {
-                
+                if((transform.position.y > _highlightHeight && transform.position.y < 0.4f)|| ((transform.position.y - _highlightHeight) > 0.44 ))
+                {
                     transform.DOMoveY(transform.position.y - _highlightHeight, 0.3f, false);
+                }
+                else
+                {
+                    transform.DOMoveY(0, 0.3f, false);
+                }
             }
         }
             _highlightedPath.Clear();
