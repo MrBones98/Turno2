@@ -25,6 +25,10 @@ public class SceneLoader : MonoBehaviour
         {
             GoToGameScene();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ReloadScene();
+        }
     }
     public void GoToMainMenu()
     {
