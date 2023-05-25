@@ -52,7 +52,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //AKA click on a corner and move it, without it jumping back to it
         //print("begin");
         onCardPickedUp?.Invoke();
-        transform.DOScale(_startScale * .5f, .15f);
+        transform.DOScale(_startScale * .5f, .1f);
         transform.SetParent(transform.parent.parent);
     }
 
