@@ -203,6 +203,10 @@ public class GameManager : MonoBehaviour
             _bot.GetComponent<Bot>().StepCount = 0;
 
         }
+        if(_voidHighlightPlatformReference!= null)
+        {
+            Destroy(_voidHighlightPlatformReference);
+        }
     }
     private void FinishLevel()
     {
@@ -358,8 +362,26 @@ public class GameManager : MonoBehaviour
                     int distance = (int)Vector3.Distance(platformsToRaise[0].collider.gameObject.transform.position,_bot.transform.position);
                     if(distance > 1)
                     {
-                        _voidDistance = _bot.GetComponent<Bot>().StepCount - distance;
+                        //_voidDistance = _bot.GetComponent<Bot>().StepCount - distance;
+                        _voidDistance = 1;
                         print(distance);
+                    }
+                    else if (distance == 1)
+                    {
+                        
+                        distance = (int)Vector3.Distance(platformsToRaise[1].collider.gameObject.transform.position, _bot.transform.position);
+                        if(distance > 2)
+                        {
+                            _voidDistance =distance-1;
+                        }
+                        else
+                        {
+                            _voidDistance = 0;
+                            Destroy(_voidHighlightPlatformReference);
+
+                        }
+                        print(_voidDistance);
+                        
                     }
                     else
                     {
