@@ -19,6 +19,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private float _originalHeight;
     private float _hoverDuration;
 
+    private Vector3 _startScale;
+
     public delegate void OnCardPickedUp();
     public static event OnCardPickedUp onCardPickedUp;
     public delegate void OnCardDropped();
@@ -41,6 +43,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //print(_originalHandParent.name);
         _scaleAdditionVector = new Vector3(transform.localScale.x, transform.localScale.y, 0) * 0.15f;
         //transform.DOMoveY(_originalHeight, _hoverDuration);
+        _startScale = transform.localScale;
 
     }
     public void OnBeginDrag(PointerEventData eventData)
@@ -49,6 +52,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //AKA click on a corner and move it, without it jumping back to it
         //print("begin");
         onCardPickedUp?.Invoke();
+        transform.DOScale(_startScale * .5f, .15f);
         transform.SetParent(transform.parent.parent);
     }
 
@@ -82,6 +86,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //print("end");
         onCardDropped?.Invoke();
         transform.SetParent(_originalHandParent,false);
+        transform.DOScale(_startScale, .1f);
         PopDown();
         if (_bot != null)
         {
