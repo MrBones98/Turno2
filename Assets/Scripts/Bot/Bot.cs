@@ -346,7 +346,7 @@ public class Bot : MonoBehaviour
                 await solveCollisionsTask;
                 var solveMovementTask = SolveMovementAsync(_wallTile,_platformCached, _pushableBox, direction, _pushableBot);
                 await solveMovementTask;
-                print(_stepCount);
+                //print(_stepCount);
                 _stepCount--;
                 _wallTile = null;
                 _pushableBox = null;

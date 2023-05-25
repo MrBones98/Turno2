@@ -11,10 +11,14 @@ public class Tile : MonoBehaviour
     public int Distance;
     public bool StartsActivated = false;
     public bool IsHighlighted = false;
+    public bool IsVoidHighlightTile = false;
 
     private void Awake()
     {
-        LevelEditor.TilesToSave.Add(this);
+        if(IsVoidHighlightTile == false)
+        {
+            LevelEditor.TilesToSave.Add(this);
+        }
         Direction.Normalize();
     }
 }
