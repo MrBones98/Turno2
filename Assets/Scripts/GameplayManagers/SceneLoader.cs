@@ -19,16 +19,13 @@ public class SceneLoader : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    private void Start()
+    {
+        ReloadScene();
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GoToGameScene();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ReloadScene();
-        }
+        
     }
     public void GoToMainMenu()
     {
