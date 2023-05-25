@@ -59,6 +59,14 @@ PrefabInstance:
       propertyPath: _isVoidHighlightTile
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2567896517559338710, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6361765654572071717, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8973112858036087981, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: _baseColor.a
       value: 0.09019608

@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     private Ray _interactableRay;
     private DirectionIs _raisingPathDirection;
     private int _currentBotStepCount;
+    private int _voidDistance;
     private int _idReference;
     private bool _selectCheck = false;
     private bool _raycastCheck =false;
@@ -285,6 +286,10 @@ public class GameManager : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     GiveChosenBotDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
+                    if(_voidHighlightPlatformReference != null)
+                    {
+                        Destroy(_voidHighlightPlatformReference);
+                    }
                 }
             }
         }
@@ -340,24 +345,43 @@ public class GameManager : MonoBehaviour
         rayOrientation = MoveUtils.SetDirection(direction);
         
         RaycastHit[] platformsToRaise = _bot.GetComponent<Bot>().PlatformsToRaise(rayOrientation);
-        int distance;
-        if(platformsToRaise.Length == 0)
+        
+        //else if(_bot.GetComponent<Bot>().StepCount > platformsToRaise.Length)
+        //print(platformsToRaise.Length);
+        //print(platformsToRaise[1].collider.gameObject.name);
+        if (_bot.GetComponent<Bot>().StepCount > platformsToRaise.Length)
         {
-            distance = 1;
-            print(distance);
+            if(platformsToRaise.Length > 0)
+            {
+                if (platformsToRaise.Length > 1)
+                {
+                    int distance = (int)Vector3.Distance(platformsToRaise[0].collider.gameObject.transform.position,_bot.transform.position);
+                    if(distance > 1)
+                    {
+                        _voidDistance = _bot.GetComponent<Bot>().StepCount - distance;
+                        print(distance);
+                    }
+                    else
+                    {
+                        _voidDistance = _bot.GetComponent<Bot>().StepCount;
+                        Destroy(_voidHighlightPlatformReference);
+                    }
+                }
+            }
+            else
+            {
+                _voidDistance = 1;
+            }
+           
         }
-        else if(platformsToRaise.Length > _bot.GetComponent<Bot>().StepCount)
+        else if(platformsToRaise.Length==0)
         {
-            distance = 0;
-            print(distance);
-        }
-        else if(_bot.GetComponent<Bot>().StepCount > platformsToRaise.Length)
-        {
-            distance = _bot.GetComponent<Bot>().StepCount;
+            _voidDistance = 1;
         }
         else
         {
-            distance = 0;
+            _voidDistance = 0;
+            Destroy(_voidHighlightPlatformReference);
         }
         
         if (MoveUtils.SetDirection(_raisingPathDirection) == Vector3.zero || _raisingPathDirection != direction)
@@ -388,14 +412,17 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        if (distance > 0)
+        if (_voidDistance > 0)
         {
-            if(_voidHighlightPlatformReference != null)
+            if (_voidHighlightPlatformReference == null)
+            {
+            }
+            else
             {
                 Destroy(_voidHighlightPlatformReference);
             }
             _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual,new Vector3(_bot.transform.position.x, 0, _bot.transform.position.z) 
-                                                                                + (MoveUtils.SetDirection(direction)*distance), Quaternion.identity);
+                                                                                + (MoveUtils.SetDirection(direction)*_voidDistance), Quaternion.identity);
         }
         
 
