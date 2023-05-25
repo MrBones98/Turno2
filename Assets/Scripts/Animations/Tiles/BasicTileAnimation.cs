@@ -23,6 +23,7 @@ public class BasicTileAnimation : MonoBehaviour
 
     private void SetColors()
     {
+        //if(gameObject.GetComponent<Tile>().IsVoidHighlightTile
         _baseMaterialInstance.color = _baseColor;
         _lightMaterialInstance.color = _lightColor;
     }

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;
     [SerializeField] private float _highlightHeight;
+    [SerializeField] private GameObject _deathPlatformVisual;
     [SerializeField] [Range (0.5f, 3.0f)] private float _rainInDuration;
     [SerializeField] private LayerMask _highlightPathLayer;
     [SerializeField] private GameObject _botParentGameObject;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     //[OnValueChanged("AssignPlayer")]
     private GameObject _bot;
+    private GameObject _voidHighlightPlatformReference = null;
     private Camera _camera;
     private DirectionalInputBot _directionalInputBot;
     private List<Transform> _highlightedPath = new();
@@ -136,6 +138,7 @@ public class GameManager : MonoBehaviour
             TileGameObjects.Clear();
             Cards.Clear();
             SpawnedObjects.Clear();
+            Destroy(_voidHighlightPlatformReference);
         }
         await Task.Yield();
     }
@@ -336,10 +339,30 @@ public class GameManager : MonoBehaviour
 
         rayOrientation = MoveUtils.SetDirection(direction);
         
+        RaycastHit[] platformsToRaise = _bot.GetComponent<Bot>().PlatformsToRaise(rayOrientation);
+        int distance;
+        if(platformsToRaise.Length == 0)
+        {
+            distance = 1;
+            print(distance);
+        }
+        else if(platformsToRaise.Length > _bot.GetComponent<Bot>().StepCount)
+        {
+            distance = 0;
+            print(distance);
+        }
+        else if(_bot.GetComponent<Bot>().StepCount > platformsToRaise.Length)
+        {
+            distance = _bot.GetComponent<Bot>().StepCount;
+        }
+        else
+        {
+            distance = 0;
+        }
+        
         if (MoveUtils.SetDirection(_raisingPathDirection) == Vector3.zero || _raisingPathDirection != direction)
         {
             //RaycastHit[] platformsToRaise = Physics.RaycastAll(_botParentGameObject.transform.position, rayOrientation, _currentBotStepCount, _highlightPathLayer);
-            RaycastHit[] platformsToRaise = _bot.GetComponent<Bot>().PlatformsToRaise(rayOrientation);
             //print($"platforms on the path {platformsToRaise.Length} ");
             await ClearPath();
             foreach (var item in platformsToRaise)
@@ -365,6 +388,16 @@ public class GameManager : MonoBehaviour
             }
 
         }
+        if (distance > 0)
+        {
+            if(_voidHighlightPlatformReference != null)
+            {
+                Destroy(_voidHighlightPlatformReference);
+            }
+            _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual,new Vector3(_bot.transform.position.x, 0, _bot.transform.position.z) 
+                                                                                + (MoveUtils.SetDirection(direction)*distance), Quaternion.identity);
+        }
+        
 
         _raisingPathDirection = direction;
     }
@@ -374,6 +407,10 @@ public class GameManager : MonoBehaviour
     {
         if (_highlightedPath.Count > 0)
         {
+            //if (_voidHighlightPlatformReference != null)
+            //{
+            //    Destroy(_voidHighlightPlatformReference);
+            //}
             foreach (Transform transform in _highlightedPath)
             {
                 if((transform.position.y > _highlightHeight && transform.position.y < 0.4f)|| ((transform.position.y - _highlightHeight) > 0.44 ))
