@@ -306,7 +306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 179362292644361128, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 828678489602887024, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_RootOrder
@@ -354,7 +354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7848142740219980394, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8973112858036087981, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: _baseColor.a
@@ -423,7 +423,7 @@ MonoBehaviour:
   _buttonObject: {fileID: 5325815363314051656}
   _lightObject: {fileID: 5307339622030319369}
   _pilonObject: {fileID: 2981802345473021899}
-  _latchSwitchColor: {r: 0.78543687, g: 0.20714669, b: 0.8962264, a: 1}
+  _latchSwitchColor: {r: 0, g: 0.46666667, b: 0.7137255, a: 1}
   _deactivatedLightColor: {r: 0, g: 0, b: 0, a: 1}
   _pilonColor: {r: 0.8235295, g: 0.8235295, b: 0.80392164, a: 1}
   _pressDistance: -0.075

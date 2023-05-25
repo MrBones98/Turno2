@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: _isVoidHighlightTile
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2002732318121686559, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 184b562ca79f644659d9776590ba74c5, type: 2}
     - target: {fileID: 2567896517559338710, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -69,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8973112858036087981, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: _baseColor.a
-      value: 0.09019608
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 8973112858036087981, guid: 16de64849e2288f46a90be82e49aa986, type: 3}
       propertyPath: _baseColor.b

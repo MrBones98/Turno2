@@ -26,11 +26,13 @@ public class BasicTileAnimation : MonoBehaviour
         //if(gameObject.GetComponent<Tile>().IsVoidHighlightTile
         _baseMaterialInstance.color = _baseColor;
         _lightMaterialInstance.color = _lightColor;
+        
     }
 
     private void CacheEverthing()
     {
         _baseMaterialInstance = _baseObject.GetComponent<MeshRenderer>().material;
         _lightMaterialInstance = _lightObject.GetComponent<MeshRenderer>().material;
+
     }
 }

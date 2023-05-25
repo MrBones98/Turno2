@@ -112,7 +112,7 @@ MonoBehaviour:
     - 0
     Distance: 0
     StartsActivated: 0
-  Name: Doors and Switches
+  Name: Bots, Doors, and Switches
   MoveOne: 4
   MoveTwo: 2
   MoveThree: 0

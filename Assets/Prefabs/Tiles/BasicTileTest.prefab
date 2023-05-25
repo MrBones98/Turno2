@@ -106,6 +106,7 @@ MonoBehaviour:
   Distance: 0
   StartsActivated: 0
   IsHighlighted: 0
+  IsVoidHighlightTile: 0
 --- !u!114 &8973112858036087981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +186,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 184b562ca79f644659d9776590ba74c5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
