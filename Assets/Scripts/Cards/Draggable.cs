@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,IPointerEnterHandler,IPointerExitHandler
+public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler,IPointerMoveHandler
 {
     [SerializeField] [Range(1,4)]private int _moveCount;
     [SerializeField] private TextMeshProUGUI _cardValueText;
@@ -18,6 +18,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private float _hoverHeight;
     private float _originalHeight;
     private float _hoverDuration;
+    private bool _isPickedUp = false;
 
     private Vector3 _startScale;
 
@@ -51,30 +52,100 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //keep track of mouse position vs anchor point to have card movement relative to the grabbing point
         //AKA click on a corner and move it, without it jumping back to it
         //print("begin");
-        onCardPickedUp?.Invoke();
-        transform.DOScale(_startScale * .5f, .1f);
-        transform.SetParent(transform.parent.parent);
+        //onCardPickedUp?.Invoke();
+        //transform.DOScale(_startScale * .5f, .1f);
+        //transform.SetParent(transform.parent.parent);
+    }
+    public void OnPointerDown()
+    {
+
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_isPickedUp == false)
+        {
+            onCardPickedUp?.Invoke();
+            transform.DOScale(_startScale * .5f, .1f);
+            transform.SetParent(transform.parent.parent);
+            _isPickedUp = true;
+        }
+        else
+        {
+            RaycastHit hitInfo;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hitInfo, 40f, _layerMask))
+            {
+
+                if (hitInfo.collider.GetComponent<Bot>())
+                {
+                    _bot = hitInfo.collider.gameObject;
+                    //transform.localScale-= _scaleAdditionVector;
+                }
+                else
+                {
+                    //transform.localScale+= _scaleAdditionVector;
+                    _bot = null;
+                }
+            }
+            //transform.SetParent(_originalHandParent, false);
+            //PopDown();
+            if (_bot != null)
+            {
+                onCardDropped?.Invoke();
+                transform.DOScale(_startScale, .1f);
+                //TODO
+                if (_isJumpCard == false)
+                {
+                    _bot.GetComponent<Bot>().SetDistance(_moveCount);
+                }
+                else
+                {
+                    _bot.GetComponent<Bot>().SetJumpDistance(_moveCount);
+                }
+                GameManager.Instance.AssignPlayer(_bot);
+                //Don' Destroy, pass object to gamanager list as well as previous bot position c:
+                Destroy(gameObject, 0.1f);
+            }
+            else
+            {
+                ResetCard();
+            }
+        }
+    }
+    private void ResetCard()
+    {
+        _isPickedUp = false;
+        transform.SetParent(_originalHandParent,false);
+        transform.DOScale(_startScale, 0.1f);
+        PopDown();
+    }
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        if (_isPickedUp)
+        {
+            transform.position = eventData.position;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     { 
-        transform.position = eventData.position;
-        RaycastHit hitInfo;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out hitInfo, 40f, _layerMask))
-        {
+        //transform.position = eventData.position;
+        //RaycastHit hitInfo;
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //if(Physics.Raycast(ray, out hitInfo, 40f, _layerMask))
+        //{
             
-            if (hitInfo.collider.GetComponent<Bot>())
-            {
-                _bot= hitInfo.collider.gameObject;
-                //transform.localScale-= _scaleAdditionVector;
-            }
-            else
-            {
-                //transform.localScale+= _scaleAdditionVector;
-                _bot= null;
-            }
-        }
+        //    if (hitInfo.collider.GetComponent<Bot>())
+        //    {
+        //        _bot= hitInfo.collider.gameObject;
+        //        transform.localScale-= _scaleAdditionVector;
+        //    }
+        //    else
+        //    {
+        //        transform.localScale+= _scaleAdditionVector;
+        //        _bot= null;
+        //    }
+        //}
     }
     public void PopDown()
     {
@@ -116,4 +187,5 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.DOMoveY(_hoverHeight, _hoverDuration);
         //print($"{this.gameObject.name} hover card up");
     }
+
 }

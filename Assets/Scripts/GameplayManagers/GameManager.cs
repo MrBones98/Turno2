@@ -290,6 +290,10 @@ public class GameManager : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     GiveChosenBotDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
+                    if(_highlightedPath != null)
+                    {
+                        ClearPath();
+                    }
                     if(_voidHighlightPlatformReference != null)
                     {
                         Destroy(_voidHighlightPlatformReference);
