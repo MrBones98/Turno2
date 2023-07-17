@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using System;
+using Random = UnityEngine.Random;
 
 public class ScriptableObjectLoader : MonoBehaviour
 {
@@ -88,6 +90,7 @@ public class ScriptableObjectLoader : MonoBehaviour
     }
     public async Task LoadLevelWithIndex(int index)
     {
+        GameManager.Instance.ClearTileDictionary();
         //print(Index);
         await ClearLevelAsync();
         _isLoaded = false;
@@ -99,7 +102,6 @@ public class ScriptableObjectLoader : MonoBehaviour
                 Debug.LogError("No Level Object");
                 return;
             }
-
 
             foreach (TileObject tileObject in _levelToLoad.tileObjects)
             {
@@ -130,13 +132,22 @@ public class ScriptableObjectLoader : MonoBehaviour
                 newTileInstance.GetComponent<Tile>().Direction = new Vector2(tileObject.Direction[0], tileObject.Direction[1]);
                 newTileInstance.GetComponent<Tile>().Distance = tileObject.Distance;
 
+                Tile tile;
                 foreach (Transform child in _levelContainer.transform)
                 {
+                    tile = child.GetComponent<Tile>();
                     GameManager.TileGameObjects.Add(child.gameObject);
+                    //GameManager.TilesDictionary.Add(new Vector3(child.position.x,0,child.position.z), tile);
+                    //After populating the Gameobject list, loop through all the elements afterwarsa to avoid
+                    //any weird instantiation and falce caching of the pos & Tile Component reference
                 }
             }
             _index = index;
             Invoke(nameof(LevelLoadedCall), 0.5f);
+            //foreach (var kvp in GameManager.TilesDictionary)
+            //{
+            //     Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            //}
             //LevelLoadedCall();
         }
         else if(index>= _levels.Count-1)
@@ -154,7 +165,10 @@ public class ScriptableObjectLoader : MonoBehaviour
     private void LevelLoadedCall()
     {
         onLevelLoaded?.Invoke();
-
+        foreach (var kvp in GameManager.TilesDictionary)
+        {
+            Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+        }
     }
     private void OnDisable()
     {

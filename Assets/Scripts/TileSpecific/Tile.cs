@@ -21,6 +21,11 @@ public class Tile : MonoBehaviour
         }
         Direction.Normalize();
     }
+    public void ReferenceToDictionary()
+    {
+        GameManager.Instance.AddToTileToDictionary(new Vector3(this.gameObject.transform.position.x, 0, this.gameObject.transform.position.z), this);
+        print($"{gameObject.name} + {gameObject.transform.position.x} ");
+    }
 }
 public enum TypeOfTile
 {

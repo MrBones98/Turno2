@@ -155,25 +155,25 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         //print("end");
-        onCardDropped?.Invoke();
-        transform.SetParent(_originalHandParent,false);
-        transform.DOScale(_startScale, .1f);
-        PopDown();
-        if (_bot != null)
-        {
-            //TODO
-            if(_isJumpCard == false)
-            {
-                _bot.GetComponent<Bot>().SetDistance(_moveCount);
-            }
-            else
-            {
-                _bot.GetComponent<Bot>().SetJumpDistance(_moveCount);
-            }
-            GameManager.Instance.AssignPlayer(_bot);
-            //Don' Destroy, pass object to gamanager list as well as previous bot position c:
-            Destroy(gameObject,0.3f);
-        }
+        //onCardDropped?.Invoke();
+        //transform.SetParent(_originalHandParent,false);
+        //transform.DOScale(_startScale, .1f);
+        //PopDown();
+        //if (_bot != null)
+        //{
+        //    //TODO
+        //    if(_isJumpCard == false)
+        //    {
+        //        _bot.GetComponent<Bot>().SetDistance(_moveCount);
+        //    }
+        //    else
+        //    {
+        //        _bot.GetComponent<Bot>().SetJumpDistance(_moveCount);
+        //    }
+        //    GameManager.Instance.AssignPlayer(_bot);
+        //    //Don' Destroy, pass object to gamanager list as well as previous bot position c:
+        //    Destroy(gameObject,0.3f);
+        //}
     }
 
     public void OnPointerExit(PointerEventData eventData)

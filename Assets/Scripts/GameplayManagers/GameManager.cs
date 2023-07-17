@@ -5,6 +5,7 @@ using Utils;
 using System.Threading.Tasks;
 using DG.Tweening;
 using System;
+using Assets.Scripts.Interactables;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     public static List<GameObject> TileGameObjects = new();
     public static List<GameObject> Cards = new();
     public static List<GameObject> SpawnedObjects = new();
+    public static Dictionary<Vector3,Tile> TilesDictionary = new();
+    public static Dictionary<Vector3, InteractableObject> Interactables = new();
 
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;
@@ -124,6 +127,10 @@ public class GameManager : MonoBehaviour
         }
         if (TileGameObjects.Count != 0)
         {
+            for (int i = 0; i < TilesDictionary.Count-1; i++)
+            {
+                TilesDictionary.Remove(TileGameObjects[i].transform.position);
+            }
             for (int i = TileGameObjects.Count - 1; i >= 0; i--)
             {
                 Destroy(TileGameObjects[i]);
@@ -137,6 +144,7 @@ public class GameManager : MonoBehaviour
                 Destroy(SpawnedObjects[i]);
             }
             TileGameObjects.Clear();
+            TilesDictionary.Clear();
             Cards.Clear();
             SpawnedObjects.Clear();
             Destroy(_voidHighlightPlatformReference);
@@ -499,7 +507,25 @@ public class GameManager : MonoBehaviour
         WallTile.onWallHighlighted -= HighlightInteractable;
         Bot.onStartedMove -= CleanVisualOnBotMove;
     }
-
+    public void AddToTileToDictionary(Vector3 pos, Tile tile)
+    {
+        if (TilesDictionary.ContainsKey(pos))
+        {
+            Debug.LogWarning($"Tile{ gameObject.name} is already added.");
+        }
+        else
+        {
+            TilesDictionary.Add(pos, tile);
+        }
+    }
+    public void ClearTileDictionary()
+    {
+        TilesDictionary.Clear();
+    }
+    public void AddInteractableToDictionary(Vector3 pos, InteractableObject interactable)
+    {
+        Interactables.Add(pos, interactable);
+    }
     private async void LoadLevel()
     {
         onObjectsInstantiated?.Invoke();
@@ -510,6 +536,20 @@ public class GameManager : MonoBehaviour
             uIController.SetLevelNameText(levelToLoad.Name);
         }
         await RainInAnimation();
+        //if(TilesDictionary.Count <= 0)
+        //{
+            //for (int i = 0; i < TileGameObjects.Count-1; i++)
+            //{
+            //    TilesDictionary.Add(new Vector3(TileGameObjects[i].transform.position.x, 0, TileGameObjects[i].transform.position.z), TileGameObjects[i].GetComponent<Tile>());
+            //    print("Went into the dictionary saving system");
+            //    //print($"Tile Objects: {TileGameObjects.Count}");
+            //    print($"Tile Dictionary: {TilesDictionary.Count}");
+            //}
+        //}
+        //for (int i = 0; i < TileGameObjects.Count - 1; i++)
+        //{
+        //    print($"Tile at :{TileGameObjects[i].transform.position}");
+        //}
         //This after the raining in animation
         if (_camera == null)
         {
@@ -521,8 +561,11 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject tile in TileGameObjects)
         {
-             RainInTween(tile.transform);
+            RainInTween(tile.transform);
+            tile.GetComponent<Tile>().ReferenceToDictionary();  
         }
+        
+        print(TilesDictionary.Count);
         foreach (GameObject interactable in SpawnedObjects)
         {
             float randomSpeed = 1f;
@@ -536,7 +579,16 @@ public class GameManager : MonoBehaviour
         await Task.Yield();
         onGameStarted?.Invoke();
 
+
     }
+    //private void UpdateTilesDictionary()
+    //{
+
+    //}
+    //private void UpdateInteractablesDictionary()
+    //{
+
+    //}
     private async Task RainOutAnimation()
     {
         foreach (GameObject tile in TileGameObjects)
@@ -549,6 +601,7 @@ public class GameManager : MonoBehaviour
 
         }
         await Task.Delay(300);
+        
     }
     private async void RainOutTween(Transform transform)
     {

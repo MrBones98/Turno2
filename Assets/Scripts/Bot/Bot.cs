@@ -4,8 +4,9 @@ using UnityEngine;
 using System.Threading.Tasks;
 using DG.Tweening;
 using Utils;
+using Assets.Scripts.Utils;
 
-public class Bot : MonoBehaviour
+public class Bot : MonoBehaviour, IMovable,IPushable
 {
     [SerializeField] private GameObject _parentGameObject;
     [SerializeField] private float _goundcheckOffset;
@@ -437,4 +438,21 @@ public class Bot : MonoBehaviour
         //Gizmos.DrawRay(_parentGameObject.transform.position, MoveUtils.SetDirection(_raisingPathDirection));
     }
 
+    public void CheckMovement()
+    {
+        //interface
+        throw new System.NotImplementedException();
+    }
+
+    public void CheckJumping()
+    {
+        //interface
+        throw new System.NotImplementedException();
+    }
+
+    public void CheckPushing()
+    {
+        //interface
+        throw new System.NotImplementedException();
+    }
 }
