@@ -438,19 +438,29 @@ public class Bot : MonoBehaviour, IMovable,IPushable
         //Gizmos.DrawRay(_parentGameObject.transform.position, MoveUtils.SetDirection(_raisingPathDirection));
     }
 
-    public void CheckMovement()
+    public void CheckMovement(Vector3 direction)
+    {
+        //interface
+        throw new System.NotImplementedException();
+        //if (_isActive)
+        //{
+        //    onStartedMove?.Invoke();
+        //    _movementDirection = direction;
+        //    //_parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
+        //    var solveRotationTask = SolveRotationOrientation(direction);
+        //    //_parentGameObject.transform.DOLookAt(_lookDirection, _rotationSpeed, AxisConstraint.None);
+        //    await solveRotationTask;
+        //    SolveTurnAsync(direction);
+        //}
+    }
+
+    public void CheckJumping(Vector3 direction)
     {
         //interface
         throw new System.NotImplementedException();
     }
 
-    public void CheckJumping()
-    {
-        //interface
-        throw new System.NotImplementedException();
-    }
-
-    public void CheckPushing()
+    public void CheckPushing(Vector3 direction)
     {
         //interface
         throw new System.NotImplementedException();

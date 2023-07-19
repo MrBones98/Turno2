@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
             TilesDictionary.Clear();
             Cards.Clear();
             SpawnedObjects.Clear();
+            Interactables.Clear();
             Destroy(_voidHighlightPlatformReference);
         }
         await Task.Yield();
@@ -564,8 +565,12 @@ public class GameManager : MonoBehaviour
             RainInTween(tile.transform);
             tile.GetComponent<Tile>().ReferenceToDictionary();  
         }
-        
-        print(TilesDictionary.Count);
+
+        foreach (var tile in TilesDictionary)
+        {
+            print($"{tile.Key} + {tile.Value.type}");
+        }
+        //print(TilesDictionary.Count);
         foreach (GameObject interactable in SpawnedObjects)
         {
             float randomSpeed = 1f;
@@ -575,6 +580,10 @@ public class GameManager : MonoBehaviour
                 await interactable.GetComponentInChildren<Bot>().CheckForLanding();
             }
 
+        }
+        foreach (var interact in Interactables)
+        {
+            print($"{interact.Key} + {interact.Value.Type}");
         }
         await Task.Yield();
         onGameStarted?.Invoke();

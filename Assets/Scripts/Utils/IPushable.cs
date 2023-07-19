@@ -1,7 +1,8 @@
-﻿namespace Assets.Scripts.Utils
+﻿using UnityEngine;
+namespace Assets.Scripts.Utils
 {
     public interface IPushable
     {
-        public void CheckPushing();
+        public void CheckPushing(Vector3 direction);
     }
 }

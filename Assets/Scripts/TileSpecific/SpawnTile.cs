@@ -1,3 +1,4 @@
+using Assets.Scripts.Interactables;
 using Editor;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ public class SpawnTile : Tile
     {
        GameObject bot = Instantiate(_bot,this.transform.position + new Vector3(0, _offset, 0), Quaternion.Euler(0,180,0));
        GameManager.SpawnedObjects.Add(bot);
+       GameManager.Interactables.Add(new Vector3(transform.position.x, 0, transform.position.z), bot.GetComponentInChildren<InteractableObject>());
     }
 
     private void OnDisable()
