@@ -178,12 +178,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if(!_isPickedUp)
         transform.DOMoveY(0, _hoverDuration);
         //print("hover card down");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(!_isPickedUp)
         transform.DOMoveY(_hoverHeight, _hoverDuration);
         //print($"{this.gameObject.name} hover card up");
     }

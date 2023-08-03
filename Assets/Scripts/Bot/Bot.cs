@@ -4,7 +4,9 @@ using UnityEngine;
 using System.Threading.Tasks;
 using DG.Tweening;
 using Utils;
+using Editor;
 using Assets.Scripts.Utils;
+using Assets.Scripts.Interactables;
 
 public class Bot : MonoBehaviour, IMovable,IPushable
 {
@@ -113,98 +115,193 @@ public class Bot : MonoBehaviour, IMovable,IPushable
     }
     async Task SolvePushCollisionsAsync(Vector3 direction)
     {
-        Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x, -1, _parentGameObject.transform.position.z) + direction*1.35f;
         //if (IsFocused) //Debug purposes, delete
         await Task.Delay((int)(_botStepDelay) * 1000);
+        FindInDictionaries(direction);
 
-        Collider[] hits = Physics.OverlapSphere(transform.position + direction, 0.44f, _collidableLayers);
-        //RaycastHit[] hits = Physics.SphereCastAll(correctedPushDirection, 0.44f, Vector3.up, 1.5f, _collidableLayers);
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (_platformCached == false && hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.layer == 7)
-            {
-                _platformCached = true;
-            }
-            else if(!_platformCached)
-            {
-                _platformCached = false;
-            }
-            if (hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<WallTile>())
-            {
-                _wallTile = hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<WallTile>();
-            }
-            else if (_wallTile == null)
-            {
-                _wallTile = null;
-            }
-            if (_pushableBox == null || hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
-            {
-                _pushableBox = hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
-            }
+        
+        //GameManager.Interactables.Remove(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z));
+        //Old Raycast System
+        //Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x, -1, _parentGameObject.transform.position.z) + direction*1.35f;
+        //Collider[] hits = Physics.OverlapSphere(transform.position + direction, 0.44f, _collidableLayers);
+        ////RaycastHit[] hits = Physics.SphereCastAll(correctedPushDirection, 0.44f, Vector3.up, 1.5f, _collidableLayers);
+        //for (int i = 0; i < hits.Length; i++)
+        //{
+        //    if (_platformCached == false && hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.layer == 7)
+        //    {
+        //        _platformCached = true;
+        //    }
+        //    else if(!_platformCached)
+        //    {
+        //        _platformCached = false;
+        //    }
+        //    if (hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<WallTile>())
+        //    {
+        //        _wallTile = hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<WallTile>();
+        //    }
+        //    else if (_wallTile == null)
+        //    {
+        //        _wallTile = null;
+        //    }
+        //    if (_pushableBox == null || hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
+        //    {
+        //        _pushableBox = hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
+        //    }
 
-            if (hits[i].GetComponent<Collider>().GetComponent<Bot>())
-            {
-                _pushableBot = hits[i].GetComponent<Collider>().GetComponent<Bot>();
-                //if (!_pushableBot.IsPushableBot)
-                //{
-                //    _pushableBot = null;
-                //}
-            }
-            print(hits[i].GetComponent<Collider>().gameObject.name);
-        }
-            print($"There are {hits.Length} colliders on this step");
+        //    if (hits[i].GetComponent<Collider>().GetComponent<Bot>())
+        //    {
+        //        _pushableBot = hits[i].GetComponent<Collider>().GetComponent<Bot>();
+        //        //if (!_pushableBot.IsPushableBot)
+        //        //{
+        //        //    _pushableBot = null;
+        //        //}
+        //    }
+        //    print(hits[i].GetComponent<Collider>().gameObject.name);
+        //}
+        //    print($"There are {hits.Length} colliders on this step");
     }
     async Task SolveCollisionsAsync(Vector3 direction, bool jump)
     {
         await Task.Delay((int)(_botStepDelay * 1000));
-        RaycastHit[] facingHit;
-        if (jump == false)
+        //Dictionary
+        FindInDictionaries(direction);
+        print($"In the {direction} direction there are: WallTile = {_wallTile}, Box = {_pushableBox}, Platform in front = {_platformCached}, PushableBot = {_pushableBot}");
+        //Old Raycast system
+
+        //RaycastHit[] facingHit;
+        //if (jump == false)
+        //{
+        //     facingHit= Physics.SphereCastAll(_raycastOrigin.position, 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
+        //}
+        //else
+        //{
+        //    Vector3 jumpRayPosition = _parentGameObject.transform.position+ (direction*_stepCount);
+        //    facingHit = Physics.SphereCastAll(jumpRayPosition,0.44f,Vector3.up, 1.5f, _collidableLayers);
+        //}
+        //for (int i = 0; i < facingHit.Length; i++)
+        //{
+        //    if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
+        //    {
+        //        _platformCached = true;
+        //    }
+        //    else if (!_platformCached)
+        //    {
+        //        _platformCached = false;
+        //    }
+        //    if (facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>())
+        //    {
+        //        _wallTile = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>();
+        //        print(_wallTile);
+        //    }
+        //    else if (_wallTile == null)
+        //    {
+        //        _wallTile = null;
+        //    }
+        //    if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
+        //    {
+        //        _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
+        //    }
+
+        //    if (facingHit[i].collider.GetComponent<Bot>())
+        //    {
+        //        _pushableBot = facingHit[i].collider.GetComponent<Bot>();
+        //        //print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
+
+        //    }
+        //    //print($"Collisions on Step #{_stepCount} , collider of: {facingHit[i].collider.gameObject.name}, at Pos: {facingHit[i].collider.gameObject.transform.position}");
+        //}
+
+        //if (facingHit.Length == 0)
+        //{
+        //    _platformCached = false;
+        //}
+    }
+
+    private void FindInDictionaries(Vector3 direction)
+    {
+        Tile tile = GameManager.Instance.FindTile(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z) + direction);
+
+        InteractableObject interactable = GameManager.Instance.FindInteractable(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z) + direction);
+
+        if (tile == null)
         {
-             facingHit= Physics.SphereCastAll(_raycastOrigin.position, 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
+            print("Tile is null");
+            _platformCached = false;
+            _wallTile = null;
         }
         else
         {
-            Vector3 jumpRayPosition = _parentGameObject.transform.position+ (direction*_stepCount);
-            facingHit = Physics.SphereCastAll(jumpRayPosition,0.44f,Vector3.up, 1.5f, _collidableLayers);
-        }
-        for (int i = 0; i < facingHit.Length; i++)
-        {
-            if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
+            TileType type = tile.type;
+            switch (type)
             {
-                _platformCached = true;
-            }
-            else if (!_platformCached)
-            {
-                _platformCached = false;
-            }
-            if (facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>())
-            {
-                _wallTile = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>();
-                print(_wallTile);
-            }
-            else if (_wallTile == null)
-            {
-                _wallTile = null;
-            }
-            if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
-            {
-                _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
+                case TileType.Platform:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.Button:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.Wall:
+                    _wallTile = tile.GetComponent<WallTile>();
+                    break;
+                case TileType.SpawnTile:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.LatchSwitch:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.Gate:
+                    break;
+                case TileType.MomentarySwitch:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.Moving:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.BoxSpawnTile:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.PushableBotSpawnTile:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                default:
+                    break;
             }
 
-            if (facingHit[i].collider.GetComponent<Bot>())
-            {
-                _pushableBot = facingHit[i].collider.GetComponent<Bot>();
-                //print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
-                
-            }
-            //print($"Collisions on Step #{_stepCount} , collider of: {facingHit[i].collider.gameObject.name}, at Pos: {facingHit[i].collider.gameObject.transform.position}");
         }
-
-        if (facingHit.Length == 0)
+        if (interactable == null)
         {
-            _platformCached = false;
+            _pushableBot = null;
+            _pushableBox = null;
+        }
+        else
+        {
+            TypeOfInteractableObject type = interactable.Type;
+            switch (type)
+            {
+                case TypeOfInteractableObject.PushableBot:
+                    _pushableBot = interactable.GetComponent<Bot>();
+                    _pushableBox = null;
+                    break;
+                case TypeOfInteractableObject.PushableBox:
+                    _pushableBox = interactable.GetComponent<PushableBox>();
+                    _pushableBot = null;
+                    break;
+                case TypeOfInteractableObject.Bot:
+                    _pushableBot = interactable.GetComponent<Bot>();
+                    _pushableBox = null;
+                    break;
+            }
         }
     }
+
     async Task SolveMovementAsync(WallTile walltile, bool platformCached, PushableBox pushablebox, Vector3 direction, Bot pushableBot)
     {
         //print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}, PushableBot = {pushableBot}");
@@ -259,7 +356,7 @@ public class Bot : MonoBehaviour, IMovable,IPushable
                     if (!pushableBot.CanBePushed)
                     {
                         _canBePushed = false;
-                            //print("Can't push Bot");
+                            print("Can't push Bot");
                     }
                     else
                     {
@@ -269,6 +366,7 @@ public class Bot : MonoBehaviour, IMovable,IPushable
                         if(_jumpInput == false)
                         {
                             Move(direction);
+                            print("moving while pushing bot");
                         }
                         else
                         {
@@ -323,7 +421,14 @@ public class Bot : MonoBehaviour, IMovable,IPushable
     private void Move(Vector3 direction)
     {
         onBotStep?.Invoke();
+        GameManager.Interactables.Remove(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z));
+        if (IsPushableBot)
+        {
+            _canBePushed = true;
+        }
         _parentGameObject.transform.DOMove(_parentGameObject.transform.position + direction, _botStepSpeed);
+        GameManager.Interactables.TryAdd(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z)+ direction, gameObject.GetComponent<InteractableObject>());
+
         //print("Bot Moved!");
     }
     private async Task Jump(Vector3 direction)
@@ -354,6 +459,7 @@ public class Bot : MonoBehaviour, IMovable,IPushable
                 _pushableBot = null;
                 _platformCached = false;
             }
+            //print(GameManager.Interactables.TryGetValue(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z), out InteractableObject interactable));
         }
         else
         {
@@ -373,6 +479,7 @@ public class Bot : MonoBehaviour, IMovable,IPushable
         transform.DOMoveY(0.45f, 0.3f, false);
 
         onFinishedMove();
+        //print(GameManager.Interactables.ContainsKey(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z)));
         _isMoving = false;
         
     }
@@ -392,6 +499,8 @@ public class Bot : MonoBehaviour, IMovable,IPushable
         await solvePushCollisionsTask;
         var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, direction, _pushableBot);
         await solveMovementTask;
+        //GameManager.Instance.AddInteractableToDictionary(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z),gameObject.GetComponent<InteractableObject>());
+        print(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z));
         _wallTile = null;
         _pushableBot=null;
         _pushableBox=null;
@@ -438,20 +547,59 @@ public class Bot : MonoBehaviour, IMovable,IPushable
         //Gizmos.DrawRay(_parentGameObject.transform.position, MoveUtils.SetDirection(_raisingPathDirection));
     }
 
-    public void CheckMovement(Vector3 direction)
+    public async void CheckMovement(Vector3 direction)
     {
         //interface
-        throw new System.NotImplementedException();
-        //if (_isActive)
-        //{
-        //    onStartedMove?.Invoke();
-        //    _movementDirection = direction;
-        //    //_parentGameObject.transform.rotation = Quaternion.LookRotation(_lookDirection);
-        //    var solveRotationTask = SolveRotationOrientation(direction);
-        //    //_parentGameObject.transform.DOLookAt(_lookDirection, _rotationSpeed, AxisConstraint.None);
-        //    await solveRotationTask;
-        //    SolveTurnAsync(direction);
-        //}
+        //throw new System.NotImplementedException();
+        if (_isActive)
+        {
+            onStartedMove?.Invoke();
+            _movementDirection = direction;
+            var solveRotationTask = SolveRotationOrientation(direction);
+            await solveRotationTask;
+            SolveDictionaryTurnAsync(direction);
+        }
+    }
+    async void SolveDictionaryTurnAsync(Vector3 direction)
+    {
+        _isFocused = false;
+        _isMoving = true;
+        if (_jumpInput == false)
+        {
+            while (_stepCount > 0)
+            {
+                //        var solveCollisionsTask = SolveCollisionsAsync(direction, _jumpInput);
+                //        await solveCollisionsTask;
+                //        var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, direction, _pushableBot);
+                //        await solveMovementTask;
+                //        //print(_stepCount);
+                //        _stepCount--;
+                //        _wallTile = null;
+                //        _pushableBox = null;
+                //        _pushableBot = null;
+                //        _platformCached = false;
+            }
+        }
+        else
+        {
+        //    var solveCollisionsTask = SolveCollisionsAsync(direction, _jumpInput);
+        //    await solveCollisionsTask;
+        //    var solveMovementTask = SolveMovementAsync(_wallTile, _platformCached, _pushableBox, direction, _pushableBot);
+        //    await solveMovementTask;
+        //    _stepCount = 0;
+        //    _wallTile = null;
+        //    _pushableBox = null;
+        //    _pushableBot = null;
+        //    _platformCached = false;
+        }
+        ////transform.position -= new Vector3(0, 0.2f, 0);
+
+        ////Expose HeighleightHeight
+        //transform.DOMoveY(0.45f, 0.3f, false);
+
+        //onFinishedMove();
+        //_isMoving = false;
+
     }
 
     public void CheckJumping(Vector3 direction)

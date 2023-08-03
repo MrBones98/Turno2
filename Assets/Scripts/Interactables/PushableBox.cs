@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using DG.Tweening;
+using System;
+using Assets.Scripts.Interactables;
+using Editor;
 
 public class PushableBox : MonoBehaviour
 {
@@ -54,45 +57,134 @@ public class PushableBox : MonoBehaviour
     }
     async Task SolveCollisionAsync(Vector3 direction)
     {
-        Vector3 raySpawnPos = new Vector3(transform.position.x, -1, transform.position.z);
+        //Dictionaries
+        await Task.Yield();
+        FindInDictionaries(direction);
+
+        //Old Raycast System
+        //Vector3 raySpawnPos = new Vector3(transform.position.x, -1, transform.position.z);
         //RaycastHit[] hits = Physics.SphereCastAll(raySpawnPos + direction, 0.44f, transform.position + direction, _collidableLayers);
-        Collider[] hits = Physics.OverlapSphere(transform.position+ direction,0.44f, _collidableLayers);
-         await Task.Yield();
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (_platformCached == false && hits[i].GetComponent<Collider>().gameObject.layer == 7)
-            {
-                _platformCached = true;
-            }
-            else if (!_platformCached)
-            {
-                _platformCached = false;
-            }
-            if (hits[i].gameObject.GetComponent<WallTile>())
-            {
-                _wallTile = hits[i].gameObject.GetComponent<WallTile>();
-            }
-            else if (_wallTile == null)
-            {
-                _wallTile = null;
-            }
-            if (_pushableBox == null || hits[i].GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
-            {
-                _pushableBox = hits[i].GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
-            }
-            if (hits[i].GetComponent<Bot>())
-            {
-                _pushableBot = hits[i].GetComponent<Bot>();
-                //print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
-            }
-            print(hits[i].GetComponent<Collider>().gameObject.name);
-        }
-        if (hits.Length == 0)
-        {
-            _platformCached = false;
-        }
+        //Collider[] hits = Physics.OverlapSphere(transform.position+ direction,0.44f, _collidableLayers);
+        //for (int i = 0; i < hits.Length; i++)
+        //{
+        //    if (_platformCached == false && hits[i].GetComponent<Collider>().gameObject.layer == 7)
+        //    {
+        //        _platformCached = true;
+        //    }
+        //    else if (!_platformCached)
+        //    {
+        //        _platformCached = false;
+        //    }
+        //    if (hits[i].gameObject.GetComponent<WallTile>())
+        //    {
+        //        _wallTile = hits[i].gameObject.GetComponent<WallTile>();
+        //    }
+        //    else if (_wallTile == null)
+        //    {
+        //        _wallTile = null;
+        //    }
+        //    if (_pushableBox == null || hits[i].GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
+        //    {
+        //        _pushableBox = hits[i].GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
+        //    }
+        //    if (hits[i].GetComponent<Bot>())
+        //    {
+        //        _pushableBot = hits[i].GetComponent<Bot>();
+        //        //print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
+        //    }
+        //    print(hits[i].GetComponent<Collider>().gameObject.name);
+        //}
+        //if (hits.Length == 0)
+        //{
+        //    _platformCached = false;
+        //}
         //print($"There are {hits.Length} colliders on this step");
     }
+
+    private void FindInDictionaries(Vector3 direction)
+    {
+        Tile tile = GameManager.Instance.FindTile(new Vector3(transform.position.x,0,transform.position.z)+direction);
+        InteractableObject interactable = GameManager.Instance.FindInteractable(new Vector3(transform.position.x,0,transform.position.z)+direction);
+
+        if (tile == null)
+        {
+            print("Tile is null");
+            _platformCached = false;
+            _wallTile = null;
+        }
+        else
+        {
+            TileType type = tile.type;
+            switch (type)
+            {
+                case TileType.Platform:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.Button:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.Wall:
+                    _wallTile = tile.GetComponent<WallTile>();
+                    break;
+                case TileType.SpawnTile:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.LatchSwitch:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.Gate:
+                    break;
+                case TileType.MomentarySwitch:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.Moving:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.BoxSpawnTile:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                case TileType.PushableBotSpawnTile:
+                    _platformCached = true;
+                    _wallTile = null;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        if (interactable == null)
+        {
+            _pushableBot = null;
+            _pushableBox = null;
+        }
+        else
+        {
+            TypeOfInteractableObject type = interactable.Type;
+            switch (type)
+            {
+                case TypeOfInteractableObject.PushableBot:
+                    _pushableBot = interactable.GetComponent<Bot>();
+                    _pushableBox = null;
+                    break;
+                case TypeOfInteractableObject.PushableBox:
+                    _pushableBox = interactable.GetComponent<PushableBox>();
+                    _pushableBot = null;
+                    break;
+                case TypeOfInteractableObject.Bot:
+                    _pushableBot = null;
+                    _pushableBox = null;
+                    break;
+            }
+        }
+    }
+
     async Task SolveMovementAsync(WallTile wallTile, bool platformCached, PushableBox pushableBox, Vector3 direction, Bot bot)
     {
         //print($"In the {direction} direction there are: WallTile = {wallTile}, Box = {pushableBox}, Platform in front = {platformCached}");
@@ -171,7 +263,10 @@ public class PushableBox : MonoBehaviour
 
     private void Move(Vector3 direction)
     {
-        transform.DOMove(transform.position + direction, _stepSpeed);
+        GameManager.Interactables.Remove(new Vector3(transform.position.x, 0, transform.position.z));
+        Vector3 newKey = new Vector3 (transform.position.x,0,transform.position.z) + direction;
+        transform.DOMove(newKey, _stepSpeed);
+        GameManager.Instance.AddInteractableToDictionary(newKey, gameObject.GetComponent<InteractableObject>());
         onBoxPushed?.Invoke();
     }
 
@@ -190,7 +285,9 @@ public class PushableBox : MonoBehaviour
         GameObject tile = Instantiate(_platform, new Vector3(Mathf.RoundToInt(transform.position.x), 0, Mathf.RoundToInt(transform.position.z)), Quaternion.identity);
         //GameObject tile = Instantiate(_platform, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
         //print(tile.transform.position);
+        GameManager.Interactables.Remove(transform.position);
         GameManager.TileGameObjects.Add(tile);
+        GameManager.Instance.AddToTileToDictionary(tile.transform.position, tile.GetComponent<Tile>());
         await Task.Yield();
         Destroy(gameObject, 0.4f);
     }

@@ -5,17 +5,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using System.Threading.Tasks;
+using Assets.Scripts.Interactables;
 
 public class MovingTile : Tile,ISwitchActivatable
 {
     [SerializeField] private GameObject _ghostTile;
 
     private Vector3 _moveDireciton;
+    
     private int _count=0;
+    private InteractableObject _interactable;
     private MovingTileAnimation _animation;
     private GameObject _carriedObject;
     private bool _active;
     private bool _ghostDrawn = false;
+    private bool _isOccupied = false;
     private bool _adjustedDistance = false;
     private float _moveDuration;
     private float _speed;
@@ -75,41 +79,83 @@ public class MovingTile : Tile,ISwitchActivatable
         if(raycastHits.Length>0 && !_adjustedDistance)
         {
             _adjustedDistance = true;
-           print(raycastHits[0].collider.name);
-           print(raycastHits[0].collider.transform.position);
+           //print(raycastHits[0].collider.name);
+           //print(raycastHits[0].collider.transform.position);
            hitDistance = Vector3.Distance(transform.position, raycastHits[0].collider.transform.position);
             distance = (int)hitDistance -1;
             Distance = distance;
-            print(Distance);
+//            print(Distance);
            await Task.Yield();
         }
-        _moveDireciton = new Vector3(Direction.x, 0, Direction.y) * distance; 
+        //GameManager.Interactables.Remove(transform.position);
+        //print($"removing from{transform.position}");
+        _moveDireciton = new Vector3(Direction.x, 0, Direction.y) * distance;
+        {
+
+        }
+        Vector3 positiveDictionaryKey = new Vector3((int)transform.position.x+_moveDireciton.x,0,(int)(transform.position.z + _moveDireciton.z));
+        print (positiveDictionaryKey);
+        if (_carriedObject != null)
+        {
+            print($"Removing interactable at{transform.position}");
+            GameManager.Interactables.Remove(transform.position);
+            if(_count%2 == 0)
+            {
+                RoundToUpdateDictionary(positiveDictionaryKey);
+            }
+            else
+            {
+                RoundToUpdateDictionary(transform.position - _moveDireciton);
+            }
+        }
         for (int i = 0; i <= distance; i++)
         {
             if (_count % 2 == 0)
             {
                 //transform.position = transform.position + new Vector3(Direction.x, 0, Direction.y);
-                transform.DOMove(transform.position + _moveDireciton, _moveDuration);
+                transform.DOMove(positiveDictionaryKey, _moveDuration);
                 //print("moveMove");
                 _animation.LightBack(); 
             }
             else
             {
                 //transform.position = transform.position + new Vector3(-Direction.x, 0, -Direction.y);
+                
                 transform.DOMove(transform.position -_moveDireciton, _moveDuration);
                 //print("moveMove");
                 _animation.LightForward();
             }
             distance--;
         }
+        GameManager.Instance.AddToTileToDictionary(transform.position+_moveDireciton, gameObject.GetComponent<Tile>());
         
         _count++;
+    }
+    private void RoundToUpdateDictionary(Vector3 key)
+    {
+        if (_carriedObject != null)
+        {
+            GameManager.Instance.AddInteractableToDictionary(key, _interactable);
+            foreach (var interact in GameManager.Interactables)
+            {
+                print($"{interact.Key} + {interact.Value.Type}");
+            }
+            print($"Interactables count: {GameManager.Interactables.Count}");
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
         if (IsMovable(other))
+        {
+            _isOccupied = true;
+            _interactable = other.gameObject.GetComponent<InteractableObject>();
             _carriedObject.transform.SetParent(transform, true);
+            print(_carriedObject.name);
+            //RECACHE INTERACTABLE DICTIONARY
+            
             //_carriedObject.transform.parent.parent.position += new Vector3(0, 0.45f, 0);
+
+        }
 
 
     }
@@ -145,8 +191,11 @@ public class MovingTile : Tile,ISwitchActivatable
     private void OnTriggerExit(Collider other)
     {
         if (IsMovable(other))
+        {
             _carriedObject.transform.SetParent(null, true);
-            _carriedObject=null;
+            _carriedObject = null;
+            _interactable = null;
+        }
             //_carriedObject.transform.SetParent(_carriedObject.transform.parent.parent);
     }
     private bool IsMovable(Collider collider)
@@ -157,6 +206,7 @@ public class MovingTile : Tile,ISwitchActivatable
         {
             _carriedObject = collider.transform.parent.parent.gameObject;
             print($"Triggered by: {collider.gameObject.name}");
+            
             return true;
 
         }
@@ -164,6 +214,7 @@ public class MovingTile : Tile,ISwitchActivatable
         {
             _carriedObject = collider.gameObject;
             print($"Triggered by: {collider.gameObject.name}");
+           
             return true;
         }
         else return false;

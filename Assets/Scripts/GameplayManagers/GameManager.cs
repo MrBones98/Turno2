@@ -5,6 +5,7 @@ using Utils;
 using System.Threading.Tasks;
 using DG.Tweening;
 using System;
+using Editor;
 using Assets.Scripts.Interactables;
 using Random = UnityEngine.Random;
 
@@ -165,6 +166,8 @@ public class GameManager : MonoBehaviour
     {
 
         Invoke(nameof(BotMoved), 0.3f);
+        
+        //print(Interactables);
     }
     private void BotMoved()
     {
@@ -215,6 +218,29 @@ public class GameManager : MonoBehaviour
         if(_voidHighlightPlatformReference!= null)
         {
             Destroy(_voidHighlightPlatformReference);
+        }
+    }
+    public Tile FindTile(Vector3 keyPos)
+    {
+        print($"Finding Tile at: {keyPos}");
+        if(TilesDictionary.TryGetValue(keyPos, out Tile tile))
+        {
+            return tile;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public InteractableObject FindInteractable(Vector3 keyPos)
+    {
+        if (Interactables.TryGetValue(keyPos, out InteractableObject interactable))
+        {
+            return interactable;
+        }
+        else 
+        {
+            return null;
         }
     }
     private void FinishLevel()
@@ -525,6 +551,10 @@ public class GameManager : MonoBehaviour
     }
     public void AddInteractableToDictionary(Vector3 pos, InteractableObject interactable)
     {
+        //if (Interactables.ContainsKey(pos))
+        //{
+        //    Debug.LogWarning($"Interactable{ Interactables.Co(pos)} is already added.");
+        //}
         Interactables.Add(pos, interactable);
     }
     private async void LoadLevel()
@@ -566,10 +596,10 @@ public class GameManager : MonoBehaviour
             tile.GetComponent<Tile>().ReferenceToDictionary();  
         }
 
-        foreach (var tile in TilesDictionary)
-        {
-            print($"{tile.Key} + {tile.Value.type}");
-        }
+        //foreach (var tile in TilesDictionary)
+        //{
+        //    print($"{tile.Key} + {tile.Value.type}");
+        //}
         //print(TilesDictionary.Count);
         foreach (GameObject interactable in SpawnedObjects)
         {
