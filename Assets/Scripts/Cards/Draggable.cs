@@ -5,6 +5,10 @@ using DG.Tweening;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler,IPointerMoveHandler
 {
+    public int MoveCount { get { return _moveCount; } }
+    public bool IsJumpCard { get { return _isJumpCard; } }
+    public bool IsPickedUp { get { return _isPickedUp; } }
+
     [SerializeField] [Range(1,4)]private int _moveCount;
     [SerializeField] private TextMeshProUGUI _cardValueText;
     [SerializeField] private LayerMask _layerMask;
@@ -24,8 +28,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public delegate void OnCardPickedUp();
     public static event OnCardPickedUp onCardPickedUp;
+    public delegate void OnCardSelected(GameObject gameObject, Draggable draggable);
+    public static event OnCardSelected onCardSelected;
     public delegate void OnCardDropped();
     public static event OnCardDropped onCardDropped;
+    public delegate void OnCardGiven();
+    public static event OnCardGiven onCardGiven;
     private void Awake()
     {
         
@@ -65,54 +73,69 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (_isPickedUp == false)
         {
             onCardPickedUp?.Invoke();
+            onCardSelected?.Invoke(gameObject,this);
             transform.DOScale(_startScale * .5f, .1f);
             transform.SetParent(transform.parent.parent);
             _isPickedUp = true;
         }
         else
         {
-            RaycastHit hitInfo;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hitInfo, 40f, _layerMask))
-            {
+            //raise this from gameManager bc pointerclick does not work for an object you're not carrying around lmao
+            onCardGiven?.Invoke();
+            //BotCaching();
+            onCardDropped?.Invoke();
+        }
+    }
 
-                if (hitInfo.collider.GetComponent<Bot>())
-                {
-                    _bot = hitInfo.collider.gameObject;
-                    //transform.localScale-= _scaleAdditionVector;
-                }
-                else
-                {
-                    //transform.localScale+= _scaleAdditionVector;
-                    _bot = null;
-                }
-            }
-            //transform.SetParent(_originalHandParent, false);
-            //PopDown();
-            if (_bot != null)
+    private void BotCaching()
+    {
+        RaycastHit hitInfo;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hitInfo, 40f, _layerMask))
+        {
+
+            if (hitInfo.collider.GetComponent<Bot>())
             {
-                onCardDropped?.Invoke();
-                transform.DOScale(_startScale, .1f);
-                //TODO
-                if (_isJumpCard == false)
-                {
-                    _bot.GetComponent<Bot>().SetDistance(_moveCount);
-                }
-                else
-                {
-                    _bot.GetComponent<Bot>().SetJumpDistance(_moveCount);
-                }
-                GameManager.Instance.AssignPlayer(_bot);
-                //Don' Destroy, pass object to gamanager list as well as previous bot position c:
-                Destroy(gameObject, 0.1f);
+                _bot = hitInfo.collider.gameObject;
+                //transform.localScale-= _scaleAdditionVector;
             }
             else
             {
-                ResetCard();
+                //transform.localScale+= _scaleAdditionVector;
+                _bot = null;
             }
         }
+        //transform.SetParent(_originalHandParent, false);
+        //PopDown();
+        if (_bot != null)
+        {
+            onCardDropped?.Invoke();
+            DropScaling();
+            //TODO
+            if (_isJumpCard == false)
+            {
+                _bot.GetComponent<Bot>().SetDistance(_moveCount);
+            }
+            else
+            {
+                _bot.GetComponent<Bot>().SetJumpDistance(_moveCount);
+            }
+            GameManager.Instance.AssignPlayer(_bot);
+            //Don' Destroy, pass object to gamanager list as well as previous bot position c:
+            //Destroy(gameObject, 0.1f);
+        }
+        else
+        {
+            ResetCard();
+        }
     }
-    private void ResetCard()
+
+    public void DropScaling()
+    {
+        transform.DOScale(_startScale, .1f);
+    }
+
+    public void ResetCard()
     {
         _isPickedUp = false;
         transform.SetParent(_originalHandParent,false);
@@ -123,7 +146,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (_isPickedUp)
         {
-            transform.position = eventData.position;
+            //transform.position = eventData.position;
         }
     }
 

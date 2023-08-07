@@ -15,19 +15,23 @@ public class GameManager : MonoBehaviour
     public static List<GameObject> TileGameObjects = new();
     public static List<GameObject> Cards = new();
     public static List<GameObject> SpawnedObjects = new();
-    public static Dictionary<Vector3,Tile> TilesDictionary = new();
+    public static Dictionary<Vector3, Tile> TilesDictionary = new();
     public static Dictionary<Vector3, InteractableObject> Interactables = new();
 
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;
     [SerializeField] private float _highlightHeight;
     [SerializeField] private GameObject _deathPlatformVisual;
-    [SerializeField] [Range (0.5f, 3.0f)] private float _rainInDuration;
+    [SerializeField] [Range(0.5f, 3.0f)] private float _rainInDuration;
     [SerializeField] private LayerMask _highlightPathLayer;
+    [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private GameObject _botParentGameObject;
 
+    public Draggable CurrentDraggable { get { return _currentDraggable; } set { _currentDraggable = value; } }
 
     //[OnValueChanged("AssignPlayer")]
+    private Draggable _currentDraggable = null;
+    private GameObject _currentCard = null;
     private GameObject _bot;
     private GameObject _voidHighlightPlatformReference = null;
     private Camera _camera;
@@ -41,7 +45,7 @@ public class GameManager : MonoBehaviour
     private int _voidDistance;
     private int _idReference;
     private bool _selectCheck = false;
-    private bool _raycastCheck =false;
+    private bool _raycastCheck = false;
     //public WinTile WinTile;
 
     //ON THE LEVEL SO ADD COUNT OF BUTTONS FOR WINNING FOR DIFFERENT NEEED AMOUNTS
@@ -59,7 +63,7 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         ScriptableObjectLoader.onLevelLoaded += LoadLevel;
-        ScriptableObjectLoader.onLevelQeued +=async ()=>await  ClearLevel();
+        ScriptableObjectLoader.onLevelQeued += async () => await ClearLevel();
         WinTile.onButtonPressed += FinishLevel;
         SwitchTile.onSwitchPressed += Activate;
         SwitchTile.onSwitchReleased += DeActivate;
@@ -67,8 +71,58 @@ public class GameManager : MonoBehaviour
         SwitchTile.onSwitchHighlighted += HighlightInteractable;
         WallTile.onWallHighlighted += HighlightInteractable;
         Bot.onStartedMove += CleanVisualOnBotMove;
+        Draggable.onCardSelected += CacheCard;
+        Draggable.onCardGiven += ResolveCardInteraction;
     }
 
+    private void CacheCard(GameObject cardObject, Draggable draggable)
+    {
+        _currentDraggable = draggable;
+        _currentCard = cardObject;
+    }
+    private void ResolveCardInteraction()
+    {
+        print("Remember to delete this event on the card ty, also the onCardDropped (for the sound) move it");
+    }
+    private void BotCaching()
+    {
+        print("Caching card with new gm function");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 40f, _playerLayer))
+        {
+            print(hitInfo.collider.gameObject.name);
+            if (hitInfo.collider.GetComponent<Bot>())
+            {
+                AssignPlayer(hitInfo.collider.gameObject);
+                print("card cached");
+            }
+            else
+            {
+                _bot = null;
+            }
+        }
+
+        if (_bot != null)
+        {
+            _currentDraggable.DropScaling();
+            if (_currentDraggable.IsJumpCard == false)
+            {
+                _bot.GetComponent<Bot>().SetDistance(_currentDraggable.MoveCount);
+            }
+            else
+            {
+                _bot.GetComponent<Bot>().SetJumpDistance(_currentDraggable.MoveCount);
+            }
+            //could save it in qeue jic
+            Destroy(_currentCard, 0.1f);
+        }
+        else
+        {
+            _currentDraggable.ResetCard();
+            _currentDraggable = null;
+            _currentCard = null;
+        }
+    }
     private async void CleanVisualOnBotMove()
     {
         await ClearPath();
@@ -81,11 +135,11 @@ public class GameManager : MonoBehaviour
             if (tiles.GetComponent<Tile>().InteractableID == id && tiles.GetComponent<Tile>().IsHighlighted == false)
             {
                 //print(tiles.name);
-               
-                    //tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(_highlightHeight);
-                    _higlightedInteractables.Add(tiles.transform);
-                    tiles.GetComponent<Tile>().IsHighlighted = true;
-                
+
+                //tiles.GetComponent<ISwitchActivatable>().HighlightInteractable(_highlightHeight);
+                _higlightedInteractables.Add(tiles.transform);
+                tiles.GetComponent<Tile>().IsHighlighted = true;
+
             }
         }
         foreach (Transform interactable in _higlightedInteractables)
@@ -97,10 +151,10 @@ public class GameManager : MonoBehaviour
         }
         //_selectCheck = !_selectCheck;
     }
-    private async Task PrettyHighlightAsync(Transform interactableTransform,bool up,float offset)
+    private async Task PrettyHighlightAsync(Transform interactableTransform, bool up, float offset)
     {
         float height = offset;
-        if (up==false)
+        if (up == false)
         {
             height = 0;
         }
@@ -111,24 +165,24 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
-        else 
-        { 
+        else
+        {
             Destroy(gameObject);
         }
     }
     public async Task ClearLevel()
     {
-        if(SceneLoader.Instance.GetCurrentSceneIndex() == 1)
+        if (SceneLoader.Instance.GetCurrentSceneIndex() == 1)
         {
             await UnloadLevel();
         }
         if (TileGameObjects.Count != 0)
         {
-            for (int i = 0; i < TilesDictionary.Count-1; i++)
+            for (int i = 0; i < TilesDictionary.Count - 1; i++)
             {
                 TilesDictionary.Remove(TileGameObjects[i].transform.position);
             }
@@ -166,7 +220,7 @@ public class GameManager : MonoBehaviour
     {
 
         Invoke(nameof(BotMoved), 0.3f);
-        
+
         //print(Interactables);
     }
     private void BotMoved()
@@ -189,7 +243,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject tiles in TileGameObjects)
         {
-            if(tiles.GetComponent<Tile>().InteractableID == id)
+            if (tiles.GetComponent<Tile>().InteractableID == id)
             {
                 tiles.GetComponent<ISwitchActivatable>().Activate();
             }
@@ -205,7 +259,7 @@ public class GameManager : MonoBehaviour
         onUndoButtonPressed?.Invoke();
         await Task.Yield();
         int countReference = _bot.GetComponent<Bot>().StepCount;
-        if (_bot != null && countReference>0)
+        if (_bot != null && countReference > 0)
         {
             //remove focused
             _bot.GetComponent<Bot>().IsFocused = false;
@@ -215,7 +269,7 @@ public class GameManager : MonoBehaviour
             _bot.GetComponent<Bot>().StepCount = 0;
 
         }
-        if(_voidHighlightPlatformReference!= null)
+        if (_voidHighlightPlatformReference != null)
         {
             Destroy(_voidHighlightPlatformReference);
         }
@@ -223,7 +277,7 @@ public class GameManager : MonoBehaviour
     public Tile FindTile(Vector3 keyPos)
     {
         print($"Finding Tile at: {keyPos}");
-        if(TilesDictionary.TryGetValue(keyPos, out Tile tile))
+        if (TilesDictionary.TryGetValue(keyPos, out Tile tile))
         {
             return tile;
         }
@@ -238,7 +292,7 @@ public class GameManager : MonoBehaviour
         {
             return interactable;
         }
-        else 
+        else
         {
             return null;
         }
@@ -255,19 +309,19 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public  async void GiveChosenBotDirection(DirectionIs directionIs)
+    public async void GiveChosenBotDirection(DirectionIs directionIs)
     {
         Vector3 moveVector;
 
-        if(directionIs == DirectionIs.PosX)
+        if (directionIs == DirectionIs.PosX)
         {
             moveVector = Vector3.right;
         }
-        else if(directionIs==DirectionIs.NegZ)
+        else if (directionIs == DirectionIs.NegZ)
         {
             moveVector = -Vector3.forward;
         }
-        else if(directionIs ==DirectionIs.NegX)
+        else if (directionIs == DirectionIs.NegX)
         {
             moveVector = -Vector3.right;
         }
@@ -284,19 +338,19 @@ public class GameManager : MonoBehaviour
         await clearPathTask;
         _bot.GetComponent<Bot>().CheckMove(moveVector);
     }
-    public  async void GiveChosenBotJumpDirection(DirectionIs directionIs)
+    public async void GiveChosenBotJumpDirection(DirectionIs directionIs)
     {
         Vector3 moveVector;
 
-        if(directionIs == DirectionIs.PosX)
+        if (directionIs == DirectionIs.PosX)
         {
             moveVector = Vector3.right;
         }
-        else if(directionIs==DirectionIs.NegZ)
+        else if (directionIs == DirectionIs.NegZ)
         {
             moveVector = -Vector3.forward;
         }
-        else if(directionIs ==DirectionIs.NegX)
+        else if (directionIs == DirectionIs.NegX)
         {
             moveVector = -Vector3.right;
         }
@@ -325,22 +379,32 @@ public class GameManager : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     GiveChosenBotDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
-                    if(_highlightedPath != null)
+                    if (_highlightedPath != null)
                     {
                         ClearPath();
                     }
-                    if(_voidHighlightPlatformReference != null)
+                    if (_voidHighlightPlatformReference != null)
                     {
                         Destroy(_voidHighlightPlatformReference);
                     }
                 }
             }
         }
+        if (_currentDraggable != null && Input.GetMouseButtonDown(0))
+        {
+
+            BotCaching();
+
+        }
         //TODO Check for Scene
-        if (_bot == null ||(_bot!= null && ! _bot.GetComponent<Bot>().IsMoving))
+        else if (_bot == null || (_bot != null && !_bot.GetComponent<Bot>().IsMoving))
         {
             HighlightInteractables();
         }
+        //if (_bot == null ||(_bot!= null && ! _bot.GetComponent<Bot>().IsMoving))
+        //{
+        //    HighlightInteractables();
+        //}
     }
 
     private void HighlightInteractables()
