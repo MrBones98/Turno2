@@ -378,7 +378,7 @@ public class GameSpaceUIController : MonoBehaviour
             button = container.Q<Button>();
             button.style.backgroundImage = new StyleBackground(data.image);
 
-            button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnDebugCardClicked(this, data.distance, data.isJump));
+            //button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnDebugCardClicked(this, data.distance, data.isJump));
             button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnCardClicked(data));
 
 
