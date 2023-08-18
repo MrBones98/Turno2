@@ -55,7 +55,7 @@ public class CardHandManager : MonoBehaviour
         _cardContainerPos = _cardContainer.transform.position;
         _cardContainer.transform.position += new Vector3(0, -1000, 0);
             //_slots = GameObject.FindGameObjectsWithTag("CardSlot");
-
+    
         _level = ScriptableObjectLoader.Instance.LevelToLoad;
         if (_isActive)
         {

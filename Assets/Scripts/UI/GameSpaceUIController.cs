@@ -24,6 +24,8 @@ public class GameSpaceUIController : MonoBehaviour
 
     private static CardSlot _activeCard;
 
+    private Level _level;
+
     private List<ActionCardData> cardsToLoad = new List<ActionCardData>();
 
     private void Awake()
@@ -33,10 +35,12 @@ public class GameSpaceUIController : MonoBehaviour
     private void OnEnable()
     {
         WinTile.onButtonPressed += ShowWinScreen;
+        GameManager.onGameStarted += LoadCards;
     }
     private void OnDisable()
     {
         WinTile.onButtonPressed -= ShowWinScreen;
+        GameManager.onGameStarted -= LoadCards;
     }
     private void Start()
     {
@@ -47,7 +51,7 @@ public class GameSpaceUIController : MonoBehaviour
         _handler.ClearMenus();
         _instance = ScriptableObjectLoader.Instance;
 
-        DebugDrawCards();
+        //DebugDrawCards();
     }
     #region public methods
     public void ShowWinScreen()
@@ -120,6 +124,48 @@ public class GameSpaceUIController : MonoBehaviour
     public void DebugSliderValue(string name, float val)
     {
         print($"{name} slider has {val} value");
+    }
+
+    #endregion
+
+    #region Card Methods
+
+    private void LoadCards()
+    {
+        _level = ScriptableObjectLoader.Instance.LevelToLoad;
+ 
+        
+        for (int i = 0; i < _level.MoveOne; i++)
+        {
+            CardSlot newSlot = new CardSlot(Move1_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        for (int i = 0; i < _level.MoveTwo; i++)
+        {
+            CardSlot newSlot = new CardSlot(Move2_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        for (int i = 0; i < _level.MoveThree; i++)
+        {
+            CardSlot newSlot = new CardSlot(Move3_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        for (int i = 0; i < _level.MoveFour; i++)
+        {
+            CardSlot newSlot = new CardSlot(Move4_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        for (int i = 0; i < _level.JumpCardTwo; i++)
+        {
+            CardSlot newSlot = new CardSlot(Jump2_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        
     }
 
     #endregion
