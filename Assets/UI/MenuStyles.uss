@@ -106,3 +106,12 @@
     width: 80%;
     margin-bottom: 13px;
 }
+
+.CardButton {
+    background-image: url('project://database/Assets/Sprites/CardSprites2.png?fileID=-790914762&guid=ac3ae801e190641eab234d71b6195a61&type=3#CardSprites2_0');
+    flex-shrink: 0;
+    flex-basis: 200px;
+    flex-direction: row;
+    height: 199px;
+    width: 120px;
+}
