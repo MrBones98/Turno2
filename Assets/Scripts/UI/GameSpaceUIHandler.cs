@@ -11,6 +11,10 @@ public class GameSpaceUIHandler : MonoBehaviour
 
     [SerializeField] public VisualTreeAsset PauseMenuDoc;
     [SerializeField] public VisualTreeAsset WinMenuDoc;
+
+    // action card template
+    [SerializeField] public VisualTreeAsset ActionCardTemplate;
+
     //public VisualTreeAsset LossScreen;
 
     #region element IDs
@@ -20,6 +24,8 @@ public class GameSpaceUIHandler : MonoBehaviour
     public const string k_PauseButton = "PauseButton";
 
     public const string k_CentralPanel = "CentralPanel";
+
+    public const string k_CardDisplay = "CardDisplay";
 
     public const string k_LvlNameDisplay = "LevelNameDisplay";
 
@@ -49,8 +55,12 @@ public class GameSpaceUIHandler : MonoBehaviour
 
     [HideInInspector] public VisualElement _root;
 
+
+
     // displays pause and win menus
     [HideInInspector] public VisualElement CentralPanel;
+
+    [HideInInspector] public VisualElement CardDisplay;
 
     [HideInInspector] public VisualElement PauseMenu;
     [HideInInspector] public VisualElement WinMenu;

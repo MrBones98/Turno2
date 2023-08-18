@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,6 +14,23 @@ public class GameSpaceUIController : MonoBehaviour
     public delegate void OnAnyButtonClicked();
     public static event OnAnyButtonClicked OnAnyGameSpaceButtonClickedEvent;
 
+    public delegate void OnCardSelected(ActionCardData cardData);
+    public static event OnCardSelected onCardButtonClicked;
+
+    [SerializeField] public ActionCardData Move1_Card;
+    [SerializeField] public ActionCardData Move2_Card;
+    [SerializeField] public ActionCardData Move3_Card;
+    [SerializeField] public ActionCardData Move4_Card;
+    [SerializeField] public ActionCardData Jump2_Card;
+    [SerializeField] public ActionCardData Jump3_Card;
+    [SerializeField] public ActionCardData Jump4_Card;
+
+    private static CardSlot _activeCard;
+
+    private Level _level;
+
+    private List<ActionCardData> cardsToLoad = new List<ActionCardData>();
+
     private void Awake()
     {
 
@@ -20,10 +38,14 @@ public class GameSpaceUIController : MonoBehaviour
     private void OnEnable()
     {
         WinTile.onButtonPressed += ShowWinScreen;
+        GameManager.onGameStarted += LoadCards;
+        ScriptableObjectLoader.onLevelQeued += ClearAllCards;
     }
     private void OnDisable()
     {
         WinTile.onButtonPressed -= ShowWinScreen;
+        GameManager.onGameStarted -= LoadCards;
+        ScriptableObjectLoader.onLevelQeued -= ClearAllCards;
     }
     private void Start()
     {
@@ -33,6 +55,8 @@ public class GameSpaceUIController : MonoBehaviour
         SetLevelNameText(" ");
         _handler.ClearMenus();
         _instance = ScriptableObjectLoader.Instance;
+
+        //DebugDrawCards();
     }
     #region public methods
     public void ShowWinScreen()
@@ -43,6 +67,45 @@ public class GameSpaceUIController : MonoBehaviour
     #endregion
 
     #region debug methods
+
+    private void DebugDrawCards()
+    {
+        
+        cardsToLoad.Add(Move1_Card);
+        cardsToLoad.Add(Move1_Card);
+        cardsToLoad.Add(Move2_Card);
+        cardsToLoad.Add(Move2_Card);
+        cardsToLoad.Add(Move3_Card);
+        cardsToLoad.Add(Jump4_Card);
+
+        foreach (var card in cardsToLoad)
+        {
+            CardSlot newSlot = new CardSlot(card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+    }
+
+    public static void OnDebugCardClicked(CardSlot card, int distance, bool isJump)
+    {
+        if (isJump)
+        {
+            print($"{distance} jump card clicked");
+        }
+        else
+        {
+            print($"{distance} move card clicked");
+        }
+
+        _activeCard = card;
+        print(card);
+    }
+
+    [Button("ClearCard"), DisableInEditorMode()]
+    public void OnRemoveCardRequest(CardSlot target)
+    {
+        _handler.CardDisplay.Remove(target.button);
+    }
 
     private void DebugLoadLevel(int direction)
     {
@@ -66,6 +129,62 @@ public class GameSpaceUIController : MonoBehaviour
     public void DebugSliderValue(string name, float val)
     {
         print($"{name} slider has {val} value");
+    }
+
+    #endregion
+
+    #region Card Methods
+
+    private void LoadCards()
+    {
+        _level = ScriptableObjectLoader.Instance.LevelToLoad;
+ 
+        
+        for (int i = 0; i < _level.MoveOne; i++)
+        {
+            CardSlot newSlot = new CardSlot(Move1_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        for (int i = 0; i < _level.MoveTwo; i++)
+        {
+            CardSlot newSlot = new CardSlot(Move2_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        for (int i = 0; i < _level.MoveThree; i++)
+        {
+            CardSlot newSlot = new CardSlot(Move3_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        for (int i = 0; i < _level.MoveFour; i++)
+        {
+            CardSlot newSlot = new CardSlot(Move4_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+        for (int i = 0; i < _level.JumpCardTwo; i++)
+        {
+            CardSlot newSlot = new CardSlot(Jump2_Card, _handler.ActionCardTemplate);
+
+            _handler.CardDisplay.Add(newSlot.button);
+        }
+
+        print(_handler.CardDisplay.childCount);
+        
+    }
+
+    private void ClearAllCards()
+    {
+        print("i was told to clear the cards but i didnt because i am a naught little method");
+        _handler.CardDisplay.Clear();
+
+    }
+
+    private static void OnCardClicked(ActionCardData data)
+    {
+        onCardButtonClicked?.Invoke(data);
     }
 
     #endregion
@@ -157,6 +276,8 @@ public class GameSpaceUIController : MonoBehaviour
 
         _handler.CentralPanel = _handler._root.Q<VisualElement>(GameSpaceUIHandler.k_CentralPanel);
 
+        _handler.CardDisplay = _handler._root.Q<VisualElement>(GameSpaceUIHandler.k_CardDisplay);
+
         _handler.LvlNameDisplay = _handler._root.Q<Label>(GameSpaceUIHandler.k_LvlNameDisplay);
 
         _handler.UndoButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_UndoButtonName);
@@ -245,4 +366,22 @@ public class GameSpaceUIController : MonoBehaviour
 
 
     #endregion
+
+    public class CardSlot
+    {
+        internal Button button;
+
+        public CardSlot(ActionCardData data, VisualTreeAsset template)
+        {
+            TemplateContainer container = template.Instantiate();
+
+            button = container.Q<Button>();
+            button.style.backgroundImage = new StyleBackground(data.image);
+
+            //button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnDebugCardClicked(this, data.distance, data.isJump));
+            button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnCardClicked(data));
+
+
+        }
+    }
 }

@@ -416,6 +416,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8994880231720030397, guid: 0275fc6d9ac78524d88a084e92c82549, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0275fc6d9ac78524d88a084e92c82549, type: 3}
 --- !u!1 &1308998527
@@ -551,6 +555,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _handler: {fileID: 1635293836}
+  Move1_Card: {fileID: 11400000, guid: f4423b560071c48b284a258952b7721c, type: 2}
+  Move2_Card: {fileID: 11400000, guid: dbeaa7e59878c49268fe3703fe296ed9, type: 2}
+  Move3_Card: {fileID: 11400000, guid: 6b2953f3351754cabbd04028339e6c4e, type: 2}
+  Move4_Card: {fileID: 11400000, guid: ee1629b976671447aa72c9a1797ca46c, type: 2}
+  Jump2_Card: {fileID: 11400000, guid: e020ed9b8a76642eaa4612bf7d5d711e, type: 2}
+  Jump3_Card: {fileID: 11400000, guid: 6a70ee54018d44a7cba35511a89a1c85, type: 2}
+  Jump4_Card: {fileID: 11400000, guid: 1799f66cfebe64134a7124611c6ce488, type: 2}
 --- !u!114 &1635293836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +577,7 @@ MonoBehaviour:
   UIDoc: {fileID: 1635293837}
   PauseMenuDoc: {fileID: 9197481963319205126, guid: 6469845e6dc4c45e18c120c28c36d41d, type: 3}
   WinMenuDoc: {fileID: 9197481963319205126, guid: 26dec2b798bf34690bac3d23b16e81b3, type: 3}
+  ActionCardTemplate: {fileID: 9197481963319205126, guid: 9bdb2ca1dcc434c049d6c9d79cd11b6b, type: 3}
 --- !u!114 &1635293837
 MonoBehaviour:
   m_ObjectHideFlags: 0

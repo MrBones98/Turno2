@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1addf60eb8a3f4405a02f7815eba17dc, type: 3}
+  m_Name: Move1_SO
+  m_EditorClassIdentifier: 
+  distance: 1
+  image: {fileID: -790914762, guid: ac3ae801e190641eab234d71b6195a61, type: 3}
+  isJump: 0

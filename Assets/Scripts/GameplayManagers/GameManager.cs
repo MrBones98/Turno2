@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     //[OnValueChanged("AssignPlayer")]
     private Draggable _currentDraggable = null;
     private GameObject _currentCard = null;
+
+    private ActionCardData _currentCardData = null;
+
     private GameObject _bot;
     private GameObject _voidHighlightPlatformReference = null;
     private Camera _camera;
@@ -73,12 +76,19 @@ public class GameManager : MonoBehaviour
         Bot.onStartedMove += CleanVisualOnBotMove;
         Draggable.onCardSelected += CacheCard;
         Draggable.onCardGiven += ResolveCardInteraction;
+        GameSpaceUIController.onCardButtonClicked += CacheCardUpdated;
     }
-
+    
     private void CacheCard(GameObject cardObject, Draggable draggable)
     {
         _currentDraggable = draggable;
         _currentCard = cardObject;
+    }
+
+    private void CacheCardUpdated(ActionCardData data)
+    {
+        _currentCardData = data;
+        print(data.distance);
     }
     private void ResolveCardInteraction()
     {
@@ -104,17 +114,17 @@ public class GameManager : MonoBehaviour
 
         if (_bot != null)
         {
-            _currentDraggable.DropScaling();
-            if (_currentDraggable.IsJumpCard == false)
+            //_currentDraggable.DropScaling();
+            if (_currentCardData.isJump == false)
             {
-                _bot.GetComponent<Bot>().SetDistance(_currentDraggable.MoveCount);
+                _bot.GetComponent<Bot>().SetDistance(_currentCardData.distance);
             }
             else
             {
-                _bot.GetComponent<Bot>().SetJumpDistance(_currentDraggable.MoveCount);
+                _bot.GetComponent<Bot>().SetJumpDistance(_currentCardData.distance);
             }
             //could save it in qeue jic
-            Destroy(_currentCard, 0.1f);
+            //Destroy(_currentCard, 0.1f);
         }
         else
         {
@@ -390,7 +400,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        if (_currentDraggable != null && Input.GetMouseButtonDown(0))
+        if (_currentCardData != null && Input.GetMouseButtonDown(0))
         {
 
             BotCaching();
