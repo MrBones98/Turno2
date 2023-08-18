@@ -114,4 +114,23 @@
     flex-direction: row;
     height: 199px;
     width: 120px;
+    background-color: rgba(0, 0, 0, 0);
+    transition-duration: 0.2s;
+}
+
+.CardButton:hover {
+    translate: 0 -15%;
+    background-color: rgba(0, 0, 0, 0);
+    transition-duration: 0.2s;
+}
+
+.CardButton:active {
+    translate: 0 -20%;
+    scale: 1 1;
+    transition-duration: 0.2s;
+}
+
+.CardButton:focus {
+    scale: 1 1;
+    translate: 0 -20%;
 }
