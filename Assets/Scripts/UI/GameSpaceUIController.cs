@@ -36,11 +36,13 @@ public class GameSpaceUIController : MonoBehaviour
     {
         WinTile.onButtonPressed += ShowWinScreen;
         GameManager.onGameStarted += LoadCards;
+        ScriptableObjectLoader.onLevelQeued += ClearAllCards;
     }
     private void OnDisable()
     {
         WinTile.onButtonPressed -= ShowWinScreen;
         GameManager.onGameStarted -= LoadCards;
+        ScriptableObjectLoader.onLevelQeued -= ClearAllCards;
     }
     private void Start()
     {
@@ -165,7 +167,16 @@ public class GameSpaceUIController : MonoBehaviour
 
             _handler.CardDisplay.Add(newSlot.button);
         }
+
+        print(_handler.CardDisplay.childCount);
         
+    }
+
+    private void ClearAllCards()
+    {
+        print("i was told to clear the cards but i didnt because i am a naught little method");
+        _handler.CardDisplay.Clear();
+
     }
 
     #endregion
