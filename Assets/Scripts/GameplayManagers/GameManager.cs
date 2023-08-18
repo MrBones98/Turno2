@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     //[OnValueChanged("AssignPlayer")]
     private Draggable _currentDraggable = null;
     private GameObject _currentCard = null;
+
+    private ActionCardData _currentCardData = null;
+
     private GameObject _bot;
     private GameObject _voidHighlightPlatformReference = null;
     private Camera _camera;
@@ -73,12 +76,18 @@ public class GameManager : MonoBehaviour
         Bot.onStartedMove += CleanVisualOnBotMove;
         Draggable.onCardSelected += CacheCard;
         Draggable.onCardGiven += ResolveCardInteraction;
+        GameSpaceUIController.onCardButtonClicked += CacheCardUpdated;
     }
-
+    
     private void CacheCard(GameObject cardObject, Draggable draggable)
     {
         _currentDraggable = draggable;
         _currentCard = cardObject;
+    }
+
+    private void CacheCardUpdated(ActionCardData data)
+    {
+        _currentCardData = data;
     }
     private void ResolveCardInteraction()
     {

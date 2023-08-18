@@ -14,6 +14,9 @@ public class GameSpaceUIController : MonoBehaviour
     public delegate void OnAnyButtonClicked();
     public static event OnAnyButtonClicked OnAnyGameSpaceButtonClickedEvent;
 
+    public delegate void OnCardSelected(ActionCardData cardData);
+    public static event OnCardSelected onCardButtonClicked;
+
     [SerializeField] public ActionCardData Move1_Card;
     [SerializeField] public ActionCardData Move2_Card;
     [SerializeField] public ActionCardData Move3_Card;
@@ -177,6 +180,11 @@ public class GameSpaceUIController : MonoBehaviour
         print("i was told to clear the cards but i didnt because i am a naught little method");
         _handler.CardDisplay.Clear();
 
+    }
+
+    private static void OnCardClicked(ActionCardData data)
+    {
+        onCardButtonClicked?.Invoke(data);
     }
 
     #endregion
@@ -371,8 +379,9 @@ public class GameSpaceUIController : MonoBehaviour
             button.style.backgroundImage = new StyleBackground(data.image);
 
             button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnDebugCardClicked(this, data.distance, data.isJump));
+            button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnCardClicked(data));
 
-            
+
         }
     }
 }
