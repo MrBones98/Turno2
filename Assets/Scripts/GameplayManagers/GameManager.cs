@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
     private void CacheCardUpdated(ActionCardData data)
     {
         _currentCardData = data;
-        print(data.distance);
     }
     private void ResolveCardInteraction()
     {
@@ -128,8 +127,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            _currentDraggable.ResetCard();
-            _currentDraggable = null;
+            //_currentDraggable.ResetCard();
+            //_currentDraggable = null;
+            _currentCardData = null;
             _currentCard = null;
         }
     }

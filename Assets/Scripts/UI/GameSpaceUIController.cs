@@ -39,8 +39,11 @@ public class GameSpaceUIController : MonoBehaviour
     {
         WinTile.onButtonPressed += ShowWinScreen;
         GameManager.onGameStarted += LoadCards;
+        Bot.onStartedMove += RemoveCard;
         ScriptableObjectLoader.onLevelQeued += ClearAllCards;
     }
+
+
     private void OnDisable()
     {
         WinTile.onButtonPressed -= ShowWinScreen;
@@ -98,15 +101,22 @@ public class GameSpaceUIController : MonoBehaviour
         }
 
         _activeCard = card;
-        print(card);
+        //print(card);
     }
 
     [Button("ClearCard"), DisableInEditorMode()]
     public void OnRemoveCardRequest(CardSlot target)
     {
+        target = _activeCard;
+        print(_activeCard);
         _handler.CardDisplay.Remove(target.button);
     }
-
+    private void RemoveCard()
+    {
+        CardSlot target = _activeCard;
+        _handler.CardDisplay.Remove(target.button);
+        _activeCard=null;
+    }
     private void DebugLoadLevel(int direction)
     {
         if (direction > 0)
@@ -182,9 +192,11 @@ public class GameSpaceUIController : MonoBehaviour
 
     }
 
-    private static void OnCardClicked(ActionCardData data)
+    private static void OnCardClicked(CardSlot cardSlot, ActionCardData data)
     {
+        _activeCard = cardSlot;
         onCardButtonClicked?.Invoke(data);
+
     }
 
     #endregion
@@ -379,7 +391,7 @@ public class GameSpaceUIController : MonoBehaviour
             button.style.backgroundImage = new StyleBackground(data.image);
 
             //button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnDebugCardClicked(this, data.distance, data.isJump));
-            button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnCardClicked(data));
+            button.RegisterCallback<ClickEvent>((evt) => GameSpaceUIController.OnCardClicked(this, data));
 
 
         }
