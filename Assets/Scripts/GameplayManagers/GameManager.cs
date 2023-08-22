@@ -417,6 +417,7 @@ public class GameManager : MonoBehaviour
         //{
         //    HighlightInteractables();
         //}
+        print(_deathHighlightObjects.Count);
     }
 
     private void ClearDeathTileVisuals()
@@ -482,12 +483,12 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                if (a == 1)
+                if (a == 0)
                 {
                     _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual, new Vector3(origin.x+i,0, origin.z), Quaternion.identity);
                     _deathHighlightObjects.Add(_voidHighlightPlatformReference);
-                }
                 a = 1;
+                }
                 
             }
             if(interactable != null)
@@ -506,8 +507,8 @@ public class GameManager : MonoBehaviour
                 {
                     _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual, new Vector3(origin.x, 0, origin.z + i), Quaternion.identity);
                     _deathHighlightObjects.Add(_voidHighlightPlatformReference);
-                }
                 b=1;
+                }
             }
             if(interactable != null)
             {
@@ -526,8 +527,8 @@ public class GameManager : MonoBehaviour
                 {
                     _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual, new Vector3(origin.x - i, 0, origin.z), Quaternion.identity);
                     _deathHighlightObjects.Add(_voidHighlightPlatformReference);
-                }
                 c=1;
+                }
             }
             if (interactable != null)
             {
@@ -546,8 +547,8 @@ public class GameManager : MonoBehaviour
                 {
                     _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual, new Vector3(origin.x, 0, origin.z - i), Quaternion.identity);
                     _deathHighlightObjects.Add(_voidHighlightPlatformReference);
-                }
                 d=1;
+                }
             }
             if (interactable != null)
             {

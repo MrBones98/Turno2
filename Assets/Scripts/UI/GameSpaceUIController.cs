@@ -64,7 +64,7 @@ public class GameSpaceUIController : MonoBehaviour
     #region public methods
     public void ShowWinScreen()
     {
-        print("Showing Win Screen");
+        //print("Showing Win Screen");
         _handler.DrawWinMenu();
     }
     #endregion
@@ -181,13 +181,13 @@ public class GameSpaceUIController : MonoBehaviour
             _handler.CardDisplay.Add(newSlot.button);
         }
 
-        print(_handler.CardDisplay.childCount);
+        //print(_handler.CardDisplay.childCount);
         
     }
 
     private void ClearAllCards()
     {
-        print("i was told to clear the cards but i didnt because i am a naught little method");
+        //print("i was told to clear the cards but i didnt because i am a naught little method");
         _handler.CardDisplay.Clear();
 
     }
@@ -210,19 +210,19 @@ public class GameSpaceUIController : MonoBehaviour
             _handler.ClearMenus();
             await GameManager.Instance.Resetlevel();
             await _instance.ReloadLevel();
-            print("Reset Clicked");
+            //print("Reset Clicked");
         }
     }
 
     private async void OnUndoClicked()
     {
-        print("Undo Clicked");
+        //print("Undo Clicked");
         await GameManager.Instance.UndoPressed();
     }
 
     private void OnPauseMenuClicked()
     {
-        print("Pause Clicked");
+        //print("Pause Clicked");
         _handler.ClearMenus();
         _handler.DrawPauseMenu();
     }
