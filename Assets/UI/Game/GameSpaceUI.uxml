@@ -3,7 +3,6 @@
     <ui:VisualElement name="Root" style="flex-grow: 1; margin-left: 3%; margin-right: 3%; margin-top: 3%; margin-bottom: 3%;">
         <ui:VisualElement name="TopPanel" style="flex-direction: row-reverse; height: 10%;">
             <ui:VisualElement name="Right" style="flex-grow: 1; flex-direction: row-reverse; width: 30%;">
-                <ui:Button text="UNDO" display-tooltip-when-elided="true" name="UndoButton" enable-rich-text="true" focusable="false" class="GameSpaceButton" style="min-width: 200px; align-items: flex-start; justify-content: flex-start; flex-direction: row;" />
                 <ui:Button text="RESET" display-tooltip-when-elided="true" name="ResetButton" focusable="false" class="GameSpaceButton" style="min-width: 200px;" />
             </ui:VisualElement>
             <ui:VisualElement name="CenterPanel" style="flex-grow: 1; width: 60%;">
@@ -15,17 +14,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="BottomPanel" style="flex-grow: 1; flex-direction: row;">
             <ui:VisualElement name="Spacer" style="width: 15%;" />
-            <ui:VisualElement name="CentralPanel" style="flex-grow: 2; width: 50%; padding-left: 15%; padding-right: 15%; padding-top: 0; padding-bottom: 6%;" />
-            <ui:VisualElement name="DebugPanel" style="flex-grow: 1; flex-direction: row; padding-left: 0; flex-wrap: wrap; width: 15%; justify-content: center;">
-                <ui:Label text="GIVE MOVE " display-tooltip-when-elided="true" style="flex-grow: 1; width: 100%; height: 60px; -unity-text-align: middle-center; -unity-font-definition: url(&apos;project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&amp;guid=fc1d487999cd947a3b9a69750f855049&amp;type=2#telegren SDF&apos;); font-size: 47px; margin-top: 0;" />
-                <ui:Button text="1" display-tooltip-when-elided="true" name="GiveMove1" class="GameSpaceButton" style="height: 6%; width: 24%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-font-style: bold; -unity-text-align: lower-center;" />
-                <ui:Button text="2" display-tooltip-when-elided="true" name="GiveMove2" class="GameSpaceButton" style="height: 6%; width: 24%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; font-size: 46px; -unity-font-definition: url(&apos;project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&amp;guid=fc1d487999cd947a3b9a69750f855049&amp;type=2#telegren SDF&apos;); -unity-font-style: bold; -unity-text-align: lower-center;" />
-                <ui:Button text="3" display-tooltip-when-elided="true" name="GiveMove3" class="GameSpaceButton" style="height: 6%; width: 24%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-font-style: bold; -unity-text-align: lower-center;" />
-                <ui:Button text="4" display-tooltip-when-elided="true" name="GiveMove4" class="GameSpaceButton" style="height: 6%; width: 24%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; -unity-font-style: bold; -unity-text-align: lower-center;" />
-                <ui:Label text="lvl skip" display-tooltip-when-elided="true" style="flex-grow: 1; width: 100%; height: 60px; -unity-text-align: middle-center; -unity-font-definition: url(&apos;project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&amp;guid=fc1d487999cd947a3b9a69750f855049&amp;type=2#telegren SDF&apos;); font-size: 47px; margin-top: 0;" />
-                <ui:Button text="&lt;" display-tooltip-when-elided="true" name="PrevLvl" class="GameSpaceButton" style="height: 6%; width: 48%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
-                <ui:Button text="&gt;" display-tooltip-when-elided="true" name="NextLvl" class="GameSpaceButton" style="height: 6%; width: 48%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
-            </ui:VisualElement>
+            <ui:VisualElement name="CentralPanel" style="flex-grow: 2; width: 50%; padding-left: 15%; padding-right: 15%; padding-top: 0; padding-bottom: 6%; margin-right: 311px;" />
         </ui:VisualElement>
         <ui:VisualElement name="CardDisplay" style="width: 100%; height: 10%; flex-direction: row; justify-content: center; align-items: flex-start;" />
     </ui:VisualElement>

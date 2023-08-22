@@ -292,9 +292,9 @@ public class GameSpaceUIController : MonoBehaviour
 
         _handler.LvlNameDisplay = _handler._root.Q<Label>(GameSpaceUIHandler.k_LvlNameDisplay);
 
-        _handler.UndoButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_UndoButtonName);
-        _handler.UndoButton.clicked += () => RaiseAnyButtonClickedEvent();
-        _handler.UndoButton.clicked += () => OnUndoClicked();
+        //_handler.UndoButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_UndoButtonName);
+        //_handler.UndoButton.clicked += () => RaiseAnyButtonClickedEvent();
+        //_handler.UndoButton.clicked += () => OnUndoClicked();
 
         _handler.ResetButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_ResetButtonName);
         _handler.ResetButton.clicked += () => RaiseAnyButtonClickedEvent();
@@ -306,30 +306,30 @@ public class GameSpaceUIController : MonoBehaviour
 
 
         // debug methods
-        _handler.DebugGiveMove1Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give1MoveButtonName);
-        _handler.DebugGiveMove1Button.clicked += () => RaiseAnyButtonClickedEvent();
-        _handler.DebugGiveMove1Button.clicked += () => GiveMoveCard(1);
+        //_handler.DebugGiveMove1Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give1MoveButtonName);
+        //_handler.DebugGiveMove1Button.clicked += () => RaiseAnyButtonClickedEvent();
+        //_handler.DebugGiveMove1Button.clicked += () => GiveMoveCard(1);
 
-        _handler.DebugGiveMove2Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give2MoveButtonName);
-        _handler.DebugGiveMove2Button.clicked += () => RaiseAnyButtonClickedEvent();
-        _handler.DebugGiveMove2Button.clicked += () => GiveMoveCard(2);
+        //_handler.DebugGiveMove2Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give2MoveButtonName);
+        //_handler.DebugGiveMove2Button.clicked += () => RaiseAnyButtonClickedEvent();
+        //_handler.DebugGiveMove2Button.clicked += () => GiveMoveCard(2);
 
-        _handler.DebugGiveMove3Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give3MoveButtonName);
-        _handler.DebugGiveMove3Button.clicked += () => RaiseAnyButtonClickedEvent();
-        _handler.DebugGiveMove3Button.clicked += () => GiveMoveCard(3);
+        //_handler.DebugGiveMove3Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give3MoveButtonName);
+        //_handler.DebugGiveMove3Button.clicked += () => RaiseAnyButtonClickedEvent();
+        //_handler.DebugGiveMove3Button.clicked += () => GiveMoveCard(3);
 
-        _handler.DebugGiveMove4Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give4MoveButtonName);
-        _handler.DebugGiveMove4Button.clicked += () => RaiseAnyButtonClickedEvent();
-        _handler.DebugGiveMove4Button.clicked += () => GiveMoveCard(4);
+        //_handler.DebugGiveMove4Button = _handler._root.Q<Button>(GameSpaceUIHandler.k_Give4MoveButtonName);
+        //_handler.DebugGiveMove4Button.clicked += () => RaiseAnyButtonClickedEvent();
+        //_handler.DebugGiveMove4Button.clicked += () => GiveMoveCard(4);
 
 
-        _handler.DebugNextLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_DebugNextLvlButtonName);
-        _handler.DebugNextLvlButton.clicked += () => RaiseAnyButtonClickedEvent();
-        _handler.DebugNextLvlButton.clicked += () => DebugLoadLevel(1);
+        //_handler.DebugNextLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_DebugNextLvlButtonName);
+        //_handler.DebugNextLvlButton.clicked += () => RaiseAnyButtonClickedEvent();
+        //_handler.DebugNextLvlButton.clicked += () => DebugLoadLevel(1);
 
-        _handler.DebugPrevLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_DebugPrevLvlMoveButtonName);
-        _handler.DebugPrevLvlButton.clicked += () => RaiseAnyButtonClickedEvent();
-        _handler.DebugPrevLvlButton.clicked += () => DebugLoadLevel(0);
+        //_handler.DebugPrevLvlButton = _handler._root.Q<Button>(GameSpaceUIHandler.k_DebugPrevLvlMoveButtonName);
+        //_handler.DebugPrevLvlButton.clicked += () => RaiseAnyButtonClickedEvent();
+        //_handler.DebugPrevLvlButton.clicked += () => DebugLoadLevel(0);
     }
 
     private void InitPauseMenu()
