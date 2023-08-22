@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private DirectionalInputBot _directionalInputBot;
     private List<Transform> _highlightedPath = new();
     private List<Transform> _higlightedInteractables = new();
+    private List<GameObject> _deathHighlightObjects = new();
     private RaycastHit _hit;
     private Ray _interactableRay;
     private DirectionIs _raisingPathDirection;
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
     private int _voidDistance;
     private int _idReference;
     private bool _selectCheck = false;
+    private bool _pathHighlighted = false;
     private bool _raycastCheck = false;
     //public WinTile WinTile;
 
@@ -95,7 +97,7 @@ public class GameManager : MonoBehaviour
     }
     private void BotCaching()
     {
-        print("Caching card with new gm function");
+        //print("Caching card with new gm function");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 40f, _playerLayer))
         {
@@ -103,7 +105,7 @@ public class GameManager : MonoBehaviour
             if (hitInfo.collider.GetComponent<Bot>())
             {
                 AssignPlayer(hitInfo.collider.gameObject);
-                print("card cached");
+                //print("card cached");
             }
             else
             {
@@ -135,7 +137,8 @@ public class GameManager : MonoBehaviour
     }
     private async void CleanVisualOnBotMove()
     {
-        await ClearPath();
+        await Task.Yield();
+        //await ClearPath();
     }
 
     private void HighlightInteractable(int id)
@@ -228,7 +231,9 @@ public class GameManager : MonoBehaviour
 
     private void UpdateTurn()
     {
+        _highlightedPath.Clear();
 
+        _bot = null;
         Invoke(nameof(BotMoved), 0.3f);
 
         //print(Interactables);
@@ -286,7 +291,7 @@ public class GameManager : MonoBehaviour
     }
     public Tile FindTile(Vector3 keyPos)
     {
-        print($"Finding Tile at: {keyPos}");
+        //print($"Finding Tile at: {keyPos}");
         if (TilesDictionary.TryGetValue(keyPos, out Tile tile))
         {
             return tile;
@@ -316,7 +321,6 @@ public class GameManager : MonoBehaviour
     private void UpdateInteractableRayCast()
     {
         _interactableRay = _camera.ScreenPointToRay(Input.mousePosition);
-
     }
 
     public async void GiveChosenBotDirection(DirectionIs directionIs)
@@ -385,26 +389,24 @@ public class GameManager : MonoBehaviour
         {
             if (_bot.GetComponent<Bot>().IsFocused)
             {
-                ShowDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
-                if (Input.GetMouseButtonDown(0))
+                if (!_bot.GetComponent<Bot>().IsMoving)
                 {
-                    GiveChosenBotDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
-                    if (_highlightedPath != null)
+                    if (_pathHighlighted== false && _highlightedPath.Count<=0)
                     {
-                        ClearPath();
+                        //ShowDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
+                        ShowDirectionDictionary(_botParentGameObject.transform.position, _bot.GetComponent<Bot>().StepCount);
                     }
-                    if (_voidHighlightPlatformReference != null)
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        Destroy(_voidHighlightPlatformReference);
+                        GiveChosenBotDirection(_directionalInputBot.CalculateQuadrants(_directionalInputBot.Calculate()));
+                        ClearDeathTileVisuals();
                     }
                 }
             }
         }
-        if (_currentCardData != null && Input.GetMouseButtonDown(0))
+        if (_currentCardData != null && Input.GetMouseButtonDown(0)&& _bot==null)
         {
-
             BotCaching();
-
         }
         //TODO Check for Scene
         else if (_bot == null || (_bot != null && !_bot.GetComponent<Bot>().IsMoving))
@@ -415,6 +417,15 @@ public class GameManager : MonoBehaviour
         //{
         //    HighlightInteractables();
         //}
+    }
+
+    private void ClearDeathTileVisuals()
+    {
+        for (int i = 0; i <= _deathHighlightObjects.Count-1; i++)
+        {
+            Destroy(_deathHighlightObjects[i]);
+        }
+        _deathHighlightObjects.Clear();
     }
 
     private void HighlightInteractables()
@@ -454,6 +465,104 @@ public class GameManager : MonoBehaviour
         } 
     }
 
+    public async void ShowDirectionDictionary(Vector3 origin, int botStepCount)
+    {
+        Tile tile;
+        InteractableObject interactable;
+        int a = 0;int b = 0; int c = 0; int d = 0;
+//        print($"a:{a},b:{b} c:{c}d:{d}");
+        //print("Showing direction for bot");
+        for (int i = 1; i < botStepCount+1; i++)
+        {
+            tile = FindTile(new Vector3(origin.x + i, 0, origin.z));
+            interactable = FindInteractable(new Vector3(origin.x + i, 0, origin.z));
+            if (tile != null && a == 0)
+            {
+                _highlightedPath.Add(tile.gameObject.transform);
+            }
+            else
+            {
+                if (a == 1)
+                {
+                    _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual, new Vector3(origin.x+i,0, origin.z), Quaternion.identity);
+                    _deathHighlightObjects.Add(_voidHighlightPlatformReference);
+                }
+                a = 1;
+                
+            }
+            if(interactable != null)
+            {
+                _highlightedPath.Add(interactable.transform);
+            }
+            tile = FindTile(new Vector3(origin.x, 0, origin.z + i));
+            interactable = FindInteractable(new Vector3(origin.x, 0, origin.z+i));
+            if (tile != null && b== 0)
+            {
+                _highlightedPath.Add(tile.gameObject.transform);
+            }
+            else
+            {
+                if (b == 0)
+                {
+                    _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual, new Vector3(origin.x, 0, origin.z + i), Quaternion.identity);
+                    _deathHighlightObjects.Add(_voidHighlightPlatformReference);
+                }
+                b=1;
+            }
+            if(interactable != null)
+            {
+                _highlightedPath.Add(interactable.transform);
+            }
+            tile = FindTile(new Vector3(origin.x - i, 0, origin.z));
+            interactable = FindInteractable(new Vector3(origin.x - i, 0, origin.z));
+            if (tile != null && c==0)
+            {
+                _highlightedPath.Add(tile.gameObject.transform);
+                tile = null;
+            }
+            else
+            {
+                if (c == 0)
+                {
+                    _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual, new Vector3(origin.x - i, 0, origin.z), Quaternion.identity);
+                    _deathHighlightObjects.Add(_voidHighlightPlatformReference);
+                }
+                c=1;
+            }
+            if (interactable != null)
+            {
+                _highlightedPath.Add(interactable.transform);
+            }
+            tile = FindTile(new Vector3(origin.x,0,origin.z - i));
+            interactable = FindInteractable(new Vector3(origin.x, 0, origin.z-i));
+            if (tile != null && d==0)
+            {
+                _highlightedPath.Add(tile.gameObject.transform);
+                tile = null;
+            }
+            else
+            {
+                if (d == 0)
+                {
+                    _voidHighlightPlatformReference = Instantiate(_deathPlatformVisual, new Vector3(origin.x, 0, origin.z - i), Quaternion.identity);
+                    _deathHighlightObjects.Add(_voidHighlightPlatformReference);
+                }
+                d=1;
+            }
+            if (interactable != null)
+            {
+                _highlightedPath.Add(interactable.transform);
+            }
+            await Task.Yield();
+        }
+        
+        foreach  (Transform transform in _highlightedPath)
+        {
+            transform.DOMoveY(transform.position.y + _highlightHeight, 0.3f, false);
+        }
+
+        _pathHighlighted = true;
+    }
     //async
     public async void ShowDirection(DirectionIs direction)
     {
@@ -462,10 +571,6 @@ public class GameManager : MonoBehaviour
         rayOrientation = MoveUtils.SetDirection(direction);
         
         RaycastHit[] platformsToRaise = _bot.GetComponent<Bot>().PlatformsToRaise(rayOrientation);
-        
-        //else if(_bot.GetComponent<Bot>().StepCount > platformsToRaise.Length)
-        //print(platformsToRaise.Length);
-        //print(platformsToRaise[1].collider.gameObject.name);
         if (_bot.GetComponent<Bot>().StepCount > platformsToRaise.Length)
         {
             if(platformsToRaise.Length > 0)
@@ -521,25 +626,13 @@ public class GameManager : MonoBehaviour
         
         if (MoveUtils.SetDirection(_raisingPathDirection) == Vector3.zero || _raisingPathDirection != direction)
         {
-            //RaycastHit[] platformsToRaise = Physics.RaycastAll(_botParentGameObject.transform.position, rayOrientation, _currentBotStepCount, _highlightPathLayer);
-            //print($"platforms on the path {platformsToRaise.Length} ");
             await ClearPath();
             foreach (var item in platformsToRaise)
             {
-                //await Task.Delay(100);
-                //item.collider.transform.DOMoveY(0.3f, 2);
                 Transform platformToShow = item.collider.transform.parent.transform;
                 float yValue = platformToShow.position.y;
-                //if (!(Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) > 1.40f && (Vector3.Distance(platformToShow.position, _botParentGameObject.transform.position) < 1.5f)))
-                //{
+                
                 _highlightedPath.Add(platformToShow);
-                //await PrettyHighlightAsync(platformToShow, true, _highlightHeight);
-
-                //platformToShow.transform.DOMoveY(yValue + _highlightHeight, 0.3f, false);
-                //}
-
-                //platformToShow.position += new Vector3(0, _highlightHeight, 0);
-                //platformToShow.DOMoveY(_highlightHeight, 0.3f);
             }
             foreach (Transform transform in _highlightedPath)
             {
@@ -567,25 +660,26 @@ public class GameManager : MonoBehaviour
 
     private async Task ClearPath()
     {
+        _pathHighlighted = false;
         if (_highlightedPath.Count > 0)
         {
-            //if (_voidHighlightPlatformReference != null)
+            //foreach (Transform transform in _highlightedPath)
             //{
-            //    Destroy(_voidHighlightPlatformReference);
+            //    if((transform.position.y > _highlightHeight && transform.position.y < 0.4f)|| ((transform.position.y - _highlightHeight) > 0.44 ))
+            //    {
+            //        transform.DOMoveY(transform.position.y - _highlightHeight, 0.3f, false);
+            //    }
+            //    else
+            //    {
+            //        transform.DOMoveY(0, 0.3f, false);
+            //    }
             //}
             foreach (Transform transform in _highlightedPath)
             {
-                if((transform.position.y > _highlightHeight && transform.position.y < 0.4f)|| ((transform.position.y - _highlightHeight) > 0.44 ))
-                {
-                    transform.DOMoveY(transform.position.y - _highlightHeight, 0.3f, false);
-                }
-                else
-                {
-                    transform.DOMoveY(0, 0.3f, false);
-                }
+                transform.DOMoveY(transform.position.y - _highlightHeight, 0.3f, false);
+
             }
         }
-            _highlightedPath.Clear();
         await Task.Yield();
     }
 
@@ -594,7 +688,6 @@ public class GameManager : MonoBehaviour
         _bot = selectedBot;
         _directionalInputBot = _bot.GetComponent<DirectionalInputBot>();
         _botParentGameObject = _bot.transform.parent.transform.parent.gameObject;
-        //_bot.GetComponent<Bot>().ShowDirection();
     }
     private void OnDisable()
     {
@@ -625,10 +718,6 @@ public class GameManager : MonoBehaviour
     }
     public void AddInteractableToDictionary(Vector3 pos, InteractableObject interactable)
     {
-        //if (Interactables.ContainsKey(pos))
-        //{
-        //    Debug.LogWarning($"Interactable{ Interactables.Co(pos)} is already added.");
-        //}
         Interactables.Add(pos, interactable);
     }
     private async void LoadLevel()
@@ -669,12 +758,6 @@ public class GameManager : MonoBehaviour
             RainInTween(tile.transform);
             tile.GetComponent<Tile>().ReferenceToDictionary();  
         }
-
-        //foreach (var tile in TilesDictionary)
-        //{
-        //    print($"{tile.Key} + {tile.Value.type}");
-        //}
-        //print(TilesDictionary.Count);
         foreach (GameObject interactable in SpawnedObjects)
         {
             float randomSpeed = 1f;
@@ -687,21 +770,13 @@ public class GameManager : MonoBehaviour
         }
         foreach (var interact in Interactables)
         {
-            print($"{interact.Key} + {interact.Value.Type}");
+            //print($"{interact.Key} + {interact.Value.Type}");
         }
         await Task.Yield();
         onGameStarted?.Invoke();
 
 
     }
-    //private void UpdateTilesDictionary()
-    //{
-
-    //}
-    //private void UpdateInteractablesDictionary()
-    //{
-
-    //}
     private async Task RainOutAnimation()
     {
         foreach (GameObject tile in TileGameObjects)
@@ -714,7 +789,6 @@ public class GameManager : MonoBehaviour
 
         }
         await Task.Delay(300);
-        
     }
     private async void RainOutTween(Transform transform)
     {

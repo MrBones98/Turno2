@@ -80,6 +80,7 @@ public class Bot : MonoBehaviour, IMovable,IPushable
     public async void CheckMove(Vector3 direction)
     {
         //Change Direction into EnumDirection is here, change parameter for SolveCollision/SolveMovement *vector3 direction*
+        _isMoving = true;
         if (_isActive)
         {
            onStartedMove?.Invoke();
@@ -118,103 +119,21 @@ public class Bot : MonoBehaviour, IMovable,IPushable
         //if (IsFocused) //Debug purposes, delete
         await Task.Delay((int)(_botStepDelay) * 1000);
         FindInDictionaries(direction);
-
-        
-        //GameManager.Interactables.Remove(new Vector3(_parentGameObject.transform.position.x, 0, _parentGameObject.transform.position.z));
-        //Old Raycast System
-        //Vector3 correctedPushDirection = new Vector3(_parentGameObject.transform.position.x, -1, _parentGameObject.transform.position.z) + direction*1.35f;
-        //Collider[] hits = Physics.OverlapSphere(transform.position + direction, 0.44f, _collidableLayers);
-        ////RaycastHit[] hits = Physics.SphereCastAll(correctedPushDirection, 0.44f, Vector3.up, 1.5f, _collidableLayers);
-        //for (int i = 0; i < hits.Length; i++)
-        //{
-        //    if (_platformCached == false && hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.layer == 7)
-        //    {
-        //        _platformCached = true;
-        //    }
-        //    else if(!_platformCached)
-        //    {
-        //        _platformCached = false;
-        //    }
-        //    if (hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<WallTile>())
-        //    {
-        //        _wallTile = hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<WallTile>();
-        //    }
-        //    else if (_wallTile == null)
-        //    {
-        //        _wallTile = null;
-        //    }
-        //    if (_pushableBox == null || hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
-        //    {
-        //        _pushableBox = hits[i].GetComponent<Collider>().GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
-        //    }
-
-        //    if (hits[i].GetComponent<Collider>().GetComponent<Bot>())
-        //    {
-        //        _pushableBot = hits[i].GetComponent<Collider>().GetComponent<Bot>();
-        //        //if (!_pushableBot.IsPushableBot)
-        //        //{
-        //        //    _pushableBot = null;
-        //        //}
-        //    }
-        //    print(hits[i].GetComponent<Collider>().gameObject.name);
-        //}
-        //    print($"There are {hits.Length} colliders on this step");
     }
     async Task SolveCollisionsAsync(Vector3 direction, bool jump)
     {
         await Task.Delay((int)(_botStepDelay * 1000));
         //Dictionary
-        FindInDictionaries(direction);
-        print($"In the {direction} direction there are: WallTile = {_wallTile}, Box = {_pushableBox}, Platform in front = {_platformCached}, PushableBot = {_pushableBot}");
-        //Old Raycast system
-
-        //RaycastHit[] facingHit;
-        //if (jump == false)
-        //{
-        //     facingHit= Physics.SphereCastAll(_raycastOrigin.position, 0.44f, _raycastOrigin.up, 1.5f, _collidableLayers);
-        //}
-        //else
-        //{
-        //    Vector3 jumpRayPosition = _parentGameObject.transform.position+ (direction*_stepCount);
-        //    facingHit = Physics.SphereCastAll(jumpRayPosition,0.44f,Vector3.up, 1.5f, _collidableLayers);
-        //}
-        //for (int i = 0; i < facingHit.Length; i++)
-        //{
-        //    if (_platformCached == false && facingHit[i].collider.GetComponent<Collider>().gameObject.layer == 7)
-        //    {
-        //        _platformCached = true;
-        //    }
-        //    else if (!_platformCached)
-        //    {
-        //        _platformCached = false;
-        //    }
-        //    if (facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>())
-        //    {
-        //        _wallTile = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<WallTile>();
-        //        print(_wallTile);
-        //    }
-        //    else if (_wallTile == null)
-        //    {
-        //        _wallTile = null;
-        //    }
-        //    if (_pushableBox == null || facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>())
-        //    {
-        //        _pushableBox = facingHit[i].collider.GetComponent<Collider>().gameObject.GetComponent<PushableBox>();
-        //    }
-
-        //    if (facingHit[i].collider.GetComponent<Bot>())
-        //    {
-        //        _pushableBot = facingHit[i].collider.GetComponent<Bot>();
-        //        //print($"Bot in front pushable: {_pushableBot.IsPushableBot}");
-
-        //    }
-        //    //print($"Collisions on Step #{_stepCount} , collider of: {facingHit[i].collider.gameObject.name}, at Pos: {facingHit[i].collider.gameObject.transform.position}");
-        //}
-
-        //if (facingHit.Length == 0)
-        //{
-        //    _platformCached = false;
-        //}
+        if (jump) 
+        {
+            FindInDictionaries(direction*_stepCount);
+        }
+        else
+        {
+            FindInDictionaries(direction);
+        }
+        //print($"In the {direction} direction there are: WallTile = {_wallTile}, Box = {_pushableBox}, Platform in front = {_platformCached}, PushableBot = {_pushableBot}");
+        
     }
 
     private void FindInDictionaries(Vector3 direction)
@@ -304,7 +223,6 @@ public class Bot : MonoBehaviour, IMovable,IPushable
 
     async Task SolveMovementAsync(WallTile walltile, bool platformCached, PushableBox pushablebox, Vector3 direction, Bot pushableBot)
     {
-        //print($"In the {direction} direction there are: WallTile = {walltile}, Box = {pushablebox}, Platform in front = {platformCached}, PushableBot = {pushableBot}");
         await Task.Delay((int)_botStepDelay * 1000);
         if (walltile == null || (walltile != null && !walltile.HasColision))
         {
@@ -317,8 +235,6 @@ public class Bot : MonoBehaviour, IMovable,IPushable
             {
                 _grounded=false;
             }
-            //Debug purposes, delete
-                //print(platformCached);
             if(_wallTile!=null && !walltile.HasColision)
             {
                 _grounded = true;
@@ -549,8 +465,7 @@ public class Bot : MonoBehaviour, IMovable,IPushable
 
     public async void CheckMovement(Vector3 direction)
     {
-        //interface
-        //throw new System.NotImplementedException();
+        //deprecated
         if (_isActive)
         {
             onStartedMove?.Invoke();

@@ -42,7 +42,6 @@ public class WinTile : Tile, ISwitchActivatable
                     Instantiate(_winParticle, transform);
                     //WinTween();
                 }
-                print("Wiiiiiiiiiiiiiii");
             }
         }
     }
