@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 40f, _playerLayer))
         {
-            print(hitInfo.collider.gameObject.name);
+            //print(hitInfo.collider.gameObject.name);
             if (hitInfo.collider.GetComponent<Bot>())
             {
                 AssignPlayer(hitInfo.collider.gameObject);
@@ -417,7 +417,7 @@ public class GameManager : MonoBehaviour
         //{
         //    HighlightInteractables();
         //}
-        print(_deathHighlightObjects.Count);
+        //print(_deathHighlightObjects.Count);
     }
 
     private void ClearDeathTileVisuals()
