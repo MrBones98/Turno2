@@ -59,34 +59,68 @@ public class MovingTile : Tile,ISwitchActivatable
             transform.Rotate(0, 270, 0);
         }
     }
+    //returns the int by which the direction should be applied, depending on wheter a tile was found or not. 
+    private int FindDistanceScaleValue(Vector3 direction)
+    {
+        //Think about how to do multiple moving platforms together
+        //TODO Implement iteration along the path not just final set destination
+        //TODO add direction *length instead of calculating inside of the call, also rework stopping at nwely found til;es while caching
+        //original path!!!!!!!!!!!
+        int adjustedValue = Distance;
+        Tile tile;
+        InteractableObject interactable;
+        for (int i = 1; i < Distance+1; i++)
+        {
+            Vector3 pathCheckValue = new Vector3(direction.x,0,direction.z) * i;
+            
+            tile = GameManager.Instance.FindTile(new Vector3(transform.position.x, 0, transform.position.z) + pathCheckValue);
+            print(new Vector3(transform.position.x, 0, transform.position.z) + pathCheckValue);
+            interactable = GameManager.Instance.FindInteractable(new Vector3(transform.position.x, 0, transform.position.z) + pathCheckValue);
+            
+            if(tile != null|| interactable!= null)
+            {
+                print($"found {tile} or {interactable}");
+                _adjustedDistance = true;
+                adjustedValue = i+1;
+                break;
+            }
+            else
+            {
+                _adjustedDistance=false;
+            }
+        }
+        return adjustedValue;
+    }
 
-    //change to async
     private async void UpdateTurn()
     {
         //print($"Is mving platf active: {_active}");
         if(_active)
         await MovingDelay();
     }
-    //change to async
+
     private async Task MovingDelay()
     {
-        //Collider[] hits = Physics.OverlapSphere(transform.position + endPos, 0.44f, 7);
-        Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;
-        //_moveDireciton = new Vector3(Direction.x, 0, Direction.y) * Distance;
-        RaycastHit[] raycastHits = Physics.RaycastAll(transform.position,endPos);
-        int distance = Distance;
-        float hitDistance = 0;
-        if(raycastHits.Length>0 && !_adjustedDistance)
-        {
-            _adjustedDistance = true;
-           //print(raycastHits[0].collider.name);
-           //print(raycastHits[0].collider.transform.position);
-           hitDistance = Vector3.Distance(transform.position, raycastHits[0].collider.transform.position);
-            distance = (int)hitDistance -1;
-            Distance = distance;
-//            print(Distance);
-           await Task.Yield();
-        }
+        await Task.Delay(500);
+        int distance = FindDistanceScaleValue(Direction);
+//        //Collider[] hits = Physics.OverlapSphere(transform.position + endPos, 0.44f, 7);
+//        Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;
+//        //_moveDireciton = new Vector3(Direction.x, 0, Direction.y) * Distance;
+//        RaycastHit[] raycastHits = Physics.RaycastAll(transform.position,endPos);
+//        float hitDistance = 0;
+//        if(raycastHits.Length>0 && !_adjustedDistance)
+//        {
+//            _adjustedDistance = true;
+//           //print(raycastHits[0].collider.name);
+//           //print(raycastHits[0].collider.transform.position);
+//           hitDistance = Vector3.Distance(transform.position, raycastHits[0].collider.transform.position);
+//            distance = (int)hitDistance -1;
+//            Distance = distance;
+////            print(Distance);
+//           await Task.Yield();
+//        }
+
+        print($"Current distance is{distance}");
         //GameManager.Interactables.Remove(transform.position);
         //print($"removing from{transform.position}");
         _moveDireciton = new Vector3(Direction.x, 0, Direction.y) * distance;

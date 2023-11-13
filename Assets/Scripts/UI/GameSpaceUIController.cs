@@ -118,12 +118,12 @@ public class GameSpaceUIController : MonoBehaviour
         //_handler = GameSpaceUIHandler.
         //_handler.CardDisplay.Remove(target.button);
         //_handler.CardDisplay.Contains(target.button);
-        print(_handler.CardDisplay.Contains(target.button));
+        //print(_handler.CardDisplay.Contains(target.button));
         _handler.CardDisplay.Remove(target.button);
         //print(target.button);
         //print(target);
         //target.button.RemoveFromHierarchy();
-        print(_handler.CardDisplay.childCount);
+        //print(_handler.CardDisplay.childCount);
         _activeCard=null;
     }
     private void DebugLoadLevel(int direction)
@@ -190,7 +190,7 @@ public class GameSpaceUIController : MonoBehaviour
             _handler.CardDisplay.Add(newSlot.button);
         }
 
-        print(_handler.CardDisplay.childCount);
+        //print(_handler.CardDisplay.childCount);
         
     }
 
@@ -204,7 +204,7 @@ public class GameSpaceUIController : MonoBehaviour
     private static void OnCardClicked(CardSlot cardSlot, ActionCardData data)
     {
         _activeCard = cardSlot;
-        print(_activeCard);
+        //print(_activeCard);
         onCardButtonClicked?.Invoke(data);
     }
 
