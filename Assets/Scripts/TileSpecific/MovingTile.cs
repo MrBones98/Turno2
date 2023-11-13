@@ -71,17 +71,26 @@ public class MovingTile : Tile,ISwitchActivatable
         InteractableObject interactable;
         for (int i = 1; i < Distance+1; i++)
         {
-            Vector3 pathCheckValue = new Vector3(direction.x,0,direction.z) * i;
-            
+            Vector3 pathCheckValue;
+            if (_count % 2 == 0)
+            {
+                pathCheckValue = new Vector3(direction.x,0,direction.y) * i;
+
+            }
+            else
+            {
+                pathCheckValue = new Vector3(direction.x,0,direction.y) *-i;
+    }
+            print($"on the {i} check the vector is {pathCheckValue}");
             tile = GameManager.Instance.FindTile(new Vector3(transform.position.x, 0, transform.position.z) + pathCheckValue);
-            print(new Vector3(transform.position.x, 0, transform.position.z) + pathCheckValue);
             interactable = GameManager.Instance.FindInteractable(new Vector3(transform.position.x, 0, transform.position.z) + pathCheckValue);
+            print(new Vector3(transform.position.x, 0, transform.position.z) + pathCheckValue);
             
-            if(tile != null|| interactable!= null)
+            if((tile != null && tile != gameObject.GetComponent<MovingTile>()) || interactable!=null)
             {
                 print($"found {tile} or {interactable}");
                 _adjustedDistance = true;
-                adjustedValue = i+1;
+                adjustedValue =i-1;
                 break;
             }
             else
@@ -101,7 +110,9 @@ public class MovingTile : Tile,ISwitchActivatable
 
     private async Task MovingDelay()
     {
-        await Task.Delay(500);
+        //await Task.Delay(500);
+        await Task.Yield();
+        print($" passing {Direction}");
         int distance = FindDistanceScaleValue(Direction);
 //        //Collider[] hits = Physics.OverlapSphere(transform.position + endPos, 0.44f, 7);
 //        Vector3 endPos = new Vector3(Direction.x, 0, Direction.y)*Distance;

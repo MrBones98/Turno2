@@ -288,7 +288,7 @@ public class PushableBox : MonoBehaviour
         GameManager.Interactables.Remove(transform.position);
         GameManager.TileGameObjects.Add(tile);
         GameManager.Instance.AddToTileToDictionary(new Vector3(MathF.Round( tile.transform.position.x),0, (int)tile.transform.position.z), tile.GetComponent<Tile>());
-        print(transform.position);
+        
         await Task.Yield();
         Destroy(gameObject, 0.4f);
     }
