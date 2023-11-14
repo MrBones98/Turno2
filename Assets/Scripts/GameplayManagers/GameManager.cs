@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     private GameObject _currentCard = null;
 
     private ActionCardData _currentCardData = null;
+    private ActionCardData _previousCardData = null;
 
     private GameObject _bot;
     private GameObject _voidHighlightPlatformReference = null;
@@ -104,7 +105,7 @@ public class GameManager : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 40f, _playerLayer))
         {
             //print(hitInfo.collider.gameObject.name);
-            if (hitInfo.collider.GetComponent<Bot>())
+            if (hitInfo.collider.GetComponent<Bot>()&& _currentCardData!=null)
             {
                 AssignPlayer(hitInfo.collider.gameObject);
                 //print("card cached");
@@ -128,6 +129,8 @@ public class GameManager : MonoBehaviour
             }
             //could save it in qeue jic
             //Destroy(_currentCard, 0.1f);
+            _currentCardData = null;
+            _currentCard=null;
         }
         else
         {
@@ -411,6 +414,9 @@ public class GameManager : MonoBehaviour
         }
         if (_currentCardData != null && Input.GetMouseButtonDown(0)&& _bot==null)
         {
+            print(_currentCardData);
+            print(_bot);
+            //_previousCardValue
             BotCaching();
         }
         //TODO Check for Scene
