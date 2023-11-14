@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public static List<GameObject> SpawnedObjects = new();
     public static Dictionary<Vector3, Tile> TilesDictionary = new();
     public static Dictionary<Vector3, InteractableObject> Interactables = new();
+    public Vector3 WinTilePositionReference;
 
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _gameplayUI;
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
     private bool _selectCheck = false;
     private bool _pathHighlighted = false;
     private bool _raycastCheck = false;
+    private bool _highlightBotMovementCheck = false;
     //public WinTile WinTile;
 
     //ON THE LEVEL SO ADD COUNT OF BUTTONS FOR WINNING FOR DIFFERENT NEEED AMOUNTS
@@ -137,6 +139,7 @@ public class GameManager : MonoBehaviour
     }
     private async void CleanVisualOnBotMove()
     {
+        _highlightBotMovementCheck = true;
         await Task.Yield();
         //await ClearPath();
     }
@@ -232,7 +235,7 @@ public class GameManager : MonoBehaviour
     private void UpdateTurn()
     {
         _highlightedPath.Clear();
-
+        _highlightBotMovementCheck = false;
         _bot = null;
         Invoke(nameof(BotMoved), 0.3f);
 
@@ -317,6 +320,8 @@ public class GameManager : MonoBehaviour
         //event for the gamespaceuicontroller to load WinScreen
         //_winScreen.SetActive(true);
         //_gameplayUI.SetActive(false);
+        //TileGameObjects.ToArray();
+        //System.Array.Sort(TileGameObjects, ( AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
     }
     private void UpdateInteractableRayCast()
     {
@@ -411,7 +416,10 @@ public class GameManager : MonoBehaviour
         //TODO Check for Scene
         else if (_bot == null || (_bot != null && !_bot.GetComponent<Bot>().IsMoving))
         {
-            HighlightInteractables();
+            if(_highlightBotMovementCheck == false)
+            {
+                HighlightInteractables();
+            }
         }
         //if (_bot == null ||(_bot!= null && ! _bot.GetComponent<Bot>().IsMoving))
         //{

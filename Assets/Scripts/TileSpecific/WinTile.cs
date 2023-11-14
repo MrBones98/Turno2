@@ -26,6 +26,7 @@ public class WinTile : Tile, ISwitchActivatable
     private void Start()
     {
         _collidableLayers = LayerMask.GetMask(_layersToCheck);
+        GameManager.Instance.WinTilePositionReference = new Vector3(transform.position.x,0,transform.position.z);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -40,8 +41,8 @@ public class WinTile : Tile, ISwitchActivatable
                 foreach (Transform transform in _particleEmitterPositions)
                 {
                     Instantiate(_winParticle, transform);
-                    //WinTween();
                 }
+                //WinTween();
             }
         }
     }
