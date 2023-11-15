@@ -2,8 +2,8 @@
     <Style src="project://database/Assets/UI/MenuStyles.uss?fileID=7433441132597879392&amp;guid=0fca17f0ae99945f2bc779d4c1796174&amp;type=3#MenuStyles" />
     <ui:VisualElement name="Root" style="align-items: stretch; flex-grow: 1;">
         <ui:VisualElement style="flex-direction: row;">
-            <ui:Label text="TURNO" display-tooltip-when-elided="true" name="GameTitleText" class="GameTitleText" style="padding-right: 5px; padding-left: 7px; font-size: 50px;" />
-            <ui:Label text="A BOT PUZZLER" display-tooltip-when-elided="true" name="GameStrapline" style="-unity-text-align: lower-left; -unity-font-definition: url(&apos;project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&amp;guid=fc1d487999cd947a3b9a69750f855049&amp;type=2#telegren SDF&apos;); padding-bottom: 8px; padding-left: 6px; flex-grow: 1; color: rgba(0, 0, 0, 255); -unity-font-style: bold;" />
+            <ui:Label text="CUBOTOS" display-tooltip-when-elided="true" name="GameTitleText" class="GameTitleText" style="padding-right: 5px; padding-left: 7px; font-size: 50px;" />
+            <ui:Label text="A BOT PUZZLER" display-tooltip-when-elided="true" name="GameStrapline" style="-unity-text-align: lower-left; -unity-font-definition: url(&apos;project://database/Assets/Fonts/telegren%20SDF.asset?fileID=11400000&amp;guid=fc1d487999cd947a3b9a69750f855049&amp;type=2#telegren SDF&apos;); padding-bottom: 8px; padding-left: 6px; flex-grow: 1; color: rgb(0, 0, 0); -unity-font-style: bold;" />
         </ui:VisualElement>
         <ui:VisualElement name="ButtonContainer" style="justify-content: center; flex-grow: 1; padding-bottom: 43px;">
             <ui:Button text="START" display-tooltip-when-elided="true" name="StartGame" focusable="false" class="MainMenuButton" />
